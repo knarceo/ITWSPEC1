@@ -158,36 +158,24 @@ public class loginPanel extends javax.swing.JPanel {
         String password = new String(passwordField.getPassword());
 
         if (username.equals("administrator") && password.equals("administrator")) {
-
-            
-            
             this.setVisible(false);
             serverFrame serverFrame = new serverFrame();
             serverFrame.setVisible(true);
-
         } else if (username.equals("") && password.equals("")) {
-
-            JOptionPane.showMessageDialog(null, "Please Fill out the needed areas.");
-
+            JOptionPane.showMessageDialog(null, "Please Fill out the needed areas.", "", JOptionPane.ERROR_MESSAGE);
         } else if (checkRecords(username, password) == 1) {
-
             this.setVisible(false);
             this.remove(this);
             clientFrame clientFrame = new clientFrame();
             clientFrame.setVisible(true);
-
         } else if (checkRecords(username, password) == 0) {
-
-            JOptionPane.showMessageDialog(null, "Account not Found!");
+            JOptionPane.showMessageDialog(null, "Account not Found!", "", JOptionPane.ERROR_MESSAGE);
             usernameField.setText("");
             passwordField.setText("");
-
         } else {
-
-            JOptionPane.showMessageDialog(null, "Account not Found!");
+            JOptionPane.showMessageDialog(null, "Account not Found!", "", JOptionPane.ERROR_MESSAGE);
             usernameField.setText("");
             passwordField.setText("");
-
         }
 
 

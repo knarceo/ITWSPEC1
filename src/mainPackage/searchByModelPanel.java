@@ -21,7 +21,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Windows8.1
  */
-public class viewIdPanel_1 extends javax.swing.JPanel {
+public class searchByModelPanel extends javax.swing.JPanel {
 
     private static final String DATABSE_URL = "jdbc:derby://localhost:1527/libraryDb";
     private static final String username = "oracle";
@@ -33,12 +33,12 @@ public class viewIdPanel_1 extends javax.swing.JPanel {
     private ResultSet resultset;
     private ResultSetMetaData rsMetadata;
 
-    public viewIdPanel_1() {
+    public searchByModelPanel() {
         initComponents();
         try {
             connection = DriverManager.getConnection(DATABSE_URL, username, password);
         } catch (SQLException ex) {
-            Logger.getLogger(viewIdPanel_1.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(searchByModelPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -128,14 +128,14 @@ public class viewIdPanel_1 extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         displayTable = new javax.swing.JTable();
 
-        jLabel1.setFont(new java.awt.Font("Georgia", 0, 24)); // NOI18N
-        jLabel1.setText("Search a Book");
+        jLabel1.setFont(new java.awt.Font("Arial Narrow", 1, 24)); // NOI18N
+        jLabel1.setText("Search by car by model");
 
-        jLabel2.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Arial Narrow", 1, 24)); // NOI18N
         jLabel2.setText("ID:");
 
         submitButton.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        submitButton.setText("Submit");
+        submitButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/view.png"))); // NOI18N
         submitButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 submitButtonActionPerformed(evt);
@@ -165,21 +165,17 @@ public class viewIdPanel_1 extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(33, 33, 33)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(81, 81, 81)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 532, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(idField, javax.swing.GroupLayout.PREFERRED_SIZE, 386, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(submitButton)))))
-                .addContainerGap(97, Short.MAX_VALUE))
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(idField, javax.swing.GroupLayout.PREFERRED_SIZE, 386, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(submitButton))
+                    .addComponent(jLabel1)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 642, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -187,14 +183,13 @@ public class viewIdPanel_1 extends javax.swing.JPanel {
                 .addGap(44, 44, 44)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(idField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(submitButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addComponent(idField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE)))
-                .addGap(36, 36, 36)
+                    .addComponent(submitButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(226, Short.MAX_VALUE))
+                .addContainerGap(235, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 

@@ -33,8 +33,8 @@ public class clientFrame extends javax.swing.JFrame {
         clientPanel = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        byIdItem = new javax.swing.JMenuItem();
-        byTitleItem = new javax.swing.JMenuItem();
+        searchByModel = new javax.swing.JMenuItem();
+        searchByType = new javax.swing.JMenuItem();
         byAuthorItem = new javax.swing.JMenuItem();
         byGenreItem = new javax.swing.JMenuItem();
         byStateMenuItem = new javax.swing.JMenuItem();
@@ -60,27 +60,27 @@ public class clientFrame extends javax.swing.JFrame {
             .addGap(0, 469, Short.MAX_VALUE)
         );
 
-        jMenu1.setText("Books");
+        jMenu1.setText("Cars");
 
-        byIdItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.ALT_MASK));
-        byIdItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/view.png"))); // NOI18N
-        byIdItem.setText("Search Book by ID");
-        byIdItem.addActionListener(new java.awt.event.ActionListener() {
+        searchByModel.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.ALT_MASK));
+        searchByModel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/view.png"))); // NOI18N
+        searchByModel.setText("Search Car by Model");
+        searchByModel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                byIdItemActionPerformed(evt);
+                searchByModelActionPerformed(evt);
             }
         });
-        jMenu1.add(byIdItem);
+        jMenu1.add(searchByModel);
 
-        byTitleItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_T, java.awt.event.InputEvent.ALT_MASK));
-        byTitleItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/view.png"))); // NOI18N
-        byTitleItem.setText("Search Book by Title");
-        byTitleItem.addActionListener(new java.awt.event.ActionListener() {
+        searchByType.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_T, java.awt.event.InputEvent.ALT_MASK));
+        searchByType.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/view.png"))); // NOI18N
+        searchByType.setText("Search Car by Type");
+        searchByType.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                byTitleItemActionPerformed(evt);
+                searchByTypeActionPerformed(evt);
             }
         });
-        jMenu1.add(byTitleItem);
+        jMenu1.add(searchByType);
 
         byAuthorItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.ALT_MASK));
         byAuthorItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/view.png"))); // NOI18N
@@ -155,16 +155,16 @@ public class clientFrame extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void byIdItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_byIdItemActionPerformed
+    private void searchByModelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchByModelActionPerformed
 
         clientPanel.removeAll();
         clientPanel.setVisible(false);
         clientPanel.setLayout(new BorderLayout());
-        clientPanel.add(new viewIdPanel_1(), BorderLayout.CENTER);
+        clientPanel.add(new searchByModelPanel(), BorderLayout.CENTER);
         clientPanel.repaint();
         clientPanel.setVisible(true);
 
-    }//GEN-LAST:event_byIdItemActionPerformed
+    }//GEN-LAST:event_searchByModelActionPerformed
 
     private void byAuthorItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_byAuthorItemActionPerformed
 
@@ -177,7 +177,7 @@ public class clientFrame extends javax.swing.JFrame {
 
     }//GEN-LAST:event_byAuthorItemActionPerformed
 
-    private void byTitleItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_byTitleItemActionPerformed
+    private void searchByTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchByTypeActionPerformed
 
         clientPanel.removeAll();
         clientPanel.setVisible(false);
@@ -186,7 +186,7 @@ public class clientFrame extends javax.swing.JFrame {
         clientPanel.repaint();
         clientPanel.setVisible(true);
 
-    }//GEN-LAST:event_byTitleItemActionPerformed
+    }//GEN-LAST:event_searchByTypeActionPerformed
 
     private void byGenreItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_byGenreItemActionPerformed
 
@@ -260,9 +260,7 @@ public class clientFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem byAuthorItem;
     private javax.swing.JMenuItem byGenreItem;
-    private javax.swing.JMenuItem byIdItem;
     private javax.swing.JMenuItem byStateMenuItem;
-    private javax.swing.JMenuItem byTitleItem;
     private javax.swing.JPanel clientPanel;
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JMenuItem helpMenuItem;
@@ -270,5 +268,7 @@ public class clientFrame extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JMenuItem searchByModel;
+    private javax.swing.JMenuItem searchByType;
     // End of variables declaration//GEN-END:variables
 }
