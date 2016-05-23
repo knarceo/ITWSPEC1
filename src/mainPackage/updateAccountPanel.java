@@ -100,7 +100,7 @@ public class updateAccountPanel extends javax.swing.JPanel {
                 passwordField.setText("");
             }
         } catch (SQLException ex) {
-            Logger.getLogger(applyPanel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(registrationPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

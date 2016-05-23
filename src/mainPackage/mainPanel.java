@@ -39,41 +39,40 @@ public class mainPanel extends javax.swing.JPanel {
         });
 
         applyButton.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
-        applyButton.setText("Apply For Card");
+        applyButton.setText("Register");
         applyButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 applyButtonActionPerformed(evt);
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Georgia", 0, 36)); // NOI18N
-        jLabel1.setText("WELCOME TO OUR LIBRARY SYSTEM");
+        jLabel1.setFont(new java.awt.Font("Arial Narrow", 0, 36)); // NOI18N
+        jLabel1.setText("CAR RENTAL SYSTEM");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 651, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(41, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(loginButton)
-                .addGap(101, 101, 101)
-                .addComponent(applyButton)
-                .addGap(141, 141, 141))
+                .addContainerGap(174, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(applyButton, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
+                    .addComponent(loginButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(jLabel1)))
+                .addGap(160, 160, 160))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(77, 77, 77)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(103, 103, 103)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(applyButton)
-                    .addComponent(loginButton))
-                .addContainerGap(174, Short.MAX_VALUE))
+                .addGap(70, 70, 70)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addComponent(loginButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(applyButton)
+                .addContainerGap(271, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -93,7 +92,7 @@ public class mainPanel extends javax.swing.JPanel {
         mainFrame.mainPanel.removeAll();
         mainFrame.mainPanel.setVisible(false);
         mainFrame.mainPanel.setLayout(new BorderLayout());
-        mainFrame.mainPanel.add(new applyPanel(), BorderLayout.CENTER);
+        mainFrame.mainPanel.add(new registrationPanel(), BorderLayout.CENTER);
         mainFrame.mainPanel.repaint();
         mainFrame.mainPanel.setVisible(true);
 

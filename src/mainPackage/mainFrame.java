@@ -39,11 +39,11 @@ public class mainFrame extends javax.swing.JFrame {
         setTitle("Library System");
         setResizable(false);
 
-        jLabel1.setFont(new java.awt.Font("Georgia", 0, 36)); // NOI18N
-        jLabel1.setText("WELCOME TO OUR LIBRARY SYSTEM");
+        jLabel1.setFont(new java.awt.Font("Arial Narrow", 0, 36)); // NOI18N
+        jLabel1.setText("CAR RENTAL SYSTEM");
 
         applyButton.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
-        applyButton.setText("Apply For Card");
+        applyButton.setText("Register");
         applyButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 applyButtonActionPerformed(evt);
@@ -62,27 +62,26 @@ public class mainFrame extends javax.swing.JFrame {
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(mainPanelLayout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 651, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(41, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(loginButton)
-                .addGap(101, 101, 101)
-                .addComponent(applyButton)
-                .addGap(141, 141, 141))
+                .addContainerGap(175, Short.MAX_VALUE)
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(applyButton, javax.swing.GroupLayout.PREFERRED_SIZE, 376, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(loginButton, javax.swing.GroupLayout.PREFERRED_SIZE, 376, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(mainPanelLayout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(31, 31, 31)))
+                .addGap(159, 159, 159))
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainPanelLayout.createSequentialGroup()
-                .addGap(77, 77, 77)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(103, 103, 103)
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(applyButton)
-                    .addComponent(loginButton))
-                .addContainerGap(174, Short.MAX_VALUE))
+                .addGap(76, 76, 76)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addComponent(loginButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(applyButton)
+                .addContainerGap(265, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -116,7 +115,7 @@ public class mainFrame extends javax.swing.JFrame {
         mainPanel.removeAll();
         mainPanel.setVisible(false);
         mainPanel.setLayout(new BorderLayout());
-        mainPanel.add(new applyPanel(), BorderLayout.CENTER);
+        mainPanel.add(new registrationPanel(), BorderLayout.CENTER);
         mainPanel.repaint();
         mainPanel.setVisible(true);
 
