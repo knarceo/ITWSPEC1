@@ -73,11 +73,11 @@ public class serverFrame extends javax.swing.JFrame {
 
         jMenuBar1.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
 
-        jMenu1.setText("Books");
+        jMenu1.setText("Cars");
 
         addItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.ALT_MASK));
         addItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/add-icon.png"))); // NOI18N
-        addItem.setText("Add Book");
+        addItem.setText("Add Car");
         addItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addItemActionPerformed(evt);
@@ -87,7 +87,7 @@ public class serverFrame extends javax.swing.JFrame {
 
         updateItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.ALT_MASK));
         updateItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/edit.png"))); // NOI18N
-        updateItem.setText("Update Book");
+        updateItem.setText("Update Car");
         updateItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 updateItemActionPerformed(evt);
@@ -97,7 +97,7 @@ public class serverFrame extends javax.swing.JFrame {
 
         deleteItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.ALT_MASK));
         deleteItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/delete.png"))); // NOI18N
-        deleteItem.setText("Delete Book");
+        deleteItem.setText("Delete Car");
         deleteItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 deleteItemActionPerformed(evt);
@@ -106,7 +106,7 @@ public class serverFrame extends javax.swing.JFrame {
         jMenu1.add(deleteItem);
 
         jMenu4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/view.png"))); // NOI18N
-        jMenu4.setText("Search a Book");
+        jMenu4.setText("Search Car");
 
         byIdMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/view.png"))); // NOI18N
         byIdMenuItem.setText("By ID");
@@ -157,7 +157,7 @@ public class serverFrame extends javax.swing.JFrame {
 
         viewAllItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.ALT_MASK));
         viewAllItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/viewAll.png"))); // NOI18N
-        viewAllItem.setText("View All Book");
+        viewAllItem.setText("View All Car");
         viewAllItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 viewAllItemActionPerformed(evt);

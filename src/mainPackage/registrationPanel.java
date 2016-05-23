@@ -48,7 +48,7 @@ public class registrationPanel extends javax.swing.JPanel {
 
             if (checkRecords(sNumber, username) >= 1) {
 
-                JOptionPane.showMessageDialog(null, "Student Number OR Username already Exists!");
+                JOptionPane.showMessageDialog(null, "Student Number OR Username already Exists!", "", JOptionPane.ERROR_MESSAGE);
                 studIdField.setText("");
                 fNameField.setText("");
                 lNameField.setText("");
@@ -67,7 +67,7 @@ public class registrationPanel extends javax.swing.JPanel {
                 statement.setString(6, password);
                 statement.executeUpdate();
 
-                JOptionPane.showMessageDialog(null, "Your Account has been created. Please proceed to the counter for Card Printing.");
+                JOptionPane.showMessageDialog(null, "Your Account has been created. You may now login.", "", JOptionPane.INFORMATION_MESSAGE);
 
                 studIdField.setText("");
                 fNameField.setText("");
@@ -283,9 +283,7 @@ public class registrationPanel extends javax.swing.JPanel {
         String password = new String(passwordField.getPassword());
 
         if (studId.equals("") || fName.equals("") || lName.equals("") || mName.equals("") || username.equals("") || password.equals("")) {
-
-            JOptionPane.showMessageDialog(null, "Please Fill out all the needed areas.");
-
+            JOptionPane.showMessageDialog(null, "Please Fill out all the needed areas.", "", JOptionPane.ERROR_MESSAGE);
         } else {
             addRecord(studId, fName, lName, mName, username, password);
         }

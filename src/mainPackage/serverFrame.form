@@ -11,7 +11,7 @@
       <SubComponents>
         <Menu class="javax.swing.JMenu" name="jMenu1">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Books"/>
+            <Property name="text" type="java.lang.String" value="Cars"/>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="addItem">
@@ -22,7 +22,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/mainPackage/add-icon.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Add Book"/>
+                <Property name="text" type="java.lang.String" value="Add Car"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addItemActionPerformed"/>
@@ -36,7 +36,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/mainPackage/edit.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Update Book"/>
+                <Property name="text" type="java.lang.String" value="Update Car"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="updateItemActionPerformed"/>
@@ -50,7 +50,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/mainPackage/delete.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Delete Book"/>
+                <Property name="text" type="java.lang.String" value="Delete Car"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deleteItemActionPerformed"/>
@@ -61,7 +61,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/mainPackage/view.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Search a Book"/>
+                <Property name="text" type="java.lang.String" value="Search Car"/>
               </Properties>
               <SubComponents>
                 <MenuItem class="javax.swing.JMenuItem" name="byIdMenuItem">
@@ -129,7 +129,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/mainPackage/viewAll.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="View All Book"/>
+                <Property name="text" type="java.lang.String" value="View All Car"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="viewAllItemActionPerformed"/>

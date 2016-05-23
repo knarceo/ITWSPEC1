@@ -42,9 +42,7 @@ public class loginPanel extends javax.swing.JPanel {
     }
 
     public int checkRecords(String username, String password) {
-
         int count = 0;
-
         try {
             statement = connection.prepareStatement(CHECK_RECORDS);
             statement.setString(1, username);
@@ -62,7 +60,6 @@ public class loginPanel extends javax.swing.JPanel {
         } catch (SQLException ex) {
             Logger.getLogger(loginPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
-
         return count = 0;
     }
 
