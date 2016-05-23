@@ -109,8 +109,8 @@ public class deletePanel extends javax.swing.JPanel {
             }
         });
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel2.setText("DELETE");
+        jLabel2.setFont(new java.awt.Font("Arial Narrow", 1, 24)); // NOI18N
+        jLabel2.setText("Delete Car");
 
         deleteButton.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         deleteButton.setText("Delete");
@@ -139,7 +139,7 @@ public class deletePanel extends javax.swing.JPanel {
                                 .addGap(47, 47, 47)))
                         .addGap(34, 34, 34)
                         .addComponent(idField, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(158, Short.MAX_VALUE))
+                .addContainerGap(153, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

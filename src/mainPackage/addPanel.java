@@ -134,8 +134,8 @@ public class addPanel extends javax.swing.JPanel {
             }
         });
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel4.setText("ADD BOOK");
+        jLabel4.setFont(new java.awt.Font("Arial Narrow", 1, 24)); // NOI18N
+        jLabel4.setText("Add New Car");
 
         addButton.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         addButton.setText("ADD");
@@ -149,7 +149,7 @@ public class addPanel extends javax.swing.JPanel {
         jLabel5.setText("Genre:");
 
         jLabel6.setFont(new java.awt.Font("Georgia", 0, 24)); // NOI18N
-        jLabel6.setText("Id:");
+        jLabel6.setText("ID");
 
         idField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -189,7 +189,7 @@ public class addPanel extends javax.swing.JPanel {
                         .addGap(340, 340, 340)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(addButton)
-                .addContainerGap(123, Short.MAX_VALUE))
+                .addContainerGap(128, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

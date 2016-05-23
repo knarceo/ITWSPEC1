@@ -114,8 +114,8 @@ public class updatePanel extends javax.swing.JPanel {
         authorField = new javax.swing.JTextField();
         genreBox = new javax.swing.JComboBox<>();
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel2.setText("UPDATE");
+        jLabel2.setFont(new java.awt.Font("Arial Narrow", 1, 24)); // NOI18N
+        jLabel2.setText("Update Car");
 
         jLabel5.setFont(new java.awt.Font("Georgia", 0, 24)); // NOI18N
         jLabel5.setText("Genre:");

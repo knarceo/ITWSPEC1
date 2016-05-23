@@ -133,7 +133,7 @@ public class viewAccountPanel extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         displayTable = new javax.swing.JTable();
 
-        jLabel1.setFont(new java.awt.Font("Georgia", 0, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Arial Narrow", 1, 24)); // NOI18N
         jLabel1.setText("Search an Account");
 
         jLabel2.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N

@@ -33,16 +33,16 @@ public class serverFrame extends javax.swing.JFrame {
         serverPanel = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        addItem = new javax.swing.JMenuItem();
-        updateItem = new javax.swing.JMenuItem();
-        deleteItem = new javax.swing.JMenuItem();
-        jMenu4 = new javax.swing.JMenu();
+        addCar = new javax.swing.JMenuItem();
+        updateCar = new javax.swing.JMenuItem();
+        deleteCar = new javax.swing.JMenuItem();
+        searchCarAdmin = new javax.swing.JMenu();
         byIdMenuItem = new javax.swing.JMenuItem();
         byTitleMenuItem = new javax.swing.JMenuItem();
         byAuthorMenuItem = new javax.swing.JMenuItem();
         byGenreMenuItem = new javax.swing.JMenuItem();
         byStateItem = new javax.swing.JMenuItem();
-        viewAllItem = new javax.swing.JMenuItem();
+        viewAllCarAdmin = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         exitMenuItem = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
@@ -75,38 +75,38 @@ public class serverFrame extends javax.swing.JFrame {
 
         jMenu1.setText("Cars");
 
-        addItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.ALT_MASK));
-        addItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/add-icon.png"))); // NOI18N
-        addItem.setText("Add Car");
-        addItem.addActionListener(new java.awt.event.ActionListener() {
+        addCar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.ALT_MASK));
+        addCar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/add-icon.png"))); // NOI18N
+        addCar.setText("Add Car");
+        addCar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addItemActionPerformed(evt);
+                addCarActionPerformed(evt);
             }
         });
-        jMenu1.add(addItem);
+        jMenu1.add(addCar);
 
-        updateItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.ALT_MASK));
-        updateItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/edit.png"))); // NOI18N
-        updateItem.setText("Update Car");
-        updateItem.addActionListener(new java.awt.event.ActionListener() {
+        updateCar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.ALT_MASK));
+        updateCar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/edit.png"))); // NOI18N
+        updateCar.setText("Update Car");
+        updateCar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                updateItemActionPerformed(evt);
+                updateCarActionPerformed(evt);
             }
         });
-        jMenu1.add(updateItem);
+        jMenu1.add(updateCar);
 
-        deleteItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.ALT_MASK));
-        deleteItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/delete.png"))); // NOI18N
-        deleteItem.setText("Delete Car");
-        deleteItem.addActionListener(new java.awt.event.ActionListener() {
+        deleteCar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.ALT_MASK));
+        deleteCar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/delete.png"))); // NOI18N
+        deleteCar.setText("Delete Car");
+        deleteCar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                deleteItemActionPerformed(evt);
+                deleteCarActionPerformed(evt);
             }
         });
-        jMenu1.add(deleteItem);
+        jMenu1.add(deleteCar);
 
-        jMenu4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/view.png"))); // NOI18N
-        jMenu4.setText("Search Car");
+        searchCarAdmin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/view.png"))); // NOI18N
+        searchCarAdmin.setText("Search Car");
 
         byIdMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/view.png"))); // NOI18N
         byIdMenuItem.setText("By ID");
@@ -115,7 +115,7 @@ public class serverFrame extends javax.swing.JFrame {
                 byIdMenuItemActionPerformed(evt);
             }
         });
-        jMenu4.add(byIdMenuItem);
+        searchCarAdmin.add(byIdMenuItem);
 
         byTitleMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/view.png"))); // NOI18N
         byTitleMenuItem.setText("By Title");
@@ -124,7 +124,7 @@ public class serverFrame extends javax.swing.JFrame {
                 byTitleMenuItemActionPerformed(evt);
             }
         });
-        jMenu4.add(byTitleMenuItem);
+        searchCarAdmin.add(byTitleMenuItem);
 
         byAuthorMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/view.png"))); // NOI18N
         byAuthorMenuItem.setText("By Author");
@@ -133,7 +133,7 @@ public class serverFrame extends javax.swing.JFrame {
                 byAuthorMenuItemActionPerformed(evt);
             }
         });
-        jMenu4.add(byAuthorMenuItem);
+        searchCarAdmin.add(byAuthorMenuItem);
 
         byGenreMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/view.png"))); // NOI18N
         byGenreMenuItem.setText("By Genre");
@@ -142,7 +142,7 @@ public class serverFrame extends javax.swing.JFrame {
                 byGenreMenuItemActionPerformed(evt);
             }
         });
-        jMenu4.add(byGenreMenuItem);
+        searchCarAdmin.add(byGenreMenuItem);
 
         byStateItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/view.png"))); // NOI18N
         byStateItem.setText("By State");
@@ -151,19 +151,19 @@ public class serverFrame extends javax.swing.JFrame {
                 byStateItemActionPerformed(evt);
             }
         });
-        jMenu4.add(byStateItem);
+        searchCarAdmin.add(byStateItem);
 
-        jMenu1.add(jMenu4);
+        jMenu1.add(searchCarAdmin);
 
-        viewAllItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.ALT_MASK));
-        viewAllItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/viewAll.png"))); // NOI18N
-        viewAllItem.setText("View All Car");
-        viewAllItem.addActionListener(new java.awt.event.ActionListener() {
+        viewAllCarAdmin.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.ALT_MASK));
+        viewAllCarAdmin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/viewAll.png"))); // NOI18N
+        viewAllCarAdmin.setText("View All Car");
+        viewAllCarAdmin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                viewAllItemActionPerformed(evt);
+                viewAllCarAdminActionPerformed(evt);
             }
         });
-        jMenu1.add(viewAllItem);
+        jMenu1.add(viewAllCarAdmin);
         jMenu1.add(jSeparator1);
 
         exitMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X, java.awt.event.InputEvent.CTRL_MASK));
@@ -262,7 +262,7 @@ public class serverFrame extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void addItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addItemActionPerformed
+    private void addCarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCarActionPerformed
 
         serverPanel.removeAll();
         serverPanel.setVisible(false);
@@ -271,9 +271,9 @@ public class serverFrame extends javax.swing.JFrame {
         serverPanel.repaint();
         serverPanel.setVisible(true);
 
-    }//GEN-LAST:event_addItemActionPerformed
+    }//GEN-LAST:event_addCarActionPerformed
 
-    private void viewAllItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewAllItemActionPerformed
+    private void viewAllCarAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewAllCarAdminActionPerformed
 
         serverPanel.removeAll();
         serverPanel.setVisible(false);
@@ -282,9 +282,9 @@ public class serverFrame extends javax.swing.JFrame {
         serverPanel.repaint();
         serverPanel.setVisible(true);
 
-    }//GEN-LAST:event_viewAllItemActionPerformed
+    }//GEN-LAST:event_viewAllCarAdminActionPerformed
 
-    private void updateItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateItemActionPerformed
+    private void updateCarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateCarActionPerformed
         // TODO add your handling code here:
         serverPanel.removeAll();
         serverPanel.setVisible(false);
@@ -292,9 +292,9 @@ public class serverFrame extends javax.swing.JFrame {
         serverPanel.add(new updatePanel(), BorderLayout.CENTER);
         serverPanel.repaint();
         serverPanel.setVisible(true);
-    }//GEN-LAST:event_updateItemActionPerformed
+    }//GEN-LAST:event_updateCarActionPerformed
 
-    private void deleteItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteItemActionPerformed
+    private void deleteCarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteCarActionPerformed
 
         serverPanel.removeAll();
         serverPanel.setVisible(false);
@@ -303,7 +303,7 @@ public class serverFrame extends javax.swing.JFrame {
         serverPanel.repaint();
         serverPanel.setVisible(true);
 
-    }//GEN-LAST:event_deleteItemActionPerformed
+    }//GEN-LAST:event_deleteCarActionPerformed
 
     private void deleteAccountItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteAccountItemActionPerformed
 
@@ -465,27 +465,27 @@ public class serverFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem addAccountItem;
-    private javax.swing.JMenuItem addItem;
+    private javax.swing.JMenuItem addCar;
     private javax.swing.JMenuItem byAuthorMenuItem;
     private javax.swing.JMenuItem byGenreMenuItem;
     private javax.swing.JMenuItem byIdMenuItem;
     private javax.swing.JMenuItem byStateItem;
     private javax.swing.JMenuItem byTitleMenuItem;
     private javax.swing.JMenuItem deleteAccountItem;
-    private javax.swing.JMenuItem deleteItem;
+    private javax.swing.JMenuItem deleteCar;
     private javax.swing.JMenuItem displayAccountItem;
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JMenuItem helpMenuItem;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JMenu searchCarAdmin;
     private javax.swing.JPanel serverPanel;
     private javax.swing.JMenuItem updateAccountItem;
-    private javax.swing.JMenuItem updateItem;
+    private javax.swing.JMenuItem updateCar;
     private javax.swing.JMenuItem viewAccountItem;
-    private javax.swing.JMenuItem viewAllItem;
+    private javax.swing.JMenuItem viewAllCarAdmin;
     // End of variables declaration//GEN-END:variables
 }
