@@ -141,7 +141,7 @@ public class registrationPanel extends javax.swing.JPanel {
         jLabel4.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         jLabel4.setText("First Name:");
 
-        jLabel1.setFont(new java.awt.Font("Arial Narrow", 1, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Arial Narrow", 1, 36)); // NOI18N
         jLabel1.setText("Car Rental System : Account Registration");
 
         jLabel2.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
@@ -168,7 +168,8 @@ public class registrationPanel extends javax.swing.JPanel {
         jLabel10.setFont(new java.awt.Font("Arial Narrow", 1, 18)); // NOI18N
         jLabel10.setText("Personal Information");
 
-        backButton.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
+        backButton.setBackground(new java.awt.Color(255, 51, 51));
+        backButton.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         backButton.setText("Back");
         backButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -176,7 +177,8 @@ public class registrationPanel extends javax.swing.JPanel {
             }
         });
 
-        submitButton.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
+        submitButton.setBackground(new java.awt.Color(102, 255, 102));
+        submitButton.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         submitButton.setText("Register");
         submitButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -190,13 +192,13 @@ public class registrationPanel extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(22, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(backButton)
-                            .addGap(18, 18, 18)
-                            .addComponent(submitButton))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(backButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(submitButton))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel1)
                         .addGroup(layout.createSequentialGroup()
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel10)
@@ -222,8 +224,8 @@ public class registrationPanel extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(37, 37, 37)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(46, 46, 46)
+                .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)

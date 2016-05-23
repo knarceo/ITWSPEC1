@@ -39,9 +39,10 @@ public class mainFrame extends javax.swing.JFrame {
         setTitle("Library System");
         setResizable(false);
 
-        jLabel1.setFont(new java.awt.Font("Arial Narrow", 0, 36)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Arial Narrow", 1, 36)); // NOI18N
         jLabel1.setText("CAR RENTAL SYSTEM");
 
+        applyButton.setBackground(new java.awt.Color(102, 255, 102));
         applyButton.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
         applyButton.setText("Register");
         applyButton.addActionListener(new java.awt.event.ActionListener() {
@@ -50,6 +51,7 @@ public class mainFrame extends javax.swing.JFrame {
             }
         });
 
+        loginButton.setBackground(new java.awt.Color(153, 153, 255));
         loginButton.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
         loginButton.setText("Login");
         loginButton.addActionListener(new java.awt.event.ActionListener() {
@@ -75,13 +77,13 @@ public class mainFrame extends javax.swing.JFrame {
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainPanelLayout.createSequentialGroup()
-                .addGap(76, 76, 76)
+                .addGap(46, 46, 46)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(loginButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(applyButton)
-                .addContainerGap(265, Short.MAX_VALUE))
+                .addContainerGap(295, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
