@@ -5,6 +5,8 @@
  */
 package mainPackage;
 
+import mainPackage.admin.SearchByTitle_ADMIN;
+import mainPackage.admin.SearchBookByID_ADMIN;
 import mainPackage.admin.DeleteBookPanel_ADMIN;
 import mainPackage.admin.UpdateBookPanel_ADMIN;
 import mainPackage.admin.AddBookPanel_ADMIN;
@@ -365,7 +367,7 @@ public class AdminFrame extends javax.swing.JFrame {
         serverPanel.removeAll();
         serverPanel.setVisible(false);
         serverPanel.setLayout(new BorderLayout());
-        serverPanel.add(new viewIdPanel(), BorderLayout.CENTER);
+        serverPanel.add(new SearchBookByID_ADMIN(), BorderLayout.CENTER);
         serverPanel.repaint();
         serverPanel.setVisible(true);
 
@@ -376,7 +378,7 @@ public class AdminFrame extends javax.swing.JFrame {
         serverPanel.removeAll();
         serverPanel.setVisible(false);
         serverPanel.setLayout(new BorderLayout());
-        serverPanel.add(new viewTitlePanel(), BorderLayout.CENTER);
+        serverPanel.add(new SearchByTitle_ADMIN(), BorderLayout.CENTER);
         serverPanel.repaint();
         serverPanel.setVisible(true);
 

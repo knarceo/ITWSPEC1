@@ -5,6 +5,7 @@
  */
 package mainPackage;
 
+import mainPackage.admin.SearchBookByID_ADMIN;
 import mainPackage.admin.AddBookPanel_ADMIN;
 import java.sql.Connection;
 import java.sql.Date;
@@ -85,7 +86,7 @@ public class viewStatePanel extends javax.swing.JPanel {
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(viewIdPanel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SearchBookByID_ADMIN.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return count = 0;
@@ -201,7 +202,7 @@ public class viewStatePanel extends javax.swing.JPanel {
             statement.executeUpdate();
 
         } catch (SQLException ex) {
-            Logger.getLogger(viewIdPanel.class
+            Logger.getLogger(SearchBookByID_ADMIN.class
                     .getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -217,7 +218,7 @@ public class viewStatePanel extends javax.swing.JPanel {
             statement.executeUpdate();
 
         } catch (SQLException ex) {
-            Logger.getLogger(viewIdPanel.class
+            Logger.getLogger(SearchBookByID_ADMIN.class
                     .getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -233,7 +234,7 @@ public class viewStatePanel extends javax.swing.JPanel {
             statement.executeUpdate();
 
         } catch (SQLException ex) {
-            Logger.getLogger(viewIdPanel.class
+            Logger.getLogger(SearchBookByID_ADMIN.class
                     .getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -247,7 +248,7 @@ public class viewStatePanel extends javax.swing.JPanel {
             statement.executeUpdate();
 
         } catch (SQLException ex) {
-            Logger.getLogger(viewIdPanel.class
+            Logger.getLogger(SearchBookByID_ADMIN.class
                     .getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -262,7 +263,7 @@ public class viewStatePanel extends javax.swing.JPanel {
             statement.executeUpdate();
 
         } catch (SQLException ex) {
-            Logger.getLogger(viewIdPanel.class
+            Logger.getLogger(SearchBookByID_ADMIN.class
                     .getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -276,7 +277,7 @@ public class viewStatePanel extends javax.swing.JPanel {
             statement.executeUpdate();
 
         } catch (SQLException ex) {
-            Logger.getLogger(viewIdPanel.class
+            Logger.getLogger(SearchBookByID_ADMIN.class
                     .getName()).log(Level.SEVERE, null, ex);
         }
     }

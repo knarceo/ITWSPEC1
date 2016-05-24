@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mainPackage;
+package mainPackage.admin;
 
+import mainPackage.admin.SearchBookByID_ADMIN;
 import mainPackage.admin.AddBookPanel_ADMIN;
 import java.sql.Connection;
 import java.sql.Date;
@@ -19,12 +20,13 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import mainPackage.displayPanel;
 
 /**
  *
  * @author Windows8.1
  */
-public class viewIdPanel extends javax.swing.JPanel {
+public class SearchByTitle_ADMIN extends javax.swing.JPanel {
 
     private static final String DATABSE_URL = "jdbc:derby://localhost:1527/libraryDb";
     private static final String username = "oracle";
@@ -34,12 +36,9 @@ public class viewIdPanel extends javax.swing.JPanel {
 
     Date sqldate = new Date((currenttime.getTime()).getTime());
 
+    private final String GET_RECORDS = "SELECT * FROM TBLBOOKS WHERE TITLE = ?";
+
     private final String CHECK_BORROWED = "SELECT STUDENT_NUMBER = ? FROM ACCOUNTS WHERE BOOK_ID != 0";
-
-    private final String CHECK_MULTI_BORROW = "SELECT * FROM TBLBOOKS WHERE ID = ?";
-
-    //ID Checker
-    private final String GET_RECORDS = "SELECT * FROM TBLBOOKS WHERE ID = ?";
 
     //Student Number Checker
     private final String GET_SNUMBER = "SELECT * FROM ACCOUNTS WHERE STUDENT_NUMBER = ?";
@@ -61,12 +60,12 @@ public class viewIdPanel extends javax.swing.JPanel {
     private ResultSet resultset;
     private ResultSetMetaData rsMetadata;
 
-    public viewIdPanel() {
+    public SearchByTitle_ADMIN() {
         initComponents();
         try {
             connection = DriverManager.getConnection(DATABSE_URL, username, password);
         } catch (SQLException ex) {
-            Logger.getLogger(viewIdPanel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SearchByTitle_ADMIN.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -88,33 +87,7 @@ public class viewIdPanel extends javax.swing.JPanel {
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(viewIdPanel.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        return count = 0;
-
-    }
-
-    public int checktblBooks(int id) {
-
-        int count = 0;
-
-        try {
-            statement = connection.prepareStatement(GET_RECORDS);
-            statement.setInt(1, id);
-            resultset = statement.executeQuery();
-
-            while (resultset.next()) {
-                count = count + 1;
-            }
-
-            if (count == 1) {
-
-                return count;
-            }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(AddBookPanel_ADMIN.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SearchBookByID_ADMIN.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return count = 0;
@@ -134,7 +107,7 @@ public class viewIdPanel extends javax.swing.JPanel {
                 count = count + 1;
             }
 
-            if (count == 1) {
+            if (count >= 1) {
 
                 return count;
             }
@@ -147,17 +120,47 @@ public class viewIdPanel extends javax.swing.JPanel {
 
     }
 
-    public void viewRecords(int id) {
+    public int checktblBooks(String title) {
+
+        int count = 0;
+
+        try {
+            
+            String QUERY = "SELECT * FROM TBLBOOKS WHERE TITLE LIKE '%"+ title +"%'";
+            statement = connection.prepareStatement(QUERY);
+//            statement.setString(1, title);
+            resultset = statement.executeQuery();
+
+            while (resultset.next()) {
+                count = count + 1;
+            }
+
+            if (count >= 1) {
+
+                return count;
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(AddBookPanel_ADMIN.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return count = 0;
+
+    }
+
+    public void viewRecords(String title) {
         try {
 
-            if (checktblBooks(id) == 1) {
+            if (checktblBooks(title) >= 1) {
 
-                statement = connection.prepareStatement(GET_RECORDS);
-                statement.setInt(1, id);
+                String QUERY = "SELECT * FROM TBLBOOKS WHERE TITLE LIKE '%"+ title +"%'";
+                statement = connection.prepareStatement(QUERY);
+//                statement.setString(1, title);
                 resultset = statement.executeQuery();
                 rsMetadata = resultset.getMetaData();
 
                 DefaultTableModel dtmPrefix = new DefaultTableModel() {
+
                     @Override
                     public boolean isCellEditable(int row, int column) {
                         return false;
@@ -167,7 +170,7 @@ public class viewIdPanel extends javax.swing.JPanel {
                 dtmPrefix.addColumn("TITLE");
                 dtmPrefix.addColumn("AUTHOR");
                 dtmPrefix.addColumn("GENRE");
-                dtmPrefix.addColumn("STATE");
+                dtmPrefix.addColumn("STATUS");
                 dtmPrefix.addColumn("STUDENT NUMBER");
                 dtmPrefix.addColumn("DATE BORROWED");
 
@@ -183,13 +186,11 @@ public class viewIdPanel extends javax.swing.JPanel {
                         resultset.getString(7)});
                     displayTable.setModel(dtmPrefix);
                 }
-                idField.setText("");
+                titleField.setText("");
             } else {
-
-                JOptionPane.showMessageDialog(null, "Book ID not Found!");
-                idField.setText("");
-
+                JOptionPane.showMessageDialog(null, "No books found with this title", "", JOptionPane.ERROR_MESSAGE);
             }
+
         } catch (SQLException ex) {
             Logger.getLogger(displayPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -205,7 +206,7 @@ public class viewIdPanel extends javax.swing.JPanel {
             statement.executeUpdate();
 
         } catch (SQLException ex) {
-            Logger.getLogger(viewIdPanel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SearchBookByID_ADMIN.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -220,7 +221,7 @@ public class viewIdPanel extends javax.swing.JPanel {
             statement.executeUpdate();
 
         } catch (SQLException ex) {
-            Logger.getLogger(viewIdPanel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SearchBookByID_ADMIN.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -235,7 +236,7 @@ public class viewIdPanel extends javax.swing.JPanel {
             statement.executeUpdate();
 
         } catch (SQLException ex) {
-            Logger.getLogger(viewIdPanel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SearchBookByID_ADMIN.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -247,7 +248,7 @@ public class viewIdPanel extends javax.swing.JPanel {
             statement.setObject(1, id);
             statement.executeUpdate();
         } catch (SQLException ex) {
-            Logger.getLogger(viewIdPanel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SearchBookByID_ADMIN.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -260,7 +261,7 @@ public class viewIdPanel extends javax.swing.JPanel {
             statement.setObject(1, sqldate);
             statement.executeUpdate();
         } catch (SQLException ex) {
-            Logger.getLogger(viewIdPanel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SearchBookByID_ADMIN.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -272,7 +273,7 @@ public class viewIdPanel extends javax.swing.JPanel {
             statement.setObject(1, sNumber);
             statement.executeUpdate();
         } catch (SQLException ex) {
-            Logger.getLogger(viewIdPanel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SearchBookByID_ADMIN.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -286,22 +287,16 @@ public class viewIdPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        idField = new javax.swing.JTextField();
+        titleField = new javax.swing.JTextField();
         submitButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         displayTable = new javax.swing.JTable();
-        borrowButton = new javax.swing.JButton();
-        inButton = new javax.swing.JButton();
 
-        jLabel1.setFont(new java.awt.Font("Georgia", 0, 24)); // NOI18N
-        jLabel1.setText("Search a Book");
-
-        jLabel2.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
-        jLabel2.setText("ID:");
+        jLabel1.setFont(new java.awt.Font("Arial Narrow", 1, 24)); // NOI18N
+        jLabel1.setText("Administrator : Search by Title");
 
         submitButton.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        submitButton.setText("Submit");
+        submitButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/assets/viewAll.png"))); // NOI18N
         submitButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 submitButtonActionPerformed(evt);
@@ -326,149 +321,53 @@ public class viewIdPanel extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(displayTable);
 
-        borrowButton.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        borrowButton.setText("OUT");
-        borrowButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                borrowButtonActionPerformed(evt);
-            }
-        });
-
-        inButton.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        inButton.setText("IN");
-        inButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                inButtonActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(81, 81, 81)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(titleField)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(idField, javax.swing.GroupLayout.PREFERRED_SIZE, 386, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
                         .addComponent(submitButton))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(33, 33, 33)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(inButton, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(borrowButton))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 636, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(41, Short.MAX_VALUE))
+                        .addComponent(jLabel1)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 690, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(44, 44, 44)
+                .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(submitButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addComponent(idField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE)))
-                .addGap(37, 37, 37)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(borrowButton)
-                    .addComponent(inButton))
-                .addContainerGap(182, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(submitButton, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                    .addComponent(titleField))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 378, Short.MAX_VALUE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
 
-        try {
-            String id = idField.getText();
-            int id1 = Integer.parseInt(id);
-            viewRecords(id1);
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Please Input a Proper ID Number.");
+        String title = titleField.getText();
+
+        if (title.equals("")) {
+
+            JOptionPane.showMessageDialog(null, "Please Fill out all the needed areas.", "", JOptionPane.ERROR_MESSAGE);
+
+        } else {
+            viewRecords(title);
         }
     }//GEN-LAST:event_submitButtonActionPerformed
 
-    private void borrowButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_borrowButtonActionPerformed
-
-        int row = displayTable.getSelectedRow();
-
-        Object state = displayTable.getValueAt(row, 4);
-
-        if (state.equals("OUT")) {
-
-            JOptionPane.showMessageDialog(null, "The Book is still out!");
-        } else {
-
-            String sNumber = JOptionPane.showInputDialog("Enter Student Number");
-
-            if (checkAccounts(sNumber) == 1) {
-
-                if (checkBorrowed(sNumber) == 0) {
-
-                    try {
-
-                        displayTable.setValueAt("OUT", row, 4);
-
-                        displayTable.setValueAt(sNumber, row, 5);
-
-                        displayTable.setValueAt(sqldate, row, 6);
-
-                        Object id = displayTable.getValueAt(row, 0);
-
-                        UPDATE_TBLBOOKS_OUT(id, sNumber);
-                        INSERT_TO_BORROW(sNumber, id);
-                        UPDATE_ACCOUNTS_OUT(id, sNumber);
-
-                    } catch (ArrayIndexOutOfBoundsException e) {
-                        JOptionPane.showMessageDialog(null, "Input an ID first.");
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(null, "Student Number has already a Borrowed Book!");
-                }
-
-            } else {
-                JOptionPane.showMessageDialog(null, "Student Number is not registered.");
-            }
-
-        }
-    }//GEN-LAST:event_borrowButtonActionPerformed
-
-    private void inButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inButtonActionPerformed
-
-        try {
-            int row = displayTable.getSelectedRow();
-            Object id = displayTable.getValueAt(row, 0);
-
-            Object sNumber = displayTable.getValueAt(row, 5);
-            UPDATE_ACCOUNTS_IN(sNumber);
-
-            displayTable.setValueAt("IN", row, 4);
-
-            displayTable.setValueAt("", row, 5);
-
-            displayTable.setValueAt("", row, 6);
-
-            UPDATE_TBLBOOKS_IN(id);
-            UPDATE_BORROW(id);
-
-        } catch (ArrayIndexOutOfBoundsException e) {
-            JOptionPane.showMessageDialog(null, "Input an ID first.");
-        }
-    }//GEN-LAST:event_inButtonActionPerformed
-
     private void doubleClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_doubleClick
-        
+
         int rowTable = displayTable.getSelectedRow();
 
         Object id = displayTable.getValueAt(rowTable, 0);
@@ -494,18 +393,14 @@ public class viewIdPanel extends javax.swing.JPanel {
 
         }
 
-
     }//GEN-LAST:event_doubleClick
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton borrowButton;
     private javax.swing.JTable displayTable;
-    private javax.swing.JTextField idField;
-    private javax.swing.JButton inButton;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton submitButton;
+    private javax.swing.JTextField titleField;
     // End of variables declaration//GEN-END:variables
 }
