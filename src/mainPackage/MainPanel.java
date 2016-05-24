@@ -109,7 +109,7 @@ public class MainPanel extends javax.swing.JPanel {
         MainFrame.mainPanel.removeAll();
         MainFrame.mainPanel.setVisible(false);
         MainFrame.mainPanel.setLayout(new BorderLayout());
-        MainFrame.mainPanel.add(new loginPanel(), BorderLayout.CENTER);
+        MainFrame.mainPanel.add(new LoginPanel(), BorderLayout.CENTER);
         MainFrame.mainPanel.repaint();
         MainFrame.mainPanel.setVisible(true);
 

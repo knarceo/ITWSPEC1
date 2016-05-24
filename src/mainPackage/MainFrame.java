@@ -19,6 +19,12 @@ public class MainFrame extends javax.swing.JFrame {
     public MainFrame() {
         initComponents();
         
+        mainPanel.removeAll();
+        mainPanel.setVisible(false);
+        mainPanel.setLayout(new BorderLayout());
+        mainPanel.add(new MainPanel(), BorderLayout.CENTER);
+        mainPanel.repaint();
+        mainPanel.setVisible(true);
     }
 
     /**
@@ -135,7 +141,7 @@ public class MainFrame extends javax.swing.JFrame {
         mainPanel.removeAll();
         mainPanel.setVisible(false);
         mainPanel.setLayout(new BorderLayout());
-        mainPanel.add(new loginPanel(), BorderLayout.CENTER);
+        mainPanel.add(new LoginPanel(), BorderLayout.CENTER);
         mainPanel.repaint();
         mainPanel.setVisible(true);
 
