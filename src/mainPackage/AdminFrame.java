@@ -5,6 +5,8 @@
  */
 package mainPackage;
 
+import mainPackage.admin.UpdateUserPanel_ADMIN;
+import mainPackage.admin.AddUserPanel_ADMIN;
 import mainPackage.admin.SearchByStatus_ADMIN;
 import mainPackage.admin.SearchByGenre_ADMIN;
 import mainPackage.admin.SearchByAuthor_ADMIN;
@@ -14,6 +16,15 @@ import mainPackage.admin.DeleteBookPanel_ADMIN;
 import mainPackage.admin.UpdateBookPanel_ADMIN;
 import mainPackage.admin.AddBookPanel_ADMIN;
 import java.awt.BorderLayout;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
@@ -26,8 +37,17 @@ public class AdminFrame extends javax.swing.JFrame {
      * Creates new form serverFrame
      */
     
-    public static int EDIT_ID;
+    public static String EDIT_ID;
     public static int DELETE_ID;
+    public static String USER_EDIT_ID;
+    
+    private Connection connection;
+    private PreparedStatement statement;
+    private ResultSet resultset;
+    private ResultSetMetaData rsMetadata;
+    private final String DATABSE_URL = "jdbc:derby://localhost:1527/libraryDb";
+    private final String username = "oracle";
+    private final String password = "pass";
     
     public AdminFrame() {
         initComponents();
@@ -37,8 +57,38 @@ public class AdminFrame extends javax.swing.JFrame {
         serverPanel.add(new displayPanel(), BorderLayout.CENTER);
         serverPanel.repaint();
         serverPanel.setVisible(true);
+        
+        
+        try {
+            connection = DriverManager.getConnection(DATABSE_URL, username, password);
+        } catch (SQLException ex) {
+            Logger.getLogger(AdminFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
+    public int checkRecord(String sNumber, String column, String dbase) {
+
+        int count = 0;
+
+        try {
+            String CHECKQUERY = "SELECT * FROM "+dbase+" WHERE "+ column +" = "+sNumber;
+            statement = connection.prepareStatement(CHECKQUERY);
+//            statement.setString(1, sNumber);
+//            statement.setString(2, username);
+            resultset = statement.executeQuery();
+
+            if(resultset.next()){
+                return 1;
+            }
+
+        } catch (SQLException ex) {
+//            Logger.getLogger(AddBookPanel_ADMIN.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return count;
+
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -203,7 +253,7 @@ public class AdminFrame extends javax.swing.JFrame {
 
         updateAccountItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.CTRL_MASK));
         updateAccountItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/assets/editicon.png"))); // NOI18N
-        updateAccountItem.setText("Edit Edit");
+        updateAccountItem.setText("Edit User");
         updateAccountItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 updateAccountItemActionPerformed(evt);
@@ -284,23 +334,31 @@ public class AdminFrame extends javax.swing.JFrame {
 
     private void editBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBookActionPerformed
         // TODO add your handling code here:
-        EDIT_ID = Integer.valueOf(JOptionPane.showInputDialog("Enter Book ID"));
-        serverPanel.removeAll();
-        serverPanel.setVisible(false);
-        serverPanel.setLayout(new BorderLayout());
-        serverPanel.add(new UpdateBookPanel_ADMIN(), BorderLayout.CENTER);
-        serverPanel.repaint();
-        serverPanel.setVisible(true);
+        EDIT_ID = JOptionPane.showInputDialog("Enter Book ID");
+        if(checkRecord(EDIT_ID, "ID", "TBLBOOKS") != 0){
+            serverPanel.removeAll();
+            serverPanel.setVisible(false);
+            serverPanel.setLayout(new BorderLayout());
+            serverPanel.add(new UpdateBookPanel_ADMIN(), BorderLayout.CENTER);
+            serverPanel.repaint();
+            serverPanel.setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(new JFrame(), "Please input a valid Book ID", "", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_editBookActionPerformed
 
     private void deleteBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBookActionPerformed
-        DELETE_ID = Integer.valueOf(JOptionPane.showInputDialog("Enter Book ID"));
-        serverPanel.removeAll();
-        serverPanel.setVisible(false);
-        serverPanel.setLayout(new BorderLayout());
-        serverPanel.add(new DeleteBookPanel_ADMIN(), BorderLayout.CENTER);
-        serverPanel.repaint();
-        serverPanel.setVisible(true);
+        try {
+            DELETE_ID = Integer.valueOf(JOptionPane.showInputDialog("Enter Book ID"));
+            serverPanel.removeAll();
+            serverPanel.setVisible(false);
+            serverPanel.setLayout(new BorderLayout());
+            serverPanel.add(new DeleteBookPanel_ADMIN(), BorderLayout.CENTER);
+            serverPanel.repaint();
+            serverPanel.setVisible(true);  
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(new JFrame(), "Please input a valid ID", "", JOptionPane.ERROR_MESSAGE);
+        }
 
     }//GEN-LAST:event_deleteBookActionPerformed
 
@@ -331,7 +389,7 @@ public class AdminFrame extends javax.swing.JFrame {
         serverPanel.removeAll();
         serverPanel.setVisible(false);
         serverPanel.setLayout(new BorderLayout());
-        serverPanel.add(new addAccountPanel(), BorderLayout.CENTER);
+        serverPanel.add(new AddUserPanel_ADMIN(), BorderLayout.CENTER);
         serverPanel.repaint();
         serverPanel.setVisible(true);
 
@@ -349,14 +407,18 @@ public class AdminFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_displayAccountItemActionPerformed
 
     private void updateAccountItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateAccountItemActionPerformed
-
-        serverPanel.removeAll();
-        serverPanel.setVisible(false);
-        serverPanel.setLayout(new BorderLayout());
-        serverPanel.add(new updateAccountPanel(), BorderLayout.CENTER);
-        serverPanel.repaint();
-        serverPanel.setVisible(true);
-
+        
+        USER_EDIT_ID = JOptionPane.showInputDialog("Input Student Number");
+        if(checkRecord(USER_EDIT_ID, "STUDENT_NUMBER", "ACCOUNTS") > 0){
+            serverPanel.removeAll();
+            serverPanel.setVisible(false);
+            serverPanel.setLayout(new BorderLayout());
+            serverPanel.add(new UpdateUserPanel_ADMIN(), BorderLayout.CENTER);
+            serverPanel.repaint();
+            serverPanel.setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(new JFrame(), "Student Number does not exist", "", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_updateAccountItemActionPerformed
 
     private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuItemActionPerformed

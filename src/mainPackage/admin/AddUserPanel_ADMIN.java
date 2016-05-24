@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mainPackage;
+package mainPackage.admin;
 
 import mainPackage.admin.AddBookPanel_ADMIN;
 import java.sql.Connection;
@@ -15,12 +15,13 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import mainPackage.registrationPanel;
 
 /**
  *
  * @author Windows8.1
  */
-public class addAccountPanel extends javax.swing.JPanel {
+public class AddUserPanel_ADMIN extends javax.swing.JPanel {
 
     private final String DATABSE_URL = "jdbc:derby://localhost:1527/libraryDb";
     private final String username = "oracle";
@@ -33,12 +34,12 @@ public class addAccountPanel extends javax.swing.JPanel {
     private ResultSet resultset;
     private ResultSetMetaData rsMetadata;
 
-    public addAccountPanel() {
+    public AddUserPanel_ADMIN() {
         initComponents();
         try {
             connection = DriverManager.getConnection(DATABSE_URL, username, password);
         } catch (SQLException ex) {
-            Logger.getLogger(addAccountPanel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AddUserPanel_ADMIN.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -162,7 +163,7 @@ public class addAccountPanel extends javax.swing.JPanel {
         jLabel9.setText("Password:");
 
         submitButton.setBackground(new java.awt.Color(102, 255, 102));
-        submitButton.setFont(new java.awt.Font("Georgia", 0, 14)); // NOI18N
+        submitButton.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         submitButton.setText("REGISTER");
         submitButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
