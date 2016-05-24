@@ -26,8 +26,6 @@ public class searchByTitlePanel extends javax.swing.JPanel {
     private static final String DATABSE_URL = "jdbc:derby://localhost:1527/libraryDb";
     private static final String username = "oracle";
     private static final String password = "pass";
-    private final String GET_RECORDS = "SELECT * FROM TBLBOOKS WHERE TITLE = ?";
-//    private final String GET_RECORDS = "SELECT * FROM TBLBOOKS WHERE TITLE LIKE &?";
 
     private Connection connection;
     private PreparedStatement statement;
@@ -78,7 +76,6 @@ public class searchByTitlePanel extends javax.swing.JPanel {
 
                 String searchQuery = "SELECT * FROM TBLBOOKS WHERE TITLE LIKE '%"+title+"%'";
                 statement = connection.prepareStatement(searchQuery);
-//                statement.setString(1, title);
                 resultset = statement.executeQuery();
                 rsMetadata = resultset.getMetaData();
 
@@ -108,7 +105,7 @@ public class searchByTitlePanel extends javax.swing.JPanel {
                 }
                 titleField.setText("");
             } else {
-                JOptionPane.showMessageDialog(null, "Book Title not Found!", "", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "No related books found", "", JOptionPane.ERROR_MESSAGE);
             }
 
         } catch (SQLException ex) {
@@ -196,7 +193,7 @@ public class searchByTitlePanel extends javax.swing.JPanel {
         String title = titleField.getText();
 
         if (title.equals("")) {
-            JOptionPane.showMessageDialog(null, "Please Fill out all the needed areas.", "", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Please input a book title", "", JOptionPane.ERROR_MESSAGE);
         } else {
             viewRecords(title);
         }

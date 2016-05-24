@@ -110,7 +110,7 @@ public class clientFrame extends javax.swing.JFrame {
 
         byStateMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.ALT_MASK));
         byStateMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/view.png"))); // NOI18N
-        byStateMenuItem.setText("Search by State");
+        byStateMenuItem.setText("Search by Status");
         byStateMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 byStateMenuItemActionPerformed(evt);

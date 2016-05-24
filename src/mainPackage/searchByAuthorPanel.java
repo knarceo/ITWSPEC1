@@ -47,8 +47,10 @@ public class searchByAuthorPanel extends javax.swing.JPanel {
         int count = 0;
 
         try {
-            statement = connection.prepareStatement(GET_RECORDS);
-            statement.setString(1, author);
+            
+            String searchQuery = "SELECT * FROM TBLBOOKS WHERE TITLE LIKE '%"+author+"%'";
+            statement = connection.prepareStatement(searchQuery);
+//            statement.setString(1, author);
             resultset = statement.executeQuery();
 
             while (resultset.next()) {
@@ -73,8 +75,9 @@ public class searchByAuthorPanel extends javax.swing.JPanel {
 
             if (checkRecords(author) >= 1) {
 
-                statement = connection.prepareStatement(GET_RECORDS);
-                statement.setString(1, author);
+                String searchQuery = "SELECT * FROM TBLBOOKS WHERE TITLE LIKE '%"+author+"%'";
+                statement = connection.prepareStatement(searchQuery);
+//                statement.setString(1, author);
                 resultset = statement.executeQuery();
                 rsMetadata = resultset.getMetaData();
 
@@ -105,7 +108,7 @@ public class searchByAuthorPanel extends javax.swing.JPanel {
                 authorField.setText("");
             } else {
 
-                JOptionPane.showMessageDialog(null, "Book Author not Found!");
+                JOptionPane.showMessageDialog(null, "No related books found", "", JOptionPane.ERROR_MESSAGE);
                 authorField.setText("");
 
             }
@@ -200,7 +203,7 @@ public class searchByAuthorPanel extends javax.swing.JPanel {
         String author = authorField.getText();
         if (author.equals("")) {
 
-            JOptionPane.showMessageDialog(null, "Please Fill out all the needed areas.");
+            JOptionPane.showMessageDialog(null, "Please input an author name", "", JOptionPane.ERROR_MESSAGE);
 
         } else {
             viewRecords(author);

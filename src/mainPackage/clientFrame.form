@@ -73,7 +73,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/mainPackage/view.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Search by State"/>
+                <Property name="text" type="java.lang.String" value="Search by Status"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="byStateMenuItemActionPerformed"/>

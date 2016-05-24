@@ -40,6 +40,7 @@ public class searchByStatusPanel extends javax.swing.JPanel {
         } catch (SQLException ex) {
             Logger.getLogger(searchByStatusPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
+        viewAllRecords();
     }
 
     public int checkRecords(String genre) {
@@ -265,4 +266,40 @@ public class searchByStatusPanel extends javax.swing.JPanel {
     private javax.swing.JRadioButton outRadioButton;
     private javax.swing.JButton submitButton;
     // End of variables declaration//GEN-END:variables
+
+    private void viewAllRecords() {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+
+            String searchQuery = "SELECT * FROM TBLBOOKS";
+            statement = connection.prepareStatement(searchQuery);
+            resultset = statement.executeQuery();
+            rsMetadata = resultset.getMetaData();
+            
+            DefaultTableModel dtmPrefix = new DefaultTableModel() {
+                    @Override
+                    public boolean isCellEditable(int row, int column) {
+                        return false;
+                    }
+                };
+            dtmPrefix.addColumn("ID");
+            dtmPrefix.addColumn("TITLE");
+            dtmPrefix.addColumn("AUTHOR");
+            dtmPrefix.addColumn("GENRE");
+            dtmPrefix.addColumn("STATE");
+
+            while (resultset.next()) {
+
+                dtmPrefix.addRow(new Object[]{
+                    resultset.getInt(1),
+                    resultset.getString(2),
+                    resultset.getString(3),
+                    resultset.getString(4),
+                    resultset.getString(5),});
+                displayTable.setModel(dtmPrefix);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(displayPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }
