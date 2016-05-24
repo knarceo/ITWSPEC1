@@ -52,7 +52,7 @@ public class MainPanel extends javax.swing.JPanel {
         });
 
         jLabel1.setFont(new java.awt.Font("Arial Narrow", 1, 36)); // NOI18N
-        jLabel1.setText("LIBRARY SYSTEM");
+        jLabel1.setText("BOOK RENTAL SYSTEM");
 
         jLabel2.setText("This project is developed in correspondence to our final project in ITWSPEC1 taken in ");
 
@@ -82,7 +82,7 @@ public class MainPanel extends javax.swing.JPanel {
                         .addGap(145, 145, 145))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addGap(223, 223, 223))))
+                        .addGap(171, 171, 171))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

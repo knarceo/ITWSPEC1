@@ -29,45 +29,43 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
-              <EmptySpace pref="22" max="32767" attributes="0"/>
+              <EmptySpace pref="27" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
                   <Group type="102" attributes="0">
                       <Component id="backButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="submitButton" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Group type="102" alignment="1" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jLabel10" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Group type="103" alignment="0" groupAlignment="1" attributes="0">
-                              <Component id="jLabel6" alignment="1" min="-2" pref="99" max="-2" attributes="0"/>
-                              <Component id="jLabel3" alignment="1" min="-2" pref="99" max="-2" attributes="0"/>
+                  <Group type="103" alignment="1" groupAlignment="0" attributes="0">
+                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jLabel10" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" alignment="0" groupAlignment="1" attributes="0">
+                                  <Component id="jLabel6" alignment="1" min="-2" pref="99" max="-2" attributes="0"/>
+                                  <Component id="jLabel3" alignment="1" min="-2" pref="99" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                                  <Component id="mNameField" alignment="0" pref="271" max="32767" attributes="0"/>
+                                  <Component id="fNameField" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="lNameField" alignment="0" max="32767" attributes="0"/>
+                              </Group>
+                              <Component id="jLabel5" alignment="0" min="-2" pref="99" max="-2" attributes="0"/>
                           </Group>
-                          <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                              <Component id="mNameField" alignment="0" pref="271" max="32767" attributes="0"/>
-                              <Component id="fNameField" alignment="0" max="32767" attributes="0"/>
-                              <Component id="lNameField" alignment="0" max="32767" attributes="0"/>
+                          <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="jLabel9" min="-2" pref="85" max="-2" attributes="0"/>
+                              <Component id="jLabel8" min="-2" pref="99" max="-2" attributes="0"/>
+                              <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
+                              <Component id="userNameField" alignment="0" pref="308" max="32767" attributes="0"/>
+                              <Component id="passwordField" alignment="0" max="32767" attributes="0"/>
+                              <Component id="jLabel2" min="-2" pref="99" max="-2" attributes="0"/>
+                              <Component id="studIdField" alignment="0" max="32767" attributes="0"/>
                           </Group>
-                          <Component id="jLabel5" alignment="0" min="-2" pref="99" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="jLabel9" min="-2" pref="85" max="-2" attributes="0"/>
-                          <Component id="jLabel8" min="-2" pref="99" max="-2" attributes="0"/>
-                          <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
-                          <Component id="userNameField" alignment="0" pref="308" max="32767" attributes="0"/>
-                          <Component id="passwordField" alignment="0" max="32767" attributes="0"/>
-                          <Component id="jLabel2" min="-2" pref="99" max="-2" attributes="0"/>
-                          <Component id="studIdField" alignment="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace pref="23" max="32767" attributes="0"/>
-          </Group>
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
-              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="68" max="32767" attributes="0"/>
+              <EmptySpace pref="28" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -127,7 +125,7 @@
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Arial Narrow" size="36" style="1"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Library System : Account Registration"/>
+        <Property name="text" type="java.lang.String" value="Book Rental System : Account Registration"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">

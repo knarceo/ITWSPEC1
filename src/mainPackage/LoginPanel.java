@@ -31,7 +31,7 @@ public class LoginPanel extends javax.swing.JPanel {
     private PreparedStatement statement;
     private ResultSet resultset;
     private ResultSetMetaData rsMetadata;
-
+    
     public LoginPanel() {
         initComponents();
         try {
@@ -107,34 +107,35 @@ public class LoginPanel extends javax.swing.JPanel {
         });
 
         jLabel3.setFont(new java.awt.Font("Arial Narrow", 1, 36)); // NOI18N
-        jLabel3.setText("Library System : Login");
+        jLabel3.setText("Book Rental System : Login");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(132, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(137, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jLabel2))
-                                .addGap(0, 289, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(backButton)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(loginButton))
-                    .addComponent(usernameField)
-                    .addComponent(passwordField))
-                .addGap(133, 133, 133))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(197, 197, 197)
-                .addComponent(jLabel3)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel1)
+                                            .addComponent(jLabel2))
+                                        .addGap(0, 289, Short.MAX_VALUE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addGap(0, 0, Short.MAX_VALUE)
+                                        .addComponent(backButton)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(loginButton))
+                            .addComponent(usernameField)
+                            .addComponent(passwordField))
+                        .addGap(133, 133, 133))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(156, 156, 156))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -153,7 +154,7 @@ public class LoginPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(backButton)
                     .addComponent(loginButton))
-                .addContainerGap(177, Short.MAX_VALUE))
+                .addContainerGap(170, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -161,9 +162,10 @@ public class LoginPanel extends javax.swing.JPanel {
 
         String username = usernameField.getText();
         String password = new String(passwordField.getPassword());
-
+        
         if (username.equals("admin") && password.equals("admin")) {
             this.setVisible(false);
+            this.remove(this);
             AdminFrame serverFrame = new AdminFrame();
             serverFrame.setVisible(true);
         } else if (username.equals("") && password.equals("")) {

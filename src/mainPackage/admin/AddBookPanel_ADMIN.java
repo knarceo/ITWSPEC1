@@ -110,7 +110,7 @@ public class AddBookPanel_ADMIN extends javax.swing.JPanel {
         jLabel4 = new javax.swing.JLabel();
         addButton = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
-        genreBox = new javax.swing.JComboBox<>();
+        genreBox = new javax.swing.JComboBox<String>();
 
         setPreferredSize(new java.awt.Dimension(710, 469));
         addAncestorListener(new javax.swing.event.AncestorListener() {
@@ -151,7 +151,7 @@ public class AddBookPanel_ADMIN extends javax.swing.JPanel {
         jLabel5.setFont(new java.awt.Font("Arial Narrow", 0, 24)); // NOI18N
         jLabel5.setText("Genre");
 
-        genreBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Adventure", "Romance", "Fantasy", "Science fiction", "Satire", "Mystery", "Horror", "Self help", "Health", "Guide", "Travel", "Children's", "Religion & Spirituality", "Science", "History", "Math", "Anthology", "Poetry", "Encyclopedias", "Dictionaries", "Comics", "Art", "Cookbooks", "Diaries", "Journals", "Prayer books", "Series", "Trilogy", "Biographies", "Autobiographies" }));
+        genreBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Adventure", "Romance", "Fantasy", "Science fiction", "Satire", "Mystery", "Horror", "Self help", "Health", "Guide", "Travel", "Children's", "Religion & Spirituality", "Science", "History", "Math", "Anthology", "Poetry", "Encyclopedias", "Dictionaries", "Comics", "Art", "Cookbooks", "Diaries", "Journals", "Prayer books", "Series", "Trilogy", "Biographies", "Autobiographies" }));
         genreBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 genreBoxActionPerformed(evt);

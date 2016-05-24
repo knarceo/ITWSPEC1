@@ -5,6 +5,7 @@
  */
 package mainPackage.client;
 
+import java.awt.BorderLayout;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -16,6 +17,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import mainPackage.ClientFrame;
 import mainPackage.admin.AddBookPanel_ADMIN;
 import mainPackage.displayPanel;
 
@@ -45,13 +47,13 @@ public class searchByStatusPanel extends javax.swing.JPanel {
         viewAllRecords();
     }
 
-    public int checkRecords(String genre) {
+    public int checkRecords(String state) {
 
         int count = 0;
 
         try {
             statement = connection.prepareStatement(GET_RECORDS);
-            statement.setString(1, genre);
+            statement.setString(1, state);
             resultset = statement.executeQuery();
 
             while (resultset.next()) {
@@ -71,13 +73,13 @@ public class searchByStatusPanel extends javax.swing.JPanel {
 
     }
 
-    public void viewRecords(String genre) {
+    public void viewRecords(String state) {
         try {
 
-            if (checkRecords(genre) >= 1) {
+            if (checkRecords(state) >= 1) {
 
                 statement = connection.prepareStatement(GET_RECORDS);
-                statement.setString(1, genre);
+                statement.setString(1, state);
                 resultset = statement.executeQuery();
                 rsMetadata = resultset.getMetaData();
 
@@ -130,6 +132,7 @@ public class searchByStatusPanel extends javax.swing.JPanel {
         displayTable = new javax.swing.JTable();
         outRadioButton = new javax.swing.JRadioButton();
         inRadioButton = new javax.swing.JRadioButton();
+        columnBox = new javax.swing.JComboBox<String>();
 
         jLabel1.setFont(new java.awt.Font("Arial Narrow", 1, 24)); // NOI18N
         jLabel1.setText("Search by Status");
@@ -174,6 +177,18 @@ public class searchByStatusPanel extends javax.swing.JPanel {
         buttonGroup1.add(inRadioButton);
         inRadioButton.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         inRadioButton.setText("IN");
+        inRadioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                inRadioButtonActionPerformed(evt);
+            }
+        });
+
+        columnBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Search By ID", "Search By Author", "Search By Title", "Search By Genre", "Search By Status" }));
+        columnBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                columnBoxActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -182,31 +197,38 @@ public class searchByStatusPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 692, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(columnBox, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(inRadioButton)
+                        .addGap(18, 18, 18)
+                        .addComponent(outRadioButton)
+                        .addGap(18, 18, 18)
+                        .addComponent(submitButton)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 692, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(inRadioButton)
-                                .addGap(18, 18, 18)
-                                .addComponent(outRadioButton)
-                                .addGap(18, 18, 18)
-                                .addComponent(submitButton))
-                            .addComponent(jLabel1))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                                .addComponent(jLabel1)
+                                .addGap(0, 532, Short.MAX_VALUE)))
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(columnBox, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(outRadioButton)
+                        .addComponent(inRadioButton)
+                        .addComponent(submitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(outRadioButton)
-                    .addComponent(inRadioButton)
-                    .addComponent(submitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 383, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 378, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -258,9 +280,39 @@ public class searchByStatusPanel extends javax.swing.JPanel {
 
     }//GEN-LAST:event_doubleClick
 
+    private void inRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inRadioButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_inRadioButtonActionPerformed
+
+    private void columnBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_columnBoxActionPerformed
+        // TODO add your handling code here:
+        if(columnBox.getSelectedItem().toString().equals("Search By Status")){
+            //                searchByIdField.setVisible(false);
+            //                submitButton.setVisible(false);
+            //                inRadioButton.setVisible(true);
+            //                outRadioButton.setVisible(true);
+            //                searchStateBtn.setVisible(true);
+            ClientFrame.clientPanel.removeAll();
+            ClientFrame.clientPanel.setVisible(false);
+            ClientFrame.clientPanel.setLayout(new BorderLayout());
+            ClientFrame.clientPanel.add(new searchByStatusPanel(), BorderLayout.CENTER);
+            ClientFrame.clientPanel.repaint();
+            ClientFrame.clientPanel.setVisible(true);
+        }
+        else{
+            ClientFrame.clientPanel.removeAll();
+            ClientFrame.clientPanel.setVisible(false);
+            ClientFrame.clientPanel.setLayout(new BorderLayout());
+            ClientFrame.clientPanel.add(new searchByIdPanel(), BorderLayout.CENTER);
+            ClientFrame.clientPanel.repaint();
+            ClientFrame.clientPanel.setVisible(true);
+        }
+    }//GEN-LAST:event_columnBoxActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JComboBox<String> columnBox;
     private javax.swing.JTable displayTable;
     private javax.swing.JRadioButton inRadioButton;
     private javax.swing.JLabel jLabel1;
