@@ -68,7 +68,7 @@
           <Font name="Verdana" size="12" style="0"/>
         </Property>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/mainPackage/view.png"/>
+          <Image iconType="3" name="/mainPackage/assets/view.png"/>
         </Property>
       </Properties>
       <Events>

@@ -5,7 +5,6 @@
  */
 package mainPackage;
 
-import mainPackage.client.ClientFrame;
 import java.awt.BorderLayout;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -179,18 +178,16 @@ public class loginPanel extends javax.swing.JPanel {
             usernameField.setText("");
             passwordField.setText("");
         }
-
-
     }//GEN-LAST:event_loginButtonActionPerformed
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
 
-        mainFrame.mainPanel.removeAll();
-        mainFrame.mainPanel.setVisible(false);
-        mainFrame.mainPanel.setLayout(new BorderLayout());
-        mainFrame.mainPanel.add(new mainPanel(), BorderLayout.CENTER);
-        mainFrame.mainPanel.repaint();
-        mainFrame.mainPanel.setVisible(true);
+        MainFrame.mainPanel.removeAll();
+        MainFrame.mainPanel.setVisible(false);
+        MainFrame.mainPanel.setLayout(new BorderLayout());
+        MainFrame.mainPanel.add(new MainPanel(), BorderLayout.CENTER);
+        MainFrame.mainPanel.repaint();
+        MainFrame.mainPanel.setVisible(true);
 
     }//GEN-LAST:event_backButtonActionPerformed
 

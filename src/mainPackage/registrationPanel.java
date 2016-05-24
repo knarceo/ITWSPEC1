@@ -267,12 +267,12 @@ public class registrationPanel extends javax.swing.JPanel {
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
 
-        mainFrame.mainPanel.removeAll();
-        mainFrame.mainPanel.setVisible(false);
-        mainFrame.mainPanel.setLayout(new BorderLayout());
-        mainFrame.mainPanel.add(new mainPanel(), BorderLayout.CENTER);
-        mainFrame.mainPanel.repaint();
-        mainFrame.mainPanel.setVisible(true);
+        MainFrame.mainPanel.removeAll();
+        MainFrame.mainPanel.setVisible(false);
+        MainFrame.mainPanel.setLayout(new BorderLayout());
+        MainFrame.mainPanel.add(new MainPanel(), BorderLayout.CENTER);
+        MainFrame.mainPanel.repaint();
+        MainFrame.mainPanel.setVisible(true);
 
     }//GEN-LAST:event_backButtonActionPerformed
 

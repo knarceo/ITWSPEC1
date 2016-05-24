@@ -5,6 +5,7 @@
  */
 package mainPackage;
 
+import mainPackage.admin.UpdateBookPanel_ADMIN;
 import mainPackage.admin.AddBookPanel_ADMIN;
 import java.awt.BorderLayout;
 import javax.swing.JOptionPane;
@@ -18,6 +19,9 @@ public class AdminFrame extends javax.swing.JFrame {
     /**
      * Creates new form serverFrame
      */
+    
+    public static int EDIT_ID;
+    
     public AdminFrame() {
         initComponents();
         serverPanel.removeAll();
@@ -293,10 +297,11 @@ public class AdminFrame extends javax.swing.JFrame {
 
     private void editBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBookActionPerformed
         // TODO add your handling code here:
+        EDIT_ID = Integer.valueOf(JOptionPane.showInputDialog("Enter Book ID"));
         serverPanel.removeAll();
         serverPanel.setVisible(false);
         serverPanel.setLayout(new BorderLayout());
-        serverPanel.add(new updatePanel(), BorderLayout.CENTER);
+        serverPanel.add(new UpdateBookPanel_ADMIN(), BorderLayout.CENTER);
         serverPanel.repaint();
         serverPanel.setVisible(true);
     }//GEN-LAST:event_editBookActionPerformed

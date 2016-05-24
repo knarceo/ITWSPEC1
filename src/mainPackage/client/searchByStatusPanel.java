@@ -135,7 +135,7 @@ public class searchByStatusPanel extends javax.swing.JPanel {
         jLabel1.setText("Search by Status");
 
         submitButton.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        submitButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/view.png"))); // NOI18N
+        submitButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/assets/view.png"))); // NOI18N
         submitButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 submitButtonActionPerformed(evt);
