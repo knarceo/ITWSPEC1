@@ -5,6 +5,7 @@
  */
 package mainPackage;
 
+import mainPackage.admin.SearchUserAccount_ADMIN;
 import mainPackage.admin.UpdateUserPanel_ADMIN;
 import mainPackage.admin.AddUserPanel_ADMIN;
 import mainPackage.admin.SearchByStatus_ADMIN;
@@ -378,7 +379,7 @@ public class AdminFrame extends javax.swing.JFrame {
         serverPanel.removeAll();
         serverPanel.setVisible(false);
         serverPanel.setLayout(new BorderLayout());
-        serverPanel.add(new viewAccountPanel(), BorderLayout.CENTER);
+        serverPanel.add(new SearchUserAccount_ADMIN(), BorderLayout.CENTER);
         serverPanel.repaint();
         serverPanel.setVisible(true);
 

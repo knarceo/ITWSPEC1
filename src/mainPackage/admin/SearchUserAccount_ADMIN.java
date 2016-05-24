@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mainPackage;
+package mainPackage.admin;
 
 import mainPackage.admin.AddBookPanel_ADMIN;
 import java.sql.Connection;
@@ -14,15 +14,17 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import mainPackage.displayPanel;
 
 /**
  *
  * @author Windows8.1
  */
-public class viewAccountPanel extends javax.swing.JPanel {
+public class SearchUserAccount_ADMIN extends javax.swing.JPanel {
 
     private static final String DATABSE_URL = "jdbc:derby://localhost:1527/libraryDb";
     private static final String username = "oracle";
@@ -34,48 +36,52 @@ public class viewAccountPanel extends javax.swing.JPanel {
     private ResultSet resultset;
     private ResultSetMetaData rsMetadata;
 
-    public viewAccountPanel() {
+    public SearchUserAccount_ADMIN() {
         initComponents();
         try {
             connection = DriverManager.getConnection(DATABSE_URL, username, password);
         } catch (SQLException ex) {
-            Logger.getLogger(viewAccountPanel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SearchUserAccount_ADMIN.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public int checkRecords(int id) {
-
-        int count = 0;
+    public int checkRecords(String column, String tblValue) {
+        
+        String QUERY = "";
+        if(column.equals("STUDENT_NUMBER")){
+            QUERY = "SELECT * FROM ACCOUNTS WHERE "+ column +" = "+tblValue;
+        }else{
+            QUERY = "SELECT * FROM ACCOUNTS WHERE "+ column +" LIKE '%"+tblValue+"%'";
+        }
 
         try {
-            statement = connection.prepareStatement(GET_RECORDS);
-            statement.setInt(1, id);
+            statement = connection.prepareStatement(QUERY);
             resultset = statement.executeQuery();
 
-            while (resultset.next()) {
-                count = count + 1;
-            }
-
-            if (count == 1) {
-
-                return count;
+            if(resultset.next()){
+                return 1;
             }
 
         } catch (SQLException ex) {
             Logger.getLogger(AddBookPanel_ADMIN.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        return count = 0;
+        return 0;
 
     }
 
-    public void viewRecords(int id) {
+    public void viewRecords(String column, String tblValue) {
         try {
-
-            if (checkRecords(id) == 1) {
-
-                statement = connection.prepareStatement(GET_RECORDS);
-                statement.setInt(1, id);
+            
+            if (checkRecords(column, tblValue) == 1) {
+                String QUERY = "";
+                if(column.equals("STUDENT_NUMBER")){
+                    QUERY = "SELECT * FROM ACCOUNTS WHERE "+ column +" = "+tblValue;
+                }else{
+                    QUERY = "SELECT * FROM ACCOUNTS WHERE "+ column +" LIKE '%"+tblValue+"%'";
+                }
+                statement = connection.prepareStatement(QUERY);
+//                statement.setInt(1, id);
                 resultset = statement.executeQuery();
                 rsMetadata = resultset.getMetaData();
 
@@ -108,10 +114,10 @@ public class viewAccountPanel extends javax.swing.JPanel {
                     });
                     displayTable.setModel(dtmPrefix);
                 }
-                studentNumberField.setText("");
+//                studentNumberField.setText("");
             } else {
                 JOptionPane.showMessageDialog(null, "Student Number ID Not Found!");
-                studentNumberField.setText("");
+//                studentNumberField.setText("");
             }
         } catch (SQLException ex) {
             Logger.getLogger(displayPanel.class.getName()).log(Level.SEVERE, null, ex);
@@ -128,20 +134,17 @@ public class viewAccountPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         studentNumberField = new javax.swing.JTextField();
         submitButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         displayTable = new javax.swing.JTable();
+        columnBox = new javax.swing.JComboBox<>();
 
         jLabel1.setFont(new java.awt.Font("Arial Narrow", 1, 24)); // NOI18N
         jLabel1.setText("Search an Account");
 
-        jLabel2.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
-        jLabel2.setText("Student Number:");
-
         submitButton.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        submitButton.setText("Submit");
+        submitButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/assets/viewAll.png"))); // NOI18N
         submitButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 submitButtonActionPerformed(evt);
@@ -166,52 +169,71 @@ public class viewAccountPanel extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(displayTable);
 
+        columnBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Student Number", "First Name", "Last Name", "Middle Name", "Username" }));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(33, 33, 33)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(43, 43, 43)
-                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(studentNumberField, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(submitButton)
-                .addGap(98, 98, 98))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 668, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20))
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(columnBox, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(studentNumberField)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(submitButton))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 692, Short.MAX_VALUE))
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(44, 44, 44)
+                .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(submitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(studentNumberField))
-                        .addGap(2, 2, 2)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(213, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(studentNumberField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(submitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(columnBox, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
-
         try {
-            String id = studentNumberField.getText();
-            int id1 = Integer.parseInt(id);
-            viewRecords(id1);
+            String tblColumn = "Student Number";
+            
+            switch(columnBox.getSelectedItem().toString()){
+                case "Student Number" :
+                    tblColumn = "STUDENT_NUMBER";
+                    break;
+                case "First Name" :
+                    tblColumn = "FIRST_NAME";
+                    break;
+                case "Last Name" :
+                    tblColumn = "LAST_NAME";
+                    break;
+                case "Middle Name" :
+                    tblColumn = "MIDDLE_NAME";
+                    break;
+                case "Username" :
+                    tblColumn = "USERNAME";
+                    break;
+            }
+            
+            viewRecords(tblColumn, studentNumberField.getText());
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "Please Input a Proper ID Number.");
         }
@@ -251,9 +273,9 @@ public class viewAccountPanel extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> columnBox;
     private javax.swing.JTable displayTable;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField studentNumberField;
     private javax.swing.JButton submitButton;
