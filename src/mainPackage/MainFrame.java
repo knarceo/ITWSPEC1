@@ -146,7 +146,7 @@ public class MainFrame extends javax.swing.JFrame {
         mainPanel.removeAll();
         mainPanel.setVisible(false);
         mainPanel.setLayout(new BorderLayout());
-        mainPanel.add(new registrationPanel(), BorderLayout.CENTER);
+        mainPanel.add(new RegistrationPanel(), BorderLayout.CENTER);
         mainPanel.repaint();
         mainPanel.setVisible(true);
 

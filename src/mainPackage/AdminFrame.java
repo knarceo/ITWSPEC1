@@ -5,6 +5,7 @@
  */
 package mainPackage;
 
+import mainPackage.admin.DeleteAccountPanel_ADMIN;
 import mainPackage.admin.SearchUserAccount_ADMIN;
 import mainPackage.admin.UpdateUserPanel_ADMIN;
 import mainPackage.admin.AddUserPanel_ADMIN;
@@ -39,8 +40,9 @@ public class AdminFrame extends javax.swing.JFrame {
      */
     
     public static String EDIT_ID;
-    public static int DELETE_ID;
+    public static String DELETE_ID;
     public static String USER_EDIT_ID;
+    public static String USER_DELETE_ID;
     
     private Connection connection;
     private PreparedStatement statement;
@@ -349,29 +351,33 @@ public class AdminFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_editBookActionPerformed
 
     private void deleteBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBookActionPerformed
-        try {
-            DELETE_ID = Integer.valueOf(JOptionPane.showInputDialog("Enter Book ID"));
+        
+        DELETE_ID = JOptionPane.showInputDialog("Enter Book ID");
+        if(checkRecord(DELETE_ID, "ID", "TBLBOOKS") > 0){
             serverPanel.removeAll();
             serverPanel.setVisible(false);
             serverPanel.setLayout(new BorderLayout());
             serverPanel.add(new DeleteBookPanel_ADMIN(), BorderLayout.CENTER);
             serverPanel.repaint();
             serverPanel.setVisible(true);  
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(new JFrame(), "Please input a valid ID", "", JOptionPane.ERROR_MESSAGE);
+        }else{
+            JOptionPane.showMessageDialog(new JFrame(), "Please input a valid Book ID", "", JOptionPane.ERROR_MESSAGE);
         }
-
     }//GEN-LAST:event_deleteBookActionPerformed
 
     private void deleteAccountItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteAccountItemActionPerformed
 
-        serverPanel.removeAll();
-        serverPanel.setVisible(false);
-        serverPanel.setLayout(new BorderLayout());
-        serverPanel.add(new deleteAccountPanel(), BorderLayout.CENTER);
-        serverPanel.repaint();
-        serverPanel.setVisible(true);
-
+        USER_DELETE_ID = JOptionPane.showInputDialog("Input Student Number");
+        if(checkRecord(USER_DELETE_ID, "STUDENT_NUMBER", "ACCOUNTS") > 0){
+            serverPanel.removeAll();
+            serverPanel.setVisible(false);
+            serverPanel.setLayout(new BorderLayout());
+            serverPanel.add(new DeleteAccountPanel_ADMIN(), BorderLayout.CENTER);
+            serverPanel.repaint();
+            serverPanel.setVisible(true);   
+        }else{   
+            JOptionPane.showMessageDialog(new JFrame(), "Please input valid Student Number", "", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_deleteAccountItemActionPerformed
 
     private void viewAccountItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewAccountItemActionPerformed

@@ -15,7 +15,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import mainPackage.registrationPanel;
+import mainPackage.RegistrationPanel;
 
 /**
  *
@@ -104,7 +104,7 @@ public class AddUserPanel_ADMIN extends javax.swing.JPanel {
                 passwordField.setText("");
             }
         } catch (SQLException ex) {
-            Logger.getLogger(registrationPanel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RegistrationPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }

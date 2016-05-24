@@ -58,14 +58,14 @@ public class MainPanel extends javax.swing.JPanel {
 
         jLabel3.setText("Far Eastern University - Insititute of Technology  S.Y. 2015-2016");
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/bookx.png"))); // NOI18N
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/assets/bookx.png"))); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(121, Short.MAX_VALUE)
+                .addContainerGap(88, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel4)
@@ -96,7 +96,7 @@ public class MainPanel extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addComponent(applyButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(jLabel4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 145, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 130, Short.MAX_VALUE)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
@@ -120,7 +120,7 @@ public class MainPanel extends javax.swing.JPanel {
         MainFrame.mainPanel.removeAll();
         MainFrame.mainPanel.setVisible(false);
         MainFrame.mainPanel.setLayout(new BorderLayout());
-        MainFrame.mainPanel.add(new registrationPanel(), BorderLayout.CENTER);
+        MainFrame.mainPanel.add(new RegistrationPanel(), BorderLayout.CENTER);
         MainFrame.mainPanel.repaint();
         MainFrame.mainPanel.setVisible(true);
 

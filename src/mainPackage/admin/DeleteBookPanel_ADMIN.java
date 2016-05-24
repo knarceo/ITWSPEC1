@@ -247,7 +247,7 @@ public class DeleteBookPanel_ADMIN extends javax.swing.JPanel {
 //            yes 0 no 1 cancel 2
 
             if(JOptionPane.showConfirmDialog(new JFrame(), "Are you sure you want to delete this book?") == 0){   
-                deleteRecord(AdminFrame.DELETE_ID);
+                deleteRecord(Integer.valueOf(AdminFrame.DELETE_ID));
             }
 //        String id = idField.getText();
 //        int id1 = Integer.parseInt(id);

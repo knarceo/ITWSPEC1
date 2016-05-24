@@ -21,7 +21,7 @@ import javax.swing.JOptionPane;
  *
  * @author Windows8.1
  */
-public class registrationPanel extends javax.swing.JPanel {
+public class RegistrationPanel extends javax.swing.JPanel {
 
     private final String DATABSE_URL = "jdbc:derby://localhost:1527/libraryDb";
     private final String username = "oracle";
@@ -34,12 +34,12 @@ public class registrationPanel extends javax.swing.JPanel {
     private ResultSet resultset;
     private ResultSetMetaData rsMetadata;
 
-    public registrationPanel() {
+    public RegistrationPanel() {
         initComponents();
         try {
             connection = DriverManager.getConnection(DATABSE_URL, username, password);
         } catch (SQLException ex) {
-            Logger.getLogger(registrationPanel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RegistrationPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -50,12 +50,12 @@ public class registrationPanel extends javax.swing.JPanel {
             if (checkRecords(sNumber, username) >= 1) {
 
                 JOptionPane.showMessageDialog(null, "Student Number OR Username already Exists!", "", JOptionPane.ERROR_MESSAGE);
-                studIdField.setText("");
-                fNameField.setText("");
-                lNameField.setText("");
-                mNameField.setText("");
-                userNameField.setText("");
-                passwordField.setText("");
+//                studIdField.setText("");
+//                fNameField.setText("");
+//                lNameField.setText("");
+//                mNameField.setText("");
+//                userNameField.setText("");
+//                passwordField.setText("");
 
             } else {
 
@@ -79,7 +79,7 @@ public class registrationPanel extends javax.swing.JPanel {
                 
             }
         } catch (SQLException ex) {
-            Logger.getLogger(registrationPanel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RegistrationPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
