@@ -17,7 +17,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import mainPackage.admin.AddBookPanel_ADMIN;
-import mainPackage.displayPanel;
+import mainPackage.admin.ViewAllBooksPanel_ADMIN;
 
 /**
  *
@@ -111,7 +111,7 @@ public class searchByIdPanel extends javax.swing.JPanel {
 
             }
         } catch (SQLException ex) {
-            Logger.getLogger(displayPanel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ViewAllBooksPanel_ADMIN.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -270,7 +270,7 @@ public class searchByIdPanel extends javax.swing.JPanel {
             }
             idField.setText("");
         } catch (SQLException ex) {
-            Logger.getLogger(displayPanel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ViewAllBooksPanel_ADMIN.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

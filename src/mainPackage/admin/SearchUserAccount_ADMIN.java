@@ -18,7 +18,6 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import mainPackage.displayPanel;
 
 /**
  *
@@ -120,7 +119,7 @@ public class SearchUserAccount_ADMIN extends javax.swing.JPanel {
 //                studentNumberField.setText("");
             }
         } catch (SQLException ex) {
-            Logger.getLogger(displayPanel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ViewAllBooksPanel_ADMIN.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

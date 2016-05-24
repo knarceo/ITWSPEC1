@@ -5,6 +5,8 @@
  */
 package mainPackage;
 
+import mainPackage.admin.ViewAllBooksPanel_ADMIN;
+import mainPackage.admin.ViewAllAccountsPanel_ADMIN;
 import mainPackage.admin.DeleteAccountPanel_ADMIN;
 import mainPackage.admin.SearchUserAccount_ADMIN;
 import mainPackage.admin.UpdateUserPanel_ADMIN;
@@ -57,7 +59,7 @@ public class AdminFrame extends javax.swing.JFrame {
         serverPanel.removeAll();
         serverPanel.setVisible(false);
         serverPanel.setLayout(new BorderLayout());
-        serverPanel.add(new displayPanel(), BorderLayout.CENTER);
+        serverPanel.add(new ViewAllBooksPanel_ADMIN(), BorderLayout.CENTER);
         serverPanel.repaint();
         serverPanel.setVisible(true);
         
@@ -329,7 +331,7 @@ public class AdminFrame extends javax.swing.JFrame {
         serverPanel.removeAll();
         serverPanel.setVisible(false);
         serverPanel.setLayout(new BorderLayout());
-        serverPanel.add(new displayPanel(), BorderLayout.CENTER);
+        serverPanel.add(new ViewAllBooksPanel_ADMIN(), BorderLayout.CENTER);
         serverPanel.repaint();
         serverPanel.setVisible(true);
 
@@ -407,7 +409,7 @@ public class AdminFrame extends javax.swing.JFrame {
         serverPanel.removeAll();
         serverPanel.setVisible(false);
         serverPanel.setLayout(new BorderLayout());
-        serverPanel.add(new displayAccountPanel(), BorderLayout.CENTER);
+        serverPanel.add(new ViewAllAccountsPanel_ADMIN(), BorderLayout.CENTER);
         serverPanel.repaint();
         serverPanel.setVisible(true);
 

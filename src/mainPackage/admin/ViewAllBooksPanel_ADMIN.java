@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mainPackage;
+package mainPackage.admin;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -21,24 +21,24 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Windows8.1
  */
-public class displayAccountPanel extends javax.swing.JPanel {
+public class ViewAllBooksPanel_ADMIN extends javax.swing.JPanel {
 
     private final String DATABSE_URL = "jdbc:derby://localhost:1527/libraryDb";
     private final String username = "oracle";
     private final String password = "pass";
-    private final String GET_RECORDS = "SELECT * FROM ACCOUNTS";
+    private final String GET_RECORDS = "SELECT * FROM TBLBOOKS ORDER BY ID ASC";
 
     private Connection connection;
     private PreparedStatement statement;
     private ResultSet resultset;
     private ResultSetMetaData rsMetadata;
 
-    public displayAccountPanel() {
+    public ViewAllBooksPanel_ADMIN() {
         initComponents();
         try {
             connection = DriverManager.getConnection(DATABSE_URL, username, password);
         } catch (SQLException ex) {
-            Logger.getLogger(displayAccountPanel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ViewAllBooksPanel_ADMIN.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -55,31 +55,29 @@ public class displayAccountPanel extends javax.swing.JPanel {
                     return false;
                 }
             };
-            dtmPrefix.addColumn("STUDENT ID");
-            dtmPrefix.addColumn("FIRST NAME");
-            dtmPrefix.addColumn("LAST NAME");
-            dtmPrefix.addColumn("MIDDLE NAME");
-            dtmPrefix.addColumn("USERNAME");
-            dtmPrefix.addColumn("PASSWORD");
-            dtmPrefix.addColumn("BOOK ID");
+            dtmPrefix.addColumn("ID");
+            dtmPrefix.addColumn("TITLE");
+            dtmPrefix.addColumn("AUTHOR");
+            dtmPrefix.addColumn("GENRE");
+            dtmPrefix.addColumn("STATE");
+            dtmPrefix.addColumn("STUDENT NUMBER");
             dtmPrefix.addColumn("DATE BORROWED");
 
             while (resultset.next()) {
 
                 dtmPrefix.addRow(new Object[]{
-                    resultset.getString(1),
+                    resultset.getInt(1),
                     resultset.getString(2),
                     resultset.getString(3),
                     resultset.getString(4),
                     resultset.getString(5),
                     resultset.getString(6),
-                    resultset.getString(7),
-                    resultset.getString(8)
+                    resultset.getString(7)
                 });
                 displayTable.setModel(dtmPrefix);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(displayPanel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ViewAllBooksPanel_ADMIN.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -130,6 +128,12 @@ public class displayAccountPanel extends javax.swing.JPanel {
             }
         });
         jScrollPane2.setViewportView(displayTable);
+        if (displayTable.getColumnModel().getColumnCount() > 0) {
+            displayTable.getColumnModel().getColumn(0).setResizable(false);
+            displayTable.getColumnModel().getColumn(1).setResizable(false);
+            displayTable.getColumnModel().getColumn(2).setResizable(false);
+            displayTable.getColumnModel().getColumn(3).setResizable(false);
+        }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -150,46 +154,96 @@ public class displayAccountPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void panelActivate(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_panelActivate
-
         viewRecords();
 
     }//GEN-LAST:event_panelActivate
 
     private void doubleClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_doubleClick
-
+       
+            
         int rowTable = displayTable.getSelectedRow();
 
-        Object sNumber = displayTable.getValueAt(rowTable, 0);
-        Object fName = displayTable.getValueAt(rowTable, 1);
-        Object lName = displayTable.getValueAt(rowTable, 2);
-        Object mName = displayTable.getValueAt(rowTable, 3);
-        Object username = displayTable.getValueAt(rowTable, 4);
-        Object password = displayTable.getValueAt(rowTable, 5);
-        Object book_id = displayTable.getValueAt(rowTable, 6);
-        Object date_borrowed = displayTable.getValueAt(rowTable, 7);
+        Object id = displayTable.getValueAt(rowTable, 0);
+        Object title = displayTable.getValueAt(rowTable, 1);
+        Object author = displayTable.getValueAt(rowTable, 2);
+        Object genre = displayTable.getValueAt(rowTable, 3);
+        Object state = displayTable.getValueAt(rowTable, 4);
+        Object sNumber = displayTable.getValueAt(rowTable, 5);
+        Object date_borrowed = displayTable.getValueAt(rowTable, 6);
 
         if (evt.getClickCount() == 2) {
             JTable target = (JTable) evt.getSource();
             int row = target.getSelectedRow();
 
-            JOptionPane.showMessageDialog(null, "Student Number: " + sNumber + "\n"
-                    + "First Name: " + fName + "\n"
-                    + "Last Name: " + lName + "\n"
-                    + "Middle Name: " + mName + "\n"
-                    + "Username: " + username + "\n"
-                    + "Password: " + password + "\n"
-                    + "Book ID: " + book_id + "\n"
+            JOptionPane.showMessageDialog(null, "ID: " + id + "\n"
+                    + "Title: " + title + "\n"
+                    + "Author: " + author + "\n"
+                    + "Genre: " + genre + "\n"
+                    + "State: " + state + "\n"
+                    + "Student Number: " + sNumber + "\n"
                     + "Date Borrowed: " + date_borrowed + "\n"
             );
 
         }
 
-
+        
     }//GEN-LAST:event_doubleClick
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private static javax.swing.JTable displayTable;
     private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables
+
+//    public void populateJTable() throws SQLException {
+//DefaultTableModel dtmPrefix = new DefaultTableModel();
+//        dtmPrefix.addColumn("ID");
+//        dtmPrefix.addColumn("TITLE");
+//        dtmPrefix.addColumn("AUTHOR");
+//        dtmPrefix.addColumn("GENRE");
+//        Connection dbConnection = null;
+//        
+//
+//        try {
+//            String queryPrefix = "SELECT * FROM TBLBOOKS ORDER BY ID ASC";
+//            dbConnection = getDBConnection();
+//
+//            Statement statementPrefix = dbConnection.createStatement();
+//            ResultSet resultSetPrefix = statementPrefix.executeQuery(queryPrefix);
+//
+//            while (resultSetPrefix.next()) {
+//
+//                dtmPrefix.addRow(new Object[]{
+//                    resultSetPrefix.getInt(1),
+//                    resultSetPrefix.getString(2),
+//                    resultSetPrefix.getString(3),
+//                    resultSetPrefix.getString(4)
+//                });
+//                displayTable.setModel(dtmPrefix);
+//            }
+//        } catch (SQLException preEr) {
+//            JOptionPane.showMessageDialog(null, preEr, "DATABASE ERROR!", JOptionPane.WARNING_MESSAGE);
+//        }
+//
+//    }
+//
+//    private static Connection getDBConnection() {
+//
+//        Connection dbConnection = null;
+//
+//        try {
+//
+//            dbConnection = DriverManager.getConnection(
+//                    DATABSE_URL, username, password);
+//            return dbConnection;
+//
+//        } catch (SQLException e) {
+//
+//            System.out.println(e.getMessage());
+//
+//        }
+//
+//        return dbConnection;
+//
+//    }
+//
 }
