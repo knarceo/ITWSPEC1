@@ -74,7 +74,7 @@ public class clientFrame extends javax.swing.JFrame {
         jMenu1.setText("Books");
 
         searchByModel.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.ALT_MASK));
-        searchByModel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/view.png"))); // NOI18N
+        searchByModel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/assets/orange_search.png"))); // NOI18N
         searchByModel.setText("Search by ID");
         searchByModel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -84,7 +84,7 @@ public class clientFrame extends javax.swing.JFrame {
         jMenu1.add(searchByModel);
 
         searchByType.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_T, java.awt.event.InputEvent.ALT_MASK));
-        searchByType.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/view.png"))); // NOI18N
+        searchByType.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/assets/orange_search.png"))); // NOI18N
         searchByType.setText("Search by Title");
         searchByType.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -94,7 +94,7 @@ public class clientFrame extends javax.swing.JFrame {
         jMenu1.add(searchByType);
 
         byAuthorItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.ALT_MASK));
-        byAuthorItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/view.png"))); // NOI18N
+        byAuthorItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/assets/orange_search.png"))); // NOI18N
         byAuthorItem.setText("Search by Author");
         byAuthorItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -104,7 +104,7 @@ public class clientFrame extends javax.swing.JFrame {
         jMenu1.add(byAuthorItem);
 
         byGenreItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.ALT_MASK));
-        byGenreItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/view.png"))); // NOI18N
+        byGenreItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/assets/orange_search.png"))); // NOI18N
         byGenreItem.setText("Search by Genre");
         byGenreItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -114,7 +114,7 @@ public class clientFrame extends javax.swing.JFrame {
         jMenu1.add(byGenreItem);
 
         byStateMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.ALT_MASK));
-        byStateMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/view.png"))); // NOI18N
+        byStateMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/assets/orange_search.png"))); // NOI18N
         byStateMenuItem.setText("Search by Status");
         byStateMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -125,7 +125,7 @@ public class clientFrame extends javax.swing.JFrame {
         jMenu1.add(jSeparator1);
 
         exitMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X, java.awt.event.InputEvent.CTRL_MASK));
-        exitMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/exit.jpg"))); // NOI18N
+        exitMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/assets/system-delete-alt.png"))); // NOI18N
         exitMenuItem.setText("Exit");
         exitMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -138,8 +138,7 @@ public class clientFrame extends javax.swing.JFrame {
 
         jMenu2.setText("About");
 
-        helpMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/about.png"))); // NOI18N
-        helpMenuItem.setText("Help");
+        helpMenuItem.setText("Version");
         helpMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 helpMenuItemActionPerformed(evt);
@@ -218,8 +217,12 @@ public class clientFrame extends javax.swing.JFrame {
 
     private void helpMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_helpMenuItemActionPerformed
 
-        JOptionPane.showMessageDialog(null, "This is the client frame you can search your desired Book through here.");
-
+        JOptionPane.showMessageDialog(
+                null, 
+                "Book Keeping Library System by\nKevin Arceo\nJoymee Salcedo\nJan Sarmiento\n\nVersion 1.0 - 2016",
+                "Software Information",
+                JOptionPane.INFORMATION_MESSAGE);
+                
     }//GEN-LAST:event_helpMenuItemActionPerformed
 
     private void byStateMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_byStateMenuItemActionPerformed

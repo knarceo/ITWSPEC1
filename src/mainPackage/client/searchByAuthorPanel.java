@@ -95,7 +95,7 @@ public class searchByAuthorPanel extends javax.swing.JPanel {
                 dtmPrefix.addColumn("TITLE");
                 dtmPrefix.addColumn("AUTHOR");
                 dtmPrefix.addColumn("GENRE");
-                dtmPrefix.addColumn("STATE");
+                dtmPrefix.addColumn("STATUS");
 
                 while (resultset.next()) {
 
@@ -222,7 +222,7 @@ public class searchByAuthorPanel extends javax.swing.JPanel {
         Object title = displayTable.getValueAt(rowTable, 1);
         Object author = displayTable.getValueAt(rowTable, 2);
         Object genre = displayTable.getValueAt(rowTable, 3);
-        Object state = displayTable.getValueAt(rowTable, 4);
+        Object status = displayTable.getValueAt(rowTable, 4);
         
         if (evt.getClickCount() == 2) {
             JTable target = (JTable) evt.getSource();
@@ -232,7 +232,7 @@ public class searchByAuthorPanel extends javax.swing.JPanel {
                     + "Title: " + title + "\n"
                     + "Author: " + author + "\n"
                     + "Genre: " + genre + "\n"
-                    + "State: " + state + "\n"
+                    + "Status: " + status + "\n"
             );
 
         }
@@ -268,7 +268,7 @@ public class searchByAuthorPanel extends javax.swing.JPanel {
             dtmPrefix.addColumn("TITLE");
             dtmPrefix.addColumn("AUTHOR");
             dtmPrefix.addColumn("GENRE");
-            dtmPrefix.addColumn("STATE");
+            dtmPrefix.addColumn("STATUS");
 
             while (resultset.next()) {
 

@@ -91,7 +91,7 @@ public class searchByIdPanel extends javax.swing.JPanel {
                 dtmPrefix.addColumn("TITLE");
                 dtmPrefix.addColumn("AUTHOR");
                 dtmPrefix.addColumn("GENRE");
-                dtmPrefix.addColumn("STATE");
+                dtmPrefix.addColumn("STATUS");
 
                 while (resultset.next()) {
 
@@ -106,7 +106,7 @@ public class searchByIdPanel extends javax.swing.JPanel {
                 idField.setText("");
             } else {
 
-                JOptionPane.showMessageDialog(null, "Book ID not Found!");
+                JOptionPane.showMessageDialog(null, "No books found!", "", JOptionPane.ERROR_MESSAGE);
                 idField.setText("");
 
             }
@@ -198,7 +198,7 @@ public class searchByIdPanel extends javax.swing.JPanel {
             int id1 = Integer.parseInt(id);
             viewRecords(id1);
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Please Input a Proper ID Number.");
+            JOptionPane.showMessageDialog(null, "Please Input a valid Book ID", "", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_submitButtonActionPerformed
 
@@ -210,7 +210,7 @@ public class searchByIdPanel extends javax.swing.JPanel {
         Object title = displayTable.getValueAt(rowTable, 1);
         Object author = displayTable.getValueAt(rowTable, 2);
         Object genre = displayTable.getValueAt(rowTable, 3);
-        Object state = displayTable.getValueAt(rowTable, 4);
+        Object status = displayTable.getValueAt(rowTable, 4);
         
         if (evt.getClickCount() == 2) {
             JTable target = (JTable) evt.getSource();
@@ -220,7 +220,7 @@ public class searchByIdPanel extends javax.swing.JPanel {
                     + "Title: " + title + "\n"
                     + "Author: " + author + "\n"
                     + "Genre: " + genre + "\n"
-                    + "State: " + state + "\n"
+                    + "Status: " + status + "\n"
             );
 
         }
@@ -256,7 +256,7 @@ public class searchByIdPanel extends javax.swing.JPanel {
             dtmPrefix.addColumn("TITLE");
             dtmPrefix.addColumn("AUTHOR");
             dtmPrefix.addColumn("GENRE");
-            dtmPrefix.addColumn("STATE");
+            dtmPrefix.addColumn("STATUS");
 
             while (resultset.next()) {
 

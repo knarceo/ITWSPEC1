@@ -15,7 +15,7 @@
                   <KeyStroke key="Alt+I"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/mainPackage/view.png"/>
+                  <Image iconType="3" name="/mainPackage/assets/orange_search.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Search by ID"/>
               </Properties>
@@ -29,7 +29,7 @@
                   <KeyStroke key="Alt+T"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/mainPackage/view.png"/>
+                  <Image iconType="3" name="/mainPackage/assets/orange_search.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Search by Title"/>
               </Properties>
@@ -43,7 +43,7 @@
                   <KeyStroke key="Alt+A"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/mainPackage/view.png"/>
+                  <Image iconType="3" name="/mainPackage/assets/orange_search.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Search by Author"/>
               </Properties>
@@ -57,7 +57,7 @@
                   <KeyStroke key="Alt+G"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/mainPackage/view.png"/>
+                  <Image iconType="3" name="/mainPackage/assets/orange_search.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Search by Genre"/>
               </Properties>
@@ -71,7 +71,7 @@
                   <KeyStroke key="Alt+S"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/mainPackage/view.png"/>
+                  <Image iconType="3" name="/mainPackage/assets/orange_search.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Search by Status"/>
               </Properties>
@@ -87,7 +87,7 @@
                   <KeyStroke key="Ctrl+X"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/mainPackage/exit.jpg"/>
+                  <Image iconType="3" name="/mainPackage/assets/system-delete-alt.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Exit"/>
               </Properties>
@@ -104,10 +104,7 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="helpMenuItem">
               <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/mainPackage/about.png"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Help"/>
+                <Property name="text" type="java.lang.String" value="Version"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="helpMenuItemActionPerformed"/>
