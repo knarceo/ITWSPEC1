@@ -19,7 +19,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import mainPackage.ClientFrame;
 import mainPackage.admin.AddBookPanel_ADMIN;
-import mainPackage.displayPanel;
+import mainPackage.admin.ViewAllBooksPanel_ADMIN;
 
 /**
  *
@@ -112,7 +112,7 @@ public class searchByStatusPanel extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(null, "There are no books in this status", "", JOptionPane.ERROR_MESSAGE);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(displayPanel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ViewAllBooksPanel_ADMIN.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -353,7 +353,7 @@ public class searchByStatusPanel extends javax.swing.JPanel {
                 displayTable.setModel(dtmPrefix);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(displayPanel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ViewAllBooksPanel_ADMIN.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

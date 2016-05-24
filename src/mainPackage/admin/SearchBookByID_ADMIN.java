@@ -19,7 +19,6 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import mainPackage.displayPanel;
 
 /**
  *
@@ -192,7 +191,7 @@ public class SearchBookByID_ADMIN extends javax.swing.JPanel {
 
             }
         } catch (SQLException ex) {
-            Logger.getLogger(displayPanel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ViewAllBooksPanel_ADMIN.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
