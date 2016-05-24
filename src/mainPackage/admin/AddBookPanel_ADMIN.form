@@ -39,8 +39,8 @@
                               <EmptySpace min="-2" pref="69" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Component id="authorField" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="genreBox" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="titleField" alignment="0" min="-2" pref="428" max="-2" attributes="0"/>
+                                  <Component id="genreBox" alignment="0" pref="428" max="32767" attributes="0"/>
+                                  <Component id="titleField" alignment="0" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>

@@ -62,8 +62,6 @@ public class AdminFrame extends javax.swing.JFrame {
         deleteAccountItem = new javax.swing.JMenuItem();
         viewAccountItem = new javax.swing.JMenuItem();
         displayAccountItem = new javax.swing.JMenuItem();
-        jMenu3 = new javax.swing.JMenu();
-        helpMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Admin");
@@ -238,18 +236,6 @@ public class AdminFrame extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu2);
 
-        jMenu3.setText("About");
-
-        helpMenuItem.setText("Help");
-        helpMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                helpMenuItemActionPerformed(evt);
-            }
-        });
-        jMenu3.add(helpMenuItem);
-
-        jMenuBar1.add(jMenu3);
-
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -366,12 +352,6 @@ public class AdminFrame extends javax.swing.JFrame {
 
     }//GEN-LAST:event_updateAccountItemActionPerformed
 
-    private void helpMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_helpMenuItemActionPerformed
-
-        JOptionPane.showMessageDialog(null, "You have accessed the Server. Through here you can manage the Books and Accounts inside the Library.");
-
-    }//GEN-LAST:event_helpMenuItemActionPerformed
-
     private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuItemActionPerformed
 
         System.exit(0);
@@ -483,10 +463,8 @@ public class AdminFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem displayAccountItem;
     private javax.swing.JMenuItem editBook;
     private javax.swing.JMenuItem exitMenuItem;
-    private javax.swing.JMenuItem helpMenuItem;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JMenu searchBook;

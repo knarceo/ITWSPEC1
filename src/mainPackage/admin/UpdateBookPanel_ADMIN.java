@@ -46,7 +46,7 @@ public class UpdateBookPanel_ADMIN extends javax.swing.JPanel {
 
     public void getBookRecord(){
         try {
-            String QUERY = "SELECT * FROM TBLBOOK WHERE ID = +"+AdminFrame.EDIT_ID;
+            String QUERY = "SELECT * FROM TBLBOOKS WHERE ID = +"+AdminFrame.EDIT_ID;
             idField.setText(String.valueOf(AdminFrame.EDIT_ID));
             statement = connection.prepareStatement(QUERY);
             resultset = statement.executeQuery();
@@ -54,6 +54,8 @@ public class UpdateBookPanel_ADMIN extends javax.swing.JPanel {
             
             while(resultset.next()){
                 titleField.setText(resultset.getString("TITLE"));
+                authorField.setText(resultset.getString("AUTHOR"));
+                genreBox.setSelectedItem(resultset.getString("GENRE"));
             }
             
         } catch (SQLException ex) {
@@ -98,15 +100,15 @@ public class UpdateBookPanel_ADMIN extends javax.swing.JPanel {
                 statement.setString(2, author);
                 statement.setObject(3, genre);
                 statement.executeUpdate();
-                JOptionPane.showMessageDialog(null, "The Book has been Updated!");
-                idField.setText("");
-                titleField.setText("");
-                authorField.setText("");
+                JOptionPane.showMessageDialog(null, "The Book has been Updated!", "", JOptionPane.INFORMATION_MESSAGE);
+//                idField.setText("");
+//                titleField.setText("");
+//                authorField.setText("");
             } else {
                 JOptionPane.showMessageDialog(null, "Book ID not Found!");
-                idField.setText("");
-                titleField.setText("");
-                authorField.setText("");
+//                idField.setText("");
+//                titleField.setText("");
+//                authorField.setText("");
             }
 
         } catch (SQLException ex) {
@@ -134,16 +136,18 @@ public class UpdateBookPanel_ADMIN extends javax.swing.JPanel {
         authorField = new javax.swing.JTextField();
         genreBox = new javax.swing.JComboBox<>();
 
-        jLabel2.setFont(new java.awt.Font("Arial Narrow", 1, 24)); // NOI18N
-        jLabel2.setText("Update Car");
+        jLabel2.setFont(new java.awt.Font("Arial Narrow", 1, 36)); // NOI18N
+        jLabel2.setText("Administrator : Update Book");
 
-        jLabel5.setFont(new java.awt.Font("Georgia", 0, 24)); // NOI18N
-        jLabel5.setText("Genre:");
+        jLabel5.setFont(new java.awt.Font("Arial Narrow", 0, 24)); // NOI18N
+        jLabel5.setText("Genre");
 
-        jLabel6.setFont(new java.awt.Font("Georgia", 0, 24)); // NOI18N
-        jLabel6.setText("Id:");
+        jLabel6.setFont(new java.awt.Font("Arial Narrow", 0, 24)); // NOI18N
+        jLabel6.setText("ID");
 
-        updateButton.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        updateButton.setBackground(new java.awt.Color(102, 255, 102));
+        updateButton.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        updateButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/assets/editicon.png"))); // NOI18N
         updateButton.setText("Update");
         updateButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -158,11 +162,11 @@ public class UpdateBookPanel_ADMIN extends javax.swing.JPanel {
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Georgia", 0, 24)); // NOI18N
-        jLabel1.setText("Author:");
+        jLabel1.setFont(new java.awt.Font("Arial Narrow", 0, 24)); // NOI18N
+        jLabel1.setText("Author");
 
-        jLabel3.setFont(new java.awt.Font("Georgia", 0, 24)); // NOI18N
-        jLabel3.setText("Title:");
+        jLabel3.setFont(new java.awt.Font("Arial Narrow", 0, 24)); // NOI18N
+        jLabel3.setText("Title");
 
         titleField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -184,53 +188,50 @@ public class UpdateBookPanel_ADMIN extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(35, 35, 35)
+                        .addGap(136, 136, 136)
                         .addComponent(jLabel2))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(123, 123, 123)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel6))
-                        .addGap(93, 93, 93)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(idField)
-                                .addComponent(authorField, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(titleField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(genreBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(updateButton)
-                .addContainerGap(84, Short.MAX_VALUE))
+                        .addGap(74, 74, 74)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(updateButton)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel6))
+                                .addGap(69, 69, 69)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(authorField)
+                                    .addComponent(titleField, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(idField, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(genreBox, 0, 428, Short.MAX_VALUE))))))
+                .addContainerGap(83, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(40, 40, 40)
+                .addGap(46, 46, 46)
                 .addComponent(jLabel2)
                 .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel6)
-                                .addComponent(idField, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(31, 31, 31)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel3)
-                                .addComponent(titleField, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(30, 30, 30)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(authorField, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel1))
-                            .addGap(27, 27, 27)
-                            .addComponent(jLabel5))
-                        .addComponent(genreBox, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(172, 172, 172)
-                        .addComponent(updateButton)))
-                .addContainerGap(166, Short.MAX_VALUE))
+                    .addComponent(jLabel6)
+                    .addComponent(idField, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(titleField, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(authorField, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(genreBox, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(updateButton)
+                .addContainerGap(162, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -244,105 +245,9 @@ public class UpdateBookPanel_ADMIN extends javax.swing.JPanel {
             String author = authorField.getText();
             Object genre = "";
 
-            switch (genreBox.getSelectedIndex()) {
+            genre = genreBox.getSelectedItem();
 
-                case 0:
-                    genre = genreBox.getSelectedItem();
-                    System.out.println(genre);
-                    break;
-                case 1:
-                    genre = genreBox.getSelectedItem();
-                    break;
-                case 2:
-                    genre = genreBox.getSelectedItem();
-                    break;
-                case 3:
-                    genre = genreBox.getSelectedItem();
-                    break;
-                case 4:
-                    genre = genreBox.getSelectedItem();
-                    break;
-                case 5:
-                    genre = genreBox.getSelectedItem();
-                    break;
-                case 6:
-                    genre = genreBox.getSelectedItem();
-                    break;
-                case 7:
-                    genre = genreBox.getSelectedItem();
-                    break;
-                case 8:
-                    genre = genreBox.getSelectedItem();
-                    break;
-                case 9:
-                    genre = genreBox.getSelectedItem();
-                    break;
-                case 10:
-                    genre = genreBox.getSelectedItem();
-                    break;
-                case 11:
-                    genre = genreBox.getSelectedItem();
-                    break;
-                case 12:
-                    genre = genreBox.getSelectedItem();
-                    break;
-                case 13:
-                    genre = genreBox.getSelectedItem();
-                    break;
-                case 14:
-                    genre = genreBox.getSelectedItem();
-                    break;
-                case 15:
-                    genre = genreBox.getSelectedItem();
-                    break;
-                case 16:
-                    genre = genreBox.getSelectedItem();
-                    break;
-                case 17:
-                    genre = genreBox.getSelectedItem();
-                    break;
-                case 18:
-                    genre = genreBox.getSelectedItem();
-                    break;
-                case 19:
-                    genre = genreBox.getSelectedItem();
-                    break;
-                case 20:
-                    genre = genreBox.getSelectedItem();
-                    break;
-                case 21:
-                    genre = genreBox.getSelectedItem();
-                    break;
-                case 22:
-                    genre = genreBox.getSelectedItem();
-                    break;
-                case 23:
-                    genre = genreBox.getSelectedItem();
-                    break;
-                case 24:
-                    genre = genreBox.getSelectedItem();
-                    break;
-                case 25:
-                    genre = genreBox.getSelectedItem();
-                    break;
-                case 26:
-                    genre = genreBox.getSelectedItem();
-                    break;
-                case 27:
-                    genre = genreBox.getSelectedItem();
-                    break;
-                case 28:
-                    genre = genreBox.getSelectedItem();
-                    break;
-                case 29:
-                    genre = genreBox.getSelectedItem();
-                    break;
-                default:
-                    genre = "";
-                    break;
-            }
-
-            if (id.equals("") || title.equals("") || title.equals("") || author.equals("") || genre.equals("")) {
+            if (title.equals("") || title.equals("") || author.equals("") || genre.equals("")) {
 
                 JOptionPane.showMessageDialog(null, "Please Fill out all the needed areas.");
 
