@@ -203,9 +203,9 @@ public class UpdateBookPanel_ADMIN extends javax.swing.JPanel {
                                 .addGap(69, 69, 69)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(authorField)
-                                    .addComponent(titleField, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(idField, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(genreBox, 0, 428, Short.MAX_VALUE))))))
+                                    .addComponent(genreBox, 0, 428, Short.MAX_VALUE)
+                                    .addComponent(titleField, javax.swing.GroupLayout.Alignment.LEADING))))))
                 .addContainerGap(83, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(

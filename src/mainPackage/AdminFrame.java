@@ -5,6 +5,7 @@
  */
 package mainPackage;
 
+import mainPackage.admin.DeleteBookPanel_ADMIN;
 import mainPackage.admin.UpdateBookPanel_ADMIN;
 import mainPackage.admin.AddBookPanel_ADMIN;
 import java.awt.BorderLayout;
@@ -21,6 +22,7 @@ public class AdminFrame extends javax.swing.JFrame {
      */
     
     public static int EDIT_ID;
+    public static int DELETE_ID;
     
     public AdminFrame() {
         initComponents();
@@ -287,11 +289,11 @@ public class AdminFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_editBookActionPerformed
 
     private void deleteBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBookActionPerformed
-
+        DELETE_ID = Integer.valueOf(JOptionPane.showInputDialog("Enter Book ID"));
         serverPanel.removeAll();
         serverPanel.setVisible(false);
         serverPanel.setLayout(new BorderLayout());
-        serverPanel.add(new deletePanel(), BorderLayout.CENTER);
+        serverPanel.add(new DeleteBookPanel_ADMIN(), BorderLayout.CENTER);
         serverPanel.repaint();
         serverPanel.setVisible(true);
 
