@@ -27,6 +27,7 @@ public class searchByTitlePanel extends javax.swing.JPanel {
     private static final String username = "oracle";
     private static final String password = "pass";
     private final String GET_RECORDS = "SELECT * FROM TBLBOOKS WHERE TITLE = ?";
+//    private final String GET_RECORDS = "SELECT * FROM TBLBOOKS WHERE TITLE LIKE &?";
 
     private Connection connection;
     private PreparedStatement statement;
@@ -43,12 +44,14 @@ public class searchByTitlePanel extends javax.swing.JPanel {
     }
 
     public int checkRecords(String title) {
-
+        
         int count = 0;
-
+        
         try {
-            statement = connection.prepareStatement(GET_RECORDS);
-            statement.setString(1, title);
+            
+            String searchQuery = "SELECT * FROM TBLBOOKS WHERE TITLE LIKE '%"+title+"%'";
+            statement = connection.prepareStatement(searchQuery);
+//            statement.setString(1, title);
             resultset = statement.executeQuery();
 
             while (resultset.next()) {
@@ -70,11 +73,12 @@ public class searchByTitlePanel extends javax.swing.JPanel {
 
     public void viewRecords(String title) {
         try {
-
+            
             if (checkRecords(title) >= 1) {
 
-                statement = connection.prepareStatement(GET_RECORDS);
-                statement.setString(1, title);
+                String searchQuery = "SELECT * FROM TBLBOOKS WHERE TITLE LIKE '%"+title+"%'";
+                statement = connection.prepareStatement(searchQuery);
+//                statement.setString(1, title);
                 resultset = statement.executeQuery();
                 rsMetadata = resultset.getMetaData();
 
@@ -104,7 +108,7 @@ public class searchByTitlePanel extends javax.swing.JPanel {
                 }
                 titleField.setText("");
             } else {
-                JOptionPane.showMessageDialog(null, "Book Title not Found!");
+                JOptionPane.showMessageDialog(null, "Book Title not Found!", "", JOptionPane.ERROR_MESSAGE);
             }
 
         } catch (SQLException ex) {
@@ -192,9 +196,7 @@ public class searchByTitlePanel extends javax.swing.JPanel {
         String title = titleField.getText();
 
         if (title.equals("")) {
-
-            JOptionPane.showMessageDialog(null, "Please Fill out all the needed areas.");
-
+            JOptionPane.showMessageDialog(null, "Please Fill out all the needed areas.", "", JOptionPane.ERROR_MESSAGE);
         } else {
             viewRecords(title);
         }
