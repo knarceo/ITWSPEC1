@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import mainPackage.addPanel;
+import mainPackage.admin.AddBookPanel_ADMIN;
 import mainPackage.displayPanel;
 
 /**
@@ -66,7 +66,7 @@ public class searchByAuthorPanel extends javax.swing.JPanel {
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(addPanel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AddBookPanel_ADMIN.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return count = 0;

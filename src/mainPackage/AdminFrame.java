@@ -5,6 +5,7 @@
  */
 package mainPackage;
 
+import mainPackage.admin.AddBookPanel_ADMIN;
 import java.awt.BorderLayout;
 import javax.swing.JOptionPane;
 
@@ -12,13 +13,19 @@ import javax.swing.JOptionPane;
  *
  * @author Windows8.1
  */
-public class serverFrame extends javax.swing.JFrame {
+public class AdminFrame extends javax.swing.JFrame {
 
     /**
      * Creates new form serverFrame
      */
-    public serverFrame() {
+    public AdminFrame() {
         initComponents();
+        serverPanel.removeAll();
+        serverPanel.setVisible(false);
+        serverPanel.setLayout(new BorderLayout());
+        serverPanel.add(new displayPanel(), BorderLayout.CENTER);
+        serverPanel.repaint();
+        serverPanel.setVisible(true);
     }
 
     /**
@@ -33,16 +40,16 @@ public class serverFrame extends javax.swing.JFrame {
         serverPanel = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        addCar = new javax.swing.JMenuItem();
-        updateCar = new javax.swing.JMenuItem();
-        deleteCar = new javax.swing.JMenuItem();
-        searchCarAdmin = new javax.swing.JMenu();
+        addBook = new javax.swing.JMenuItem();
+        editBook = new javax.swing.JMenuItem();
+        deleteBook = new javax.swing.JMenuItem();
+        searchBook = new javax.swing.JMenu();
         byIdMenuItem = new javax.swing.JMenuItem();
         byTitleMenuItem = new javax.swing.JMenuItem();
         byAuthorMenuItem = new javax.swing.JMenuItem();
         byGenreMenuItem = new javax.swing.JMenuItem();
-        byStateItem = new javax.swing.JMenuItem();
-        viewAllCarAdmin = new javax.swing.JMenuItem();
+        byStatusItem = new javax.swing.JMenuItem();
+        viewAllBooks = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         exitMenuItem = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
@@ -73,40 +80,40 @@ public class serverFrame extends javax.swing.JFrame {
 
         jMenuBar1.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
 
-        jMenu1.setText("Cars");
+        jMenu1.setText("Books");
 
-        addCar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.ALT_MASK));
-        addCar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/add-icon.png"))); // NOI18N
-        addCar.setText("Add Car");
-        addCar.addActionListener(new java.awt.event.ActionListener() {
+        addBook.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.ALT_MASK));
+        addBook.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/add-icon.png"))); // NOI18N
+        addBook.setText("Add Book");
+        addBook.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addCarActionPerformed(evt);
+                addBookActionPerformed(evt);
             }
         });
-        jMenu1.add(addCar);
+        jMenu1.add(addBook);
 
-        updateCar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.ALT_MASK));
-        updateCar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/edit.png"))); // NOI18N
-        updateCar.setText("Update Car");
-        updateCar.addActionListener(new java.awt.event.ActionListener() {
+        editBook.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.ALT_MASK));
+        editBook.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/edit.png"))); // NOI18N
+        editBook.setText("Edit Book");
+        editBook.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                updateCarActionPerformed(evt);
+                editBookActionPerformed(evt);
             }
         });
-        jMenu1.add(updateCar);
+        jMenu1.add(editBook);
 
-        deleteCar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.ALT_MASK));
-        deleteCar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/delete.png"))); // NOI18N
-        deleteCar.setText("Delete Car");
-        deleteCar.addActionListener(new java.awt.event.ActionListener() {
+        deleteBook.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.ALT_MASK));
+        deleteBook.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/delete.png"))); // NOI18N
+        deleteBook.setText("Delete Book");
+        deleteBook.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                deleteCarActionPerformed(evt);
+                deleteBookActionPerformed(evt);
             }
         });
-        jMenu1.add(deleteCar);
+        jMenu1.add(deleteBook);
 
-        searchCarAdmin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/view.png"))); // NOI18N
-        searchCarAdmin.setText("Search Car");
+        searchBook.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/view.png"))); // NOI18N
+        searchBook.setText("Search");
 
         byIdMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/view.png"))); // NOI18N
         byIdMenuItem.setText("By ID");
@@ -115,7 +122,7 @@ public class serverFrame extends javax.swing.JFrame {
                 byIdMenuItemActionPerformed(evt);
             }
         });
-        searchCarAdmin.add(byIdMenuItem);
+        searchBook.add(byIdMenuItem);
 
         byTitleMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/view.png"))); // NOI18N
         byTitleMenuItem.setText("By Title");
@@ -124,7 +131,7 @@ public class serverFrame extends javax.swing.JFrame {
                 byTitleMenuItemActionPerformed(evt);
             }
         });
-        searchCarAdmin.add(byTitleMenuItem);
+        searchBook.add(byTitleMenuItem);
 
         byAuthorMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/view.png"))); // NOI18N
         byAuthorMenuItem.setText("By Author");
@@ -133,7 +140,7 @@ public class serverFrame extends javax.swing.JFrame {
                 byAuthorMenuItemActionPerformed(evt);
             }
         });
-        searchCarAdmin.add(byAuthorMenuItem);
+        searchBook.add(byAuthorMenuItem);
 
         byGenreMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/view.png"))); // NOI18N
         byGenreMenuItem.setText("By Genre");
@@ -142,28 +149,28 @@ public class serverFrame extends javax.swing.JFrame {
                 byGenreMenuItemActionPerformed(evt);
             }
         });
-        searchCarAdmin.add(byGenreMenuItem);
+        searchBook.add(byGenreMenuItem);
 
-        byStateItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/view.png"))); // NOI18N
-        byStateItem.setText("By State");
-        byStateItem.addActionListener(new java.awt.event.ActionListener() {
+        byStatusItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/view.png"))); // NOI18N
+        byStatusItem.setText("By Status");
+        byStatusItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                byStateItemActionPerformed(evt);
+                byStatusItemActionPerformed(evt);
             }
         });
-        searchCarAdmin.add(byStateItem);
+        searchBook.add(byStatusItem);
 
-        jMenu1.add(searchCarAdmin);
+        jMenu1.add(searchBook);
 
-        viewAllCarAdmin.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.ALT_MASK));
-        viewAllCarAdmin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/viewAll.png"))); // NOI18N
-        viewAllCarAdmin.setText("View All Car");
-        viewAllCarAdmin.addActionListener(new java.awt.event.ActionListener() {
+        viewAllBooks.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.ALT_MASK));
+        viewAllBooks.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/viewAll.png"))); // NOI18N
+        viewAllBooks.setText("View All Books");
+        viewAllBooks.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                viewAllCarAdminActionPerformed(evt);
+                viewAllBooksActionPerformed(evt);
             }
         });
-        jMenu1.add(viewAllCarAdmin);
+        jMenu1.add(viewAllBooks);
         jMenu1.add(jSeparator1);
 
         exitMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X, java.awt.event.InputEvent.CTRL_MASK));
@@ -178,11 +185,11 @@ public class serverFrame extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("Accounts");
+        jMenu2.setText("User Accounts");
 
         addAccountItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
         addAccountItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/add-icon.png"))); // NOI18N
-        addAccountItem.setText("Add Account");
+        addAccountItem.setText("Add User");
         addAccountItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addAccountItemActionPerformed(evt);
@@ -192,7 +199,7 @@ public class serverFrame extends javax.swing.JFrame {
 
         updateAccountItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.CTRL_MASK));
         updateAccountItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/edit.png"))); // NOI18N
-        updateAccountItem.setText("Update Account");
+        updateAccountItem.setText("Edit Edit");
         updateAccountItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 updateAccountItemActionPerformed(evt);
@@ -202,7 +209,7 @@ public class serverFrame extends javax.swing.JFrame {
 
         deleteAccountItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.CTRL_MASK));
         deleteAccountItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/delete.png"))); // NOI18N
-        deleteAccountItem.setText("Delete Account");
+        deleteAccountItem.setText("Delete User");
         deleteAccountItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 deleteAccountItemActionPerformed(evt);
@@ -212,7 +219,7 @@ public class serverFrame extends javax.swing.JFrame {
 
         viewAccountItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, java.awt.event.InputEvent.CTRL_MASK));
         viewAccountItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/view.png"))); // NOI18N
-        viewAccountItem.setText("View Account");
+        viewAccountItem.setText("Search User");
         viewAccountItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 viewAccountItemActionPerformed(evt);
@@ -222,7 +229,7 @@ public class serverFrame extends javax.swing.JFrame {
 
         displayAccountItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.CTRL_MASK));
         displayAccountItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/viewAll.png"))); // NOI18N
-        displayAccountItem.setText("View All Account");
+        displayAccountItem.setText("View All User Accounts");
         displayAccountItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 displayAccountItemActionPerformed(evt);
@@ -262,18 +269,18 @@ public class serverFrame extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void addCarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCarActionPerformed
+    private void addBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBookActionPerformed
 
         serverPanel.removeAll();
         serverPanel.setVisible(false);
         serverPanel.setLayout(new BorderLayout());
-        serverPanel.add(new addPanel(), BorderLayout.CENTER);
+        serverPanel.add(new AddBookPanel_ADMIN(), BorderLayout.CENTER);
         serverPanel.repaint();
         serverPanel.setVisible(true);
 
-    }//GEN-LAST:event_addCarActionPerformed
+    }//GEN-LAST:event_addBookActionPerformed
 
-    private void viewAllCarAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewAllCarAdminActionPerformed
+    private void viewAllBooksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewAllBooksActionPerformed
 
         serverPanel.removeAll();
         serverPanel.setVisible(false);
@@ -282,9 +289,9 @@ public class serverFrame extends javax.swing.JFrame {
         serverPanel.repaint();
         serverPanel.setVisible(true);
 
-    }//GEN-LAST:event_viewAllCarAdminActionPerformed
+    }//GEN-LAST:event_viewAllBooksActionPerformed
 
-    private void updateCarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateCarActionPerformed
+    private void editBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBookActionPerformed
         // TODO add your handling code here:
         serverPanel.removeAll();
         serverPanel.setVisible(false);
@@ -292,9 +299,9 @@ public class serverFrame extends javax.swing.JFrame {
         serverPanel.add(new updatePanel(), BorderLayout.CENTER);
         serverPanel.repaint();
         serverPanel.setVisible(true);
-    }//GEN-LAST:event_updateCarActionPerformed
+    }//GEN-LAST:event_editBookActionPerformed
 
-    private void deleteCarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteCarActionPerformed
+    private void deleteBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBookActionPerformed
 
         serverPanel.removeAll();
         serverPanel.setVisible(false);
@@ -303,7 +310,7 @@ public class serverFrame extends javax.swing.JFrame {
         serverPanel.repaint();
         serverPanel.setVisible(true);
 
-    }//GEN-LAST:event_deleteCarActionPerformed
+    }//GEN-LAST:event_deleteBookActionPerformed
 
     private void deleteAccountItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteAccountItemActionPerformed
 
@@ -416,7 +423,7 @@ public class serverFrame extends javax.swing.JFrame {
 
     }//GEN-LAST:event_byGenreMenuItemActionPerformed
 
-    private void byStateItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_byStateItemActionPerformed
+    private void byStatusItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_byStatusItemActionPerformed
 
         serverPanel.removeAll();
         serverPanel.setVisible(false);
@@ -426,7 +433,7 @@ public class serverFrame extends javax.swing.JFrame {
         serverPanel.setVisible(true);
 
 
-    }//GEN-LAST:event_byStateItemActionPerformed
+    }//GEN-LAST:event_byStatusItemActionPerformed
 
     /**
      * @param args the command line arguments
@@ -445,35 +452,37 @@ public class serverFrame extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(serverFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdminFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(serverFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdminFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(serverFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdminFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(serverFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdminFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new serverFrame().setVisible(true);
+                new AdminFrame().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem addAccountItem;
-    private javax.swing.JMenuItem addCar;
+    private javax.swing.JMenuItem addBook;
     private javax.swing.JMenuItem byAuthorMenuItem;
     private javax.swing.JMenuItem byGenreMenuItem;
     private javax.swing.JMenuItem byIdMenuItem;
-    private javax.swing.JMenuItem byStateItem;
+    private javax.swing.JMenuItem byStatusItem;
     private javax.swing.JMenuItem byTitleMenuItem;
     private javax.swing.JMenuItem deleteAccountItem;
-    private javax.swing.JMenuItem deleteCar;
+    private javax.swing.JMenuItem deleteBook;
     private javax.swing.JMenuItem displayAccountItem;
+    private javax.swing.JMenuItem editBook;
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JMenuItem helpMenuItem;
     private javax.swing.JMenu jMenu1;
@@ -481,11 +490,10 @@ public class serverFrame extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
-    private javax.swing.JMenu searchCarAdmin;
+    private javax.swing.JMenu searchBook;
     private javax.swing.JPanel serverPanel;
     private javax.swing.JMenuItem updateAccountItem;
-    private javax.swing.JMenuItem updateCar;
     private javax.swing.JMenuItem viewAccountItem;
-    private javax.swing.JMenuItem viewAllCarAdmin;
+    private javax.swing.JMenuItem viewAllBooks;
     // End of variables declaration//GEN-END:variables
 }

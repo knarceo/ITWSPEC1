@@ -5,7 +5,7 @@
  */
 package mainPackage;
 
-import mainPackage.client.clientFrame;
+import mainPackage.client.ClientFrame;
 import java.awt.BorderLayout;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -159,16 +159,16 @@ public class loginPanel extends javax.swing.JPanel {
         String username = usernameField.getText();
         String password = new String(passwordField.getPassword());
 
-        if (username.equals("administrator") && password.equals("administrator")) {
+        if (username.equals("admin") && password.equals("admin")) {
             this.setVisible(false);
-            serverFrame serverFrame = new serverFrame();
+            AdminFrame serverFrame = new AdminFrame();
             serverFrame.setVisible(true);
         } else if (username.equals("") && password.equals("")) {
             JOptionPane.showMessageDialog(null, "Please Fill out the needed areas.", "", JOptionPane.ERROR_MESSAGE);
         } else if (checkRecords(username, password) == 1) {
             this.setVisible(false);
             this.remove(this);
-            clientFrame clientFrame = new clientFrame();
+            ClientFrame clientFrame = new ClientFrame();
             clientFrame.setVisible(true);
         } else if (checkRecords(username, password) == 0) {
             JOptionPane.showMessageDialog(null, "Account not Found!", "", JOptionPane.ERROR_MESSAGE);

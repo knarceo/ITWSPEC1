@@ -5,6 +5,7 @@
  */
 package mainPackage;
 
+import mainPackage.admin.AddBookPanel_ADMIN;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -61,7 +62,7 @@ public class viewAccountPanel extends javax.swing.JPanel {
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(addPanel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AddBookPanel_ADMIN.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return count = 0;
