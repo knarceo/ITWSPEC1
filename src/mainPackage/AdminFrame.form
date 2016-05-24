@@ -20,7 +20,7 @@
                   <KeyStroke key="Alt+P"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/mainPackage/add-icon.png"/>
+                  <Image iconType="3" name="/mainPackage/assets/add-icon.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Add Book"/>
               </Properties>
@@ -34,7 +34,7 @@
                   <KeyStroke key="Alt+U"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/mainPackage/edit.png"/>
+                  <Image iconType="3" name="/mainPackage/assets/editicon.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Edit Book"/>
               </Properties>
@@ -48,7 +48,7 @@
                   <KeyStroke key="Alt+D"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/mainPackage/delete.png"/>
+                  <Image iconType="3" name="/mainPackage/assets/deleteicon.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Delete Book"/>
               </Properties>
@@ -59,16 +59,13 @@
             <Menu class="javax.swing.JMenu" name="searchBook">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/mainPackage/view.png"/>
+                  <Image iconType="3" name="/mainPackage/assets/viewAll.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Search"/>
               </Properties>
               <SubComponents>
                 <MenuItem class="javax.swing.JMenuItem" name="byIdMenuItem">
                   <Properties>
-                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/mainPackage/view.png"/>
-                    </Property>
                     <Property name="text" type="java.lang.String" value="By ID"/>
                   </Properties>
                   <Events>
@@ -77,9 +74,6 @@
                 </MenuItem>
                 <MenuItem class="javax.swing.JMenuItem" name="byTitleMenuItem">
                   <Properties>
-                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/mainPackage/view.png"/>
-                    </Property>
                     <Property name="text" type="java.lang.String" value="By Title"/>
                   </Properties>
                   <Events>
@@ -88,9 +82,6 @@
                 </MenuItem>
                 <MenuItem class="javax.swing.JMenuItem" name="byAuthorMenuItem">
                   <Properties>
-                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/mainPackage/view.png"/>
-                    </Property>
                     <Property name="text" type="java.lang.String" value="By Author"/>
                   </Properties>
                   <Events>
@@ -99,9 +90,6 @@
                 </MenuItem>
                 <MenuItem class="javax.swing.JMenuItem" name="byGenreMenuItem">
                   <Properties>
-                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/mainPackage/view.png"/>
-                    </Property>
                     <Property name="text" type="java.lang.String" value="By Genre"/>
                   </Properties>
                   <Events>
@@ -110,9 +98,6 @@
                 </MenuItem>
                 <MenuItem class="javax.swing.JMenuItem" name="byStatusItem">
                   <Properties>
-                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/mainPackage/view.png"/>
-                    </Property>
                     <Property name="text" type="java.lang.String" value="By Status"/>
                   </Properties>
                   <Events>
@@ -127,7 +112,7 @@
                   <KeyStroke key="Alt+A"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/mainPackage/viewAll.png"/>
+                  <Image iconType="3" name="/mainPackage/assets/view.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="View All Books"/>
               </Properties>
@@ -143,7 +128,7 @@
                   <KeyStroke key="Ctrl+X"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/mainPackage/exit.jpg"/>
+                  <Image iconType="3" name="/mainPackage/assets/system-delete-alt.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Exit"/>
               </Properties>
@@ -164,7 +149,7 @@
                   <KeyStroke key="Ctrl+P"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/mainPackage/add-icon.png"/>
+                  <Image iconType="3" name="/mainPackage/assets/add-icon.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Add User"/>
               </Properties>
@@ -178,7 +163,7 @@
                   <KeyStroke key="Ctrl+U"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/mainPackage/edit.png"/>
+                  <Image iconType="3" name="/mainPackage/assets/editicon.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Edit Edit"/>
               </Properties>
@@ -192,7 +177,7 @@
                   <KeyStroke key="Ctrl+D"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/mainPackage/delete.png"/>
+                  <Image iconType="3" name="/mainPackage/assets/deleteicon.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Delete User"/>
               </Properties>
@@ -206,7 +191,7 @@
                   <KeyStroke key="Ctrl+V"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/mainPackage/view.png"/>
+                  <Image iconType="3" name="/mainPackage/assets/viewAll.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Search User"/>
               </Properties>
@@ -220,7 +205,7 @@
                   <KeyStroke key="Ctrl+A"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/mainPackage/viewAll.png"/>
+                  <Image iconType="3" name="/mainPackage/assets/view.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="View All User Accounts"/>
               </Properties>
@@ -237,9 +222,6 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="helpMenuItem">
               <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/mainPackage/about.png"/>
-                </Property>
                 <Property name="text" type="java.lang.String" value="Help"/>
               </Properties>
               <Events>

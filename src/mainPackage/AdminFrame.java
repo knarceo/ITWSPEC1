@@ -87,7 +87,7 @@ public class AdminFrame extends javax.swing.JFrame {
         jMenu1.setText("Books");
 
         addBook.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.ALT_MASK));
-        addBook.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/add-icon.png"))); // NOI18N
+        addBook.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/assets/add-icon.png"))); // NOI18N
         addBook.setText("Add Book");
         addBook.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -97,7 +97,7 @@ public class AdminFrame extends javax.swing.JFrame {
         jMenu1.add(addBook);
 
         editBook.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.ALT_MASK));
-        editBook.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/edit.png"))); // NOI18N
+        editBook.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/assets/editicon.png"))); // NOI18N
         editBook.setText("Edit Book");
         editBook.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -107,7 +107,7 @@ public class AdminFrame extends javax.swing.JFrame {
         jMenu1.add(editBook);
 
         deleteBook.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.ALT_MASK));
-        deleteBook.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/delete.png"))); // NOI18N
+        deleteBook.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/assets/deleteicon.png"))); // NOI18N
         deleteBook.setText("Delete Book");
         deleteBook.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -116,10 +116,9 @@ public class AdminFrame extends javax.swing.JFrame {
         });
         jMenu1.add(deleteBook);
 
-        searchBook.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/view.png"))); // NOI18N
+        searchBook.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/assets/viewAll.png"))); // NOI18N
         searchBook.setText("Search");
 
-        byIdMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/view.png"))); // NOI18N
         byIdMenuItem.setText("By ID");
         byIdMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -128,7 +127,6 @@ public class AdminFrame extends javax.swing.JFrame {
         });
         searchBook.add(byIdMenuItem);
 
-        byTitleMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/view.png"))); // NOI18N
         byTitleMenuItem.setText("By Title");
         byTitleMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -137,7 +135,6 @@ public class AdminFrame extends javax.swing.JFrame {
         });
         searchBook.add(byTitleMenuItem);
 
-        byAuthorMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/view.png"))); // NOI18N
         byAuthorMenuItem.setText("By Author");
         byAuthorMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -146,7 +143,6 @@ public class AdminFrame extends javax.swing.JFrame {
         });
         searchBook.add(byAuthorMenuItem);
 
-        byGenreMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/view.png"))); // NOI18N
         byGenreMenuItem.setText("By Genre");
         byGenreMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -155,7 +151,6 @@ public class AdminFrame extends javax.swing.JFrame {
         });
         searchBook.add(byGenreMenuItem);
 
-        byStatusItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/view.png"))); // NOI18N
         byStatusItem.setText("By Status");
         byStatusItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -167,7 +162,7 @@ public class AdminFrame extends javax.swing.JFrame {
         jMenu1.add(searchBook);
 
         viewAllBooks.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.ALT_MASK));
-        viewAllBooks.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/viewAll.png"))); // NOI18N
+        viewAllBooks.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/assets/view.png"))); // NOI18N
         viewAllBooks.setText("View All Books");
         viewAllBooks.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -178,7 +173,7 @@ public class AdminFrame extends javax.swing.JFrame {
         jMenu1.add(jSeparator1);
 
         exitMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X, java.awt.event.InputEvent.CTRL_MASK));
-        exitMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/exit.jpg"))); // NOI18N
+        exitMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/assets/system-delete-alt.png"))); // NOI18N
         exitMenuItem.setText("Exit");
         exitMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -192,7 +187,7 @@ public class AdminFrame extends javax.swing.JFrame {
         jMenu2.setText("User Accounts");
 
         addAccountItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
-        addAccountItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/add-icon.png"))); // NOI18N
+        addAccountItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/assets/add-icon.png"))); // NOI18N
         addAccountItem.setText("Add User");
         addAccountItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -202,7 +197,7 @@ public class AdminFrame extends javax.swing.JFrame {
         jMenu2.add(addAccountItem);
 
         updateAccountItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.CTRL_MASK));
-        updateAccountItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/edit.png"))); // NOI18N
+        updateAccountItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/assets/editicon.png"))); // NOI18N
         updateAccountItem.setText("Edit Edit");
         updateAccountItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -212,7 +207,7 @@ public class AdminFrame extends javax.swing.JFrame {
         jMenu2.add(updateAccountItem);
 
         deleteAccountItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.CTRL_MASK));
-        deleteAccountItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/delete.png"))); // NOI18N
+        deleteAccountItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/assets/deleteicon.png"))); // NOI18N
         deleteAccountItem.setText("Delete User");
         deleteAccountItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -222,7 +217,7 @@ public class AdminFrame extends javax.swing.JFrame {
         jMenu2.add(deleteAccountItem);
 
         viewAccountItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, java.awt.event.InputEvent.CTRL_MASK));
-        viewAccountItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/view.png"))); // NOI18N
+        viewAccountItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/assets/viewAll.png"))); // NOI18N
         viewAccountItem.setText("Search User");
         viewAccountItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -232,7 +227,7 @@ public class AdminFrame extends javax.swing.JFrame {
         jMenu2.add(viewAccountItem);
 
         displayAccountItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.CTRL_MASK));
-        displayAccountItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/viewAll.png"))); // NOI18N
+        displayAccountItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/assets/view.png"))); // NOI18N
         displayAccountItem.setText("View All User Accounts");
         displayAccountItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -245,7 +240,6 @@ public class AdminFrame extends javax.swing.JFrame {
 
         jMenu3.setText("About");
 
-        helpMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/about.png"))); // NOI18N
         helpMenuItem.setText("Help");
         helpMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
