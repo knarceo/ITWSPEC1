@@ -5,6 +5,7 @@
  */
 package mainPackage;
 
+import mainPackage.client.clientFrame;
 import java.awt.BorderLayout;
 import java.sql.Connection;
 import java.sql.DriverManager;

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mainPackage;
+package mainPackage.client;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -16,39 +16,42 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import mainPackage.addPanel;
+import mainPackage.displayPanel;
 
 /**
  *
  * @author Windows8.1
  */
-public class searchByGenrePanel extends javax.swing.JPanel {
+public class searchByStatusPanel extends javax.swing.JPanel {
 
     private static final String DATABSE_URL = "jdbc:derby://localhost:1527/libraryDb";
     private static final String username = "oracle";
     private static final String password = "pass";
-    private final String GET_RECORDS = "SELECT * FROM TBLBOOKS WHERE GENRE = ?";
+    private final String GET_RECORDS = "SELECT * FROM TBLBOOKS WHERE STATE = ?";
 
     private Connection connection;
     private PreparedStatement statement;
     private ResultSet resultset;
     private ResultSetMetaData rsMetadata;
 
-    public searchByGenrePanel() {
+    public searchByStatusPanel() {
         initComponents();
         try {
             connection = DriverManager.getConnection(DATABSE_URL, username, password);
         } catch (SQLException ex) {
-            Logger.getLogger(searchByGenrePanel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(searchByStatusPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
+        viewAllRecords();
     }
 
-    public int checkRecords(Object genre) {
+    public int checkRecords(String genre) {
 
         int count = 0;
 
         try {
             statement = connection.prepareStatement(GET_RECORDS);
-            statement.setObject(1, genre);
+            statement.setString(1, genre);
             resultset = statement.executeQuery();
 
             while (resultset.next()) {
@@ -68,13 +71,13 @@ public class searchByGenrePanel extends javax.swing.JPanel {
 
     }
 
-    public void viewRecords(Object genre) {
+    public void viewRecords(String genre) {
         try {
 
             if (checkRecords(genre) >= 1) {
 
                 statement = connection.prepareStatement(GET_RECORDS);
-                statement.setObject(1, genre);
+                statement.setString(1, genre);
                 resultset = statement.executeQuery();
                 rsMetadata = resultset.getMetaData();
 
@@ -102,8 +105,9 @@ public class searchByGenrePanel extends javax.swing.JPanel {
                     });
                     displayTable.setModel(dtmPrefix);
                 }
+
             } else {
-                JOptionPane.showMessageDialog(null, "Book Genre is unavailable for the moment!");
+                JOptionPane.showMessageDialog(null, "There are no Books at this State!");
             }
         } catch (SQLException ex) {
             Logger.getLogger(displayPanel.class.getName()).log(Level.SEVERE, null, ex);
@@ -119,14 +123,16 @@ public class searchByGenrePanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
         submitButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         displayTable = new javax.swing.JTable();
-        genreBox = new javax.swing.JComboBox<>();
+        outRadioButton = new javax.swing.JRadioButton();
+        inRadioButton = new javax.swing.JRadioButton();
 
         jLabel1.setFont(new java.awt.Font("Arial Narrow", 1, 24)); // NOI18N
-        jLabel1.setText("Search by Genre");
+        jLabel1.setText("Search by Status");
 
         submitButton.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         submitButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/view.png"))); // NOI18N
@@ -138,6 +144,13 @@ public class searchByGenrePanel extends javax.swing.JPanel {
 
         displayTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
                 {null, null, null, null},
                 {null, null, null, null},
                 {null, null, null, null},
@@ -154,13 +167,13 @@ public class searchByGenrePanel extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(displayTable);
 
-        genreBox.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        genreBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Adventure", "Romance", "Fantasy", "Science fiction", "Satire", "Mystery", "Horror", "Self help", "Health", "Guide", "Travel", "Children's", "Religion & Spirituality", "Science", "History", "Math", "Anthology", "Poetry", "Encyclopedias", "Dictionaries", "Comics", "Art", "Cookbooks", "Diaries", "Journals", "Prayer books", "Series", "Trilogy", "Biographies", "Autobiographies" }));
-        genreBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                genreBoxActionPerformed(evt);
-            }
-        });
+        buttonGroup1.add(outRadioButton);
+        outRadioButton.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        outRadioButton.setText("OUT");
+
+        buttonGroup1.add(inRadioButton);
+        inRadioButton.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        inRadioButton.setText("IN");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -169,14 +182,16 @@ public class searchByGenrePanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 690, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 692, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(genreBox, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(submitButton)))
+                                .addComponent(inRadioButton)
+                                .addGap(18, 18, 18)
+                                .addComponent(outRadioButton)
+                                .addGap(18, 18, 18)
+                                .addComponent(submitButton))
+                            .addComponent(jLabel1))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -187,130 +202,38 @@ public class searchByGenrePanel extends javax.swing.JPanel {
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(genreBox, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(submitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(outRadioButton)
+                    .addComponent(inRadioButton)
+                    .addComponent(submitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 373, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 383, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
-   Object genre = "";
 
-        switch (genreBox.getSelectedIndex()) {
+        String state;
 
-            case 0:
-                genre = genreBox.getSelectedItem();
-                System.out.println(genre);
-                break;
-            case 1:
-                genre = genreBox.getSelectedItem();
-                break;
-            case 2:
-                genre = genreBox.getSelectedItem();
-                break;
-            case 3:
-                genre = genreBox.getSelectedItem();
-                break;
-            case 4:
-                genre = genreBox.getSelectedItem();
-                break;
-            case 5:
-                genre = genreBox.getSelectedItem();
-                break;
-            case 6:
-                genre = genreBox.getSelectedItem();
-                break;
-            case 7:
-                genre = genreBox.getSelectedItem();
-                break;
-            case 8:
-                genre = genreBox.getSelectedItem();
-                break;
-            case 9:
-                genre = genreBox.getSelectedItem();
-                break;
-            case 10:
-                genre = genreBox.getSelectedItem();
-                break;
-            case 11:
-                genre = genreBox.getSelectedItem();
-                break;
-            case 12:
-                genre = genreBox.getSelectedItem();
-                break;
-            case 13:
-                genre = genreBox.getSelectedItem();
-                break;
-            case 14:
-                genre = genreBox.getSelectedItem();
-                break;
-            case 15:
-                genre = genreBox.getSelectedItem();
-                break;
-            case 16:
-                genre = genreBox.getSelectedItem();
-                break;
-            case 17:
-                genre = genreBox.getSelectedItem();
-                break;
-            case 18:
-                genre = genreBox.getSelectedItem();
-                break;
-            case 19:
-                genre = genreBox.getSelectedItem();
-                break;
-            case 20:
-                genre = genreBox.getSelectedItem();
-                break;
-            case 21:
-                genre = genreBox.getSelectedItem();
-                break;
-            case 22:
-                genre = genreBox.getSelectedItem();
-                break;
-            case 23:
-                genre = genreBox.getSelectedItem();
-                break;
-            case 24:
-                genre = genreBox.getSelectedItem();
-                break;
-            case 25:
-                genre = genreBox.getSelectedItem();
-                break;
-            case 26:
-                genre = genreBox.getSelectedItem();
-                break;
-            case 27:
-                genre = genreBox.getSelectedItem();
-                break;
-            case 28:
-                genre = genreBox.getSelectedItem();
-                break;
-            case 29:
-                genre = genreBox.getSelectedItem();
-                break;
-            default:
-                genre = "";
-                break;
+        if (inRadioButton.isSelected()) {
+            state = "IN";
+            viewRecords(state);
+
         }
-      
-        if (genre.equals("")) {
-
-            JOptionPane.showMessageDialog(null, "Please Fill out all the needed areas.");
-
-        } else {
-            viewRecords(genre);
+        
+        else if(outRadioButton.isSelected()){
+            state = "OUT";
+            viewRecords(state);
+            
         }
+
+        else{
+            System.out.println("Error");
+        }
+        
     }//GEN-LAST:event_submitButtonActionPerformed
 
-    private void genreBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_genreBoxActionPerformed
-
-    }//GEN-LAST:event_genreBoxActionPerformed
-
     private void doubleClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_doubleClick
-        
                
         int rowTable = displayTable.getSelectedRow();
 
@@ -333,15 +256,52 @@ public class searchByGenrePanel extends javax.swing.JPanel {
 
         }
 
-        
     }//GEN-LAST:event_doubleClick
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JTable displayTable;
-    private javax.swing.JComboBox<String> genreBox;
+    private javax.swing.JRadioButton inRadioButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JRadioButton outRadioButton;
     private javax.swing.JButton submitButton;
     // End of variables declaration//GEN-END:variables
+
+    private void viewAllRecords() {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+
+            String searchQuery = "SELECT * FROM TBLBOOKS";
+            statement = connection.prepareStatement(searchQuery);
+            resultset = statement.executeQuery();
+            rsMetadata = resultset.getMetaData();
+            
+            DefaultTableModel dtmPrefix = new DefaultTableModel() {
+                    @Override
+                    public boolean isCellEditable(int row, int column) {
+                        return false;
+                    }
+                };
+            dtmPrefix.addColumn("ID");
+            dtmPrefix.addColumn("TITLE");
+            dtmPrefix.addColumn("AUTHOR");
+            dtmPrefix.addColumn("GENRE");
+            dtmPrefix.addColumn("STATE");
+
+            while (resultset.next()) {
+
+                dtmPrefix.addRow(new Object[]{
+                    resultset.getInt(1),
+                    resultset.getString(2),
+                    resultset.getString(3),
+                    resultset.getString(4),
+                    resultset.getString(5),});
+                displayTable.setModel(dtmPrefix);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(displayPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

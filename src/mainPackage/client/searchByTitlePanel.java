@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mainPackage;
+package mainPackage.client;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -16,41 +16,44 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import mainPackage.addPanel;
+import mainPackage.displayPanel;
 
 /**
  *
  * @author Windows8.1
  */
-public class searchByAuthorPanel extends javax.swing.JPanel {
+public class searchByTitlePanel extends javax.swing.JPanel {
 
     private static final String DATABSE_URL = "jdbc:derby://localhost:1527/libraryDb";
     private static final String username = "oracle";
     private static final String password = "pass";
-    private final String GET_RECORDS = "SELECT * FROM TBLBOOKS WHERE AUTHOR = ?";
 
     private Connection connection;
     private PreparedStatement statement;
     private ResultSet resultset;
     private ResultSetMetaData rsMetadata;
 
-    public searchByAuthorPanel() {
+    public searchByTitlePanel() {
         initComponents();
         try {
             connection = DriverManager.getConnection(DATABSE_URL, username, password);
         } catch (SQLException ex) {
-            Logger.getLogger(searchByAuthorPanel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(searchByTitlePanel.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        viewAllRecords();
     }
 
-    public int checkRecords(String author) {
-
+    public int checkRecords(String title) {
+        
         int count = 0;
-
+        
         try {
             
-            String searchQuery = "SELECT * FROM TBLBOOKS WHERE TITLE LIKE '%"+author+"%'";
+            String searchQuery = "SELECT * FROM TBLBOOKS WHERE TITLE LIKE '%"+title+"%'";
             statement = connection.prepareStatement(searchQuery);
-//            statement.setString(1, author);
+//            statement.setString(1, title);
             resultset = statement.executeQuery();
 
             while (resultset.next()) {
@@ -70,14 +73,13 @@ public class searchByAuthorPanel extends javax.swing.JPanel {
 
     }
 
-    public void viewRecords(String author) {
+    public void viewRecords(String title) {
         try {
+            
+            if (checkRecords(title) >= 1) {
 
-            if (checkRecords(author) >= 1) {
-
-                String searchQuery = "SELECT * FROM TBLBOOKS WHERE TITLE LIKE '%"+author+"%'";
+                String searchQuery = "SELECT * FROM TBLBOOKS WHERE TITLE LIKE '%"+title+"%'";
                 statement = connection.prepareStatement(searchQuery);
-//                statement.setString(1, author);
                 resultset = statement.executeQuery();
                 rsMetadata = resultset.getMetaData();
 
@@ -105,13 +107,11 @@ public class searchByAuthorPanel extends javax.swing.JPanel {
                     });
                     displayTable.setModel(dtmPrefix);
                 }
-                authorField.setText("");
+                titleField.setText("");
             } else {
-
                 JOptionPane.showMessageDialog(null, "No related books found", "", JOptionPane.ERROR_MESSAGE);
-                authorField.setText("");
-
             }
+
         } catch (SQLException ex) {
             Logger.getLogger(displayPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -127,13 +127,13 @@ public class searchByAuthorPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        authorField = new javax.swing.JTextField();
+        titleField = new javax.swing.JTextField();
         submitButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         displayTable = new javax.swing.JTable();
 
         jLabel1.setFont(new java.awt.Font("Arial Narrow", 1, 24)); // NOI18N
-        jLabel1.setText("Search by Author");
+        jLabel1.setText(" Search by Title");
 
         submitButton.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         submitButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/view.png"))); // NOI18N
@@ -166,21 +166,16 @@ public class searchByAuthorPanel extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jLabel1)
-                                .addGap(0, 465, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(authorField)))
+                        .addComponent(titleField)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(submitButton))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1)))
+                        .addComponent(jLabel1)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 690, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -191,28 +186,25 @@ public class searchByAuthorPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(submitButton, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
-                    .addComponent(authorField))
+                    .addComponent(titleField))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 374, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 385, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
 
-        String author = authorField.getText();
-        if (author.equals("")) {
+        String title = titleField.getText();
 
-            JOptionPane.showMessageDialog(null, "Please input an author name", "", JOptionPane.ERROR_MESSAGE);
-
+        if (title.equals("")) {
+            JOptionPane.showMessageDialog(null, "Please input a book title", "", JOptionPane.ERROR_MESSAGE);
         } else {
-            viewRecords(author);
+            viewRecords(title);
         }
     }//GEN-LAST:event_submitButtonActionPerformed
 
     private void doubleClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_doubleClick
- 
-               
+
         int rowTable = displayTable.getSelectedRow();
 
         Object id = displayTable.getValueAt(rowTable, 0);
@@ -220,7 +212,7 @@ public class searchByAuthorPanel extends javax.swing.JPanel {
         Object author = displayTable.getValueAt(rowTable, 2);
         Object genre = displayTable.getValueAt(rowTable, 3);
         Object state = displayTable.getValueAt(rowTable, 4);
-        
+
         if (evt.getClickCount() == 2) {
             JTable target = (JTable) evt.getSource();
             int row = target.getSelectedRow();
@@ -234,15 +226,52 @@ public class searchByAuthorPanel extends javax.swing.JPanel {
 
         }
 
-        
     }//GEN-LAST:event_doubleClick
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField authorField;
     private javax.swing.JTable displayTable;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton submitButton;
+    private javax.swing.JTextField titleField;
     // End of variables declaration//GEN-END:variables
+
+
+    private void viewAllRecords() {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+
+            String searchQuery = "SELECT * FROM TBLBOOKS";
+            statement = connection.prepareStatement(searchQuery);
+            resultset = statement.executeQuery();
+            rsMetadata = resultset.getMetaData();
+            
+            DefaultTableModel dtmPrefix = new DefaultTableModel() {
+                    @Override
+                    public boolean isCellEditable(int row, int column) {
+                        return false;
+                    }
+                };
+            dtmPrefix.addColumn("ID");
+            dtmPrefix.addColumn("TITLE");
+            dtmPrefix.addColumn("AUTHOR");
+            dtmPrefix.addColumn("GENRE");
+            dtmPrefix.addColumn("STATE");
+
+            while (resultset.next()) {
+
+                dtmPrefix.addRow(new Object[]{
+                    resultset.getInt(1),
+                    resultset.getString(2),
+                    resultset.getString(3),
+                    resultset.getString(4),
+                    resultset.getString(5),});
+                displayTable.setModel(dtmPrefix);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(displayPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
 }

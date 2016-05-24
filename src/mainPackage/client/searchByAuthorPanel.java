@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mainPackage;
+package mainPackage.client;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -16,47 +16,51 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import mainPackage.addPanel;
+import mainPackage.displayPanel;
 
 /**
  *
  * @author Windows8.1
  */
-public class searchByIdPanel extends javax.swing.JPanel {
+public class searchByAuthorPanel extends javax.swing.JPanel {
 
     private static final String DATABSE_URL = "jdbc:derby://localhost:1527/libraryDb";
     private static final String username = "oracle";
     private static final String password = "pass";
-    private final String GET_RECORDS = "SELECT * FROM TBLBOOKS WHERE ID = ?";
+    private final String GET_RECORDS = "SELECT * FROM TBLBOOKS WHERE AUTHOR = ?";
 
     private Connection connection;
     private PreparedStatement statement;
     private ResultSet resultset;
     private ResultSetMetaData rsMetadata;
 
-    public searchByIdPanel() {
+    public searchByAuthorPanel() {
         initComponents();
         try {
             connection = DriverManager.getConnection(DATABSE_URL, username, password);
         } catch (SQLException ex) {
-            Logger.getLogger(searchByIdPanel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(searchByAuthorPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
         viewAllRecords();
     }
 
-    public int checkRecords(int id) {
+    public int checkRecords(String author) {
 
         int count = 0;
 
         try {
-            statement = connection.prepareStatement(GET_RECORDS);
-            statement.setInt(1, id);
+            
+            String searchQuery = "SELECT * FROM TBLBOOKS WHERE TITLE LIKE '%"+author+"%'";
+            statement = connection.prepareStatement(searchQuery);
+//            statement.setString(1, author);
             resultset = statement.executeQuery();
 
             while (resultset.next()) {
                 count = count + 1;
             }
 
-            if (count == 1) {
+            if (count >= 1) {
 
                 return count;
             }
@@ -69,17 +73,19 @@ public class searchByIdPanel extends javax.swing.JPanel {
 
     }
 
-    public void viewRecords(int id) {
+    public void viewRecords(String author) {
         try {
 
-            if (checkRecords(id) == 1) {
+            if (checkRecords(author) >= 1) {
 
-                statement = connection.prepareStatement(GET_RECORDS);
-                statement.setInt(1, id);
+                String searchQuery = "SELECT * FROM TBLBOOKS WHERE TITLE LIKE '%"+author+"%'";
+                statement = connection.prepareStatement(searchQuery);
+//                statement.setString(1, author);
                 resultset = statement.executeQuery();
                 rsMetadata = resultset.getMetaData();
 
                 DefaultTableModel dtmPrefix = new DefaultTableModel() {
+
                     @Override
                     public boolean isCellEditable(int row, int column) {
                         return false;
@@ -98,14 +104,15 @@ public class searchByIdPanel extends javax.swing.JPanel {
                         resultset.getString(2),
                         resultset.getString(3),
                         resultset.getString(4),
-                        resultset.getString(5),});
+                        resultset.getString(5)
+                    });
                     displayTable.setModel(dtmPrefix);
                 }
-                idField.setText("");
+                authorField.setText("");
             } else {
 
-                JOptionPane.showMessageDialog(null, "Book ID not Found!");
-                idField.setText("");
+                JOptionPane.showMessageDialog(null, "No related books found", "", JOptionPane.ERROR_MESSAGE);
+                authorField.setText("");
 
             }
         } catch (SQLException ex) {
@@ -123,13 +130,13 @@ public class searchByIdPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        idField = new javax.swing.JTextField();
+        authorField = new javax.swing.JTextField();
         submitButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         displayTable = new javax.swing.JTable();
 
         jLabel1.setFont(new java.awt.Font("Arial Narrow", 1, 24)); // NOI18N
-        jLabel1.setText("Search by ID");
+        jLabel1.setText("Search by Author");
 
         submitButton.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         submitButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/view.png"))); // NOI18N
@@ -162,46 +169,53 @@ public class searchByIdPanel extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 688, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(idField)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel1)
+                                .addGap(0, 465, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(authorField)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(submitButton))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addContainerGap()
+                        .addComponent(jScrollPane1)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(submitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(idField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(submitButton, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
+                    .addComponent(authorField))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 372, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 374, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
 
-        try {
-            String id = idField.getText();
-            int id1 = Integer.parseInt(id);
-            viewRecords(id1);
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Please Input a Proper ID Number.");
+        String author = authorField.getText();
+        if (author.equals("")) {
+
+            JOptionPane.showMessageDialog(null, "Please input an author name", "", JOptionPane.ERROR_MESSAGE);
+
+        } else {
+            viewRecords(author);
         }
     }//GEN-LAST:event_submitButtonActionPerformed
 
     private void doubleClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_doubleClick
-            
+ 
+               
         int rowTable = displayTable.getSelectedRow();
 
         Object id = displayTable.getValueAt(rowTable, 0);
@@ -228,8 +242,8 @@ public class searchByIdPanel extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField authorField;
     private javax.swing.JTable displayTable;
-    private javax.swing.JTextField idField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton submitButton;
@@ -266,7 +280,6 @@ public class searchByIdPanel extends javax.swing.JPanel {
                     resultset.getString(5),});
                 displayTable.setModel(dtmPrefix);
             }
-            idField.setText("");
         } catch (SQLException ex) {
             Logger.getLogger(displayPanel.class.getName()).log(Level.SEVERE, null, ex);
         }

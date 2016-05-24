@@ -3,8 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mainPackage;
+package mainPackage.client;
 
+import mainPackage.client.searchByIdPanel;
+import mainPackage.client.searchByGenrePanel;
+import mainPackage.client.searchByStatusPanel;
+import mainPackage.client.searchByAuthorPanel;
+import mainPackage.client.searchByTitlePanel;
 import java.awt.BorderLayout;
 import javax.swing.JOptionPane;
 
