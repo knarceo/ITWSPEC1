@@ -6,7 +6,7 @@
       <SubComponents>
         <Menu class="javax.swing.JMenu" name="jMenu1">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Cars"/>
+            <Property name="text" type="java.lang.String" value="Books"/>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="searchByModel">
@@ -17,7 +17,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/mainPackage/view.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Search Car by Model"/>
+                <Property name="text" type="java.lang.String" value="Search by ID"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="searchByModelActionPerformed"/>
@@ -31,7 +31,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/mainPackage/view.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Search Car by Type"/>
+                <Property name="text" type="java.lang.String" value="Search by Title"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="searchByTypeActionPerformed"/>

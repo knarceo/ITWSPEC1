@@ -19,6 +19,12 @@ public class clientFrame extends javax.swing.JFrame {
      */
     public clientFrame() {
         initComponents();
+        clientPanel.removeAll();
+        clientPanel.setVisible(false);
+        clientPanel.setLayout(new BorderLayout());
+        clientPanel.add(new searchByIdPanel(), BorderLayout.CENTER);
+        clientPanel.repaint();
+        clientPanel.setVisible(true);
     }
 
     /**
@@ -60,11 +66,11 @@ public class clientFrame extends javax.swing.JFrame {
             .addGap(0, 469, Short.MAX_VALUE)
         );
 
-        jMenu1.setText("Cars");
+        jMenu1.setText("Books");
 
         searchByModel.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.ALT_MASK));
         searchByModel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/view.png"))); // NOI18N
-        searchByModel.setText("Search Car by Model");
+        searchByModel.setText("Search by ID");
         searchByModel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 searchByModelActionPerformed(evt);
@@ -74,7 +80,7 @@ public class clientFrame extends javax.swing.JFrame {
 
         searchByType.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_T, java.awt.event.InputEvent.ALT_MASK));
         searchByType.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/view.png"))); // NOI18N
-        searchByType.setText("Search Car by Type");
+        searchByType.setText("Search by Title");
         searchByType.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 searchByTypeActionPerformed(evt);
@@ -160,7 +166,7 @@ public class clientFrame extends javax.swing.JFrame {
         clientPanel.removeAll();
         clientPanel.setVisible(false);
         clientPanel.setLayout(new BorderLayout());
-        clientPanel.add(new searchByModelPanel(), BorderLayout.CENTER);
+        clientPanel.add(new searchByIdPanel(), BorderLayout.CENTER);
         clientPanel.repaint();
         clientPanel.setVisible(true);
 
@@ -182,7 +188,7 @@ public class clientFrame extends javax.swing.JFrame {
         clientPanel.removeAll();
         clientPanel.setVisible(false);
         clientPanel.setLayout(new BorderLayout());
-        clientPanel.add(new viewTitlePanel_1(), BorderLayout.CENTER);
+        clientPanel.add(new searchByTitlePanel(), BorderLayout.CENTER);
         clientPanel.repaint();
         clientPanel.setVisible(true);
 
