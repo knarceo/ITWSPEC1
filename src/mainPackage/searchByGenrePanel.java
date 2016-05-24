@@ -21,34 +21,34 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Windows8.1
  */
-public class viewStatePanel_1 extends javax.swing.JPanel {
+public class searchByGenrePanel extends javax.swing.JPanel {
 
     private static final String DATABSE_URL = "jdbc:derby://localhost:1527/libraryDb";
     private static final String username = "oracle";
     private static final String password = "pass";
-    private final String GET_RECORDS = "SELECT * FROM TBLBOOKS WHERE STATE = ?";
+    private final String GET_RECORDS = "SELECT * FROM TBLBOOKS WHERE GENRE = ?";
 
     private Connection connection;
     private PreparedStatement statement;
     private ResultSet resultset;
     private ResultSetMetaData rsMetadata;
 
-    public viewStatePanel_1() {
+    public searchByGenrePanel() {
         initComponents();
         try {
             connection = DriverManager.getConnection(DATABSE_URL, username, password);
         } catch (SQLException ex) {
-            Logger.getLogger(viewStatePanel_1.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(searchByGenrePanel.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public int checkRecords(String genre) {
+    public int checkRecords(Object genre) {
 
         int count = 0;
 
         try {
             statement = connection.prepareStatement(GET_RECORDS);
-            statement.setString(1, genre);
+            statement.setObject(1, genre);
             resultset = statement.executeQuery();
 
             while (resultset.next()) {
@@ -68,13 +68,13 @@ public class viewStatePanel_1 extends javax.swing.JPanel {
 
     }
 
-    public void viewRecords(String genre) {
+    public void viewRecords(Object genre) {
         try {
 
             if (checkRecords(genre) >= 1) {
 
                 statement = connection.prepareStatement(GET_RECORDS);
-                statement.setString(1, genre);
+                statement.setObject(1, genre);
                 resultset = statement.executeQuery();
                 rsMetadata = resultset.getMetaData();
 
@@ -102,9 +102,8 @@ public class viewStatePanel_1 extends javax.swing.JPanel {
                     });
                     displayTable.setModel(dtmPrefix);
                 }
-
             } else {
-                JOptionPane.showMessageDialog(null, "There are no Books at this State!");
+                JOptionPane.showMessageDialog(null, "Book Genre is unavailable for the moment!");
             }
         } catch (SQLException ex) {
             Logger.getLogger(displayPanel.class.getName()).log(Level.SEVERE, null, ex);
@@ -120,23 +119,17 @@ public class viewStatePanel_1 extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        buttonGroup1 = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         submitButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         displayTable = new javax.swing.JTable();
-        outRadioButton = new javax.swing.JRadioButton();
-        inRadioButton = new javax.swing.JRadioButton();
+        genreBox = new javax.swing.JComboBox<>();
 
-        jLabel1.setFont(new java.awt.Font("Georgia", 0, 24)); // NOI18N
-        jLabel1.setText("Search a Book");
-
-        jLabel2.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
-        jLabel2.setText("State:");
+        jLabel1.setFont(new java.awt.Font("Arial Narrow", 1, 24)); // NOI18N
+        jLabel1.setText("Search by Genre");
 
         submitButton.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        submitButton.setText("Submit");
+        submitButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/view.png"))); // NOI18N
         submitButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 submitButtonActionPerformed(evt);
@@ -145,13 +138,6 @@ public class viewStatePanel_1 extends javax.swing.JPanel {
 
         displayTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
                 {null, null, null, null},
                 {null, null, null, null},
                 {null, null, null, null},
@@ -168,77 +154,163 @@ public class viewStatePanel_1 extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(displayTable);
 
-        buttonGroup1.add(outRadioButton);
-        outRadioButton.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        outRadioButton.setText("OUT");
-
-        buttonGroup1.add(inRadioButton);
-        inRadioButton.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        inRadioButton.setText("IN");
+        genreBox.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        genreBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Adventure", "Romance", "Fantasy", "Science fiction", "Satire", "Mystery", "Horror", "Self help", "Health", "Guide", "Travel", "Children's", "Religion & Spirituality", "Science", "History", "Math", "Anthology", "Poetry", "Encyclopedias", "Dictionaries", "Comics", "Art", "Cookbooks", "Diaries", "Journals", "Prayer books", "Series", "Trilogy", "Biographies", "Autobiographies" }));
+        genreBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                genreBoxActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(33, 33, 33)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 690, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(genreBox, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(inRadioButton)
-                                .addGap(18, 18, 18)
-                                .addComponent(outRadioButton)
-                                .addGap(40, 40, 40)
-                                .addComponent(submitButton)
-                                .addGap(257, 257, 257))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING))))
-                .addContainerGap(97, Short.MAX_VALUE))
+                                .addComponent(submitButton)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(44, 44, 44)
+                .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(16, 16, 16)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(outRadioButton)
-                    .addComponent(inRadioButton)
-                    .addComponent(submitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE)
-                .addGap(127, 127, 127))
+                    .addComponent(genreBox, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(submitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 373, Short.MAX_VALUE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
+   Object genre = "";
 
-        String state;
+        switch (genreBox.getSelectedIndex()) {
 
-        if (inRadioButton.isSelected()) {
-            state = "IN";
-            viewRecords(state);
-
+            case 0:
+                genre = genreBox.getSelectedItem();
+                System.out.println(genre);
+                break;
+            case 1:
+                genre = genreBox.getSelectedItem();
+                break;
+            case 2:
+                genre = genreBox.getSelectedItem();
+                break;
+            case 3:
+                genre = genreBox.getSelectedItem();
+                break;
+            case 4:
+                genre = genreBox.getSelectedItem();
+                break;
+            case 5:
+                genre = genreBox.getSelectedItem();
+                break;
+            case 6:
+                genre = genreBox.getSelectedItem();
+                break;
+            case 7:
+                genre = genreBox.getSelectedItem();
+                break;
+            case 8:
+                genre = genreBox.getSelectedItem();
+                break;
+            case 9:
+                genre = genreBox.getSelectedItem();
+                break;
+            case 10:
+                genre = genreBox.getSelectedItem();
+                break;
+            case 11:
+                genre = genreBox.getSelectedItem();
+                break;
+            case 12:
+                genre = genreBox.getSelectedItem();
+                break;
+            case 13:
+                genre = genreBox.getSelectedItem();
+                break;
+            case 14:
+                genre = genreBox.getSelectedItem();
+                break;
+            case 15:
+                genre = genreBox.getSelectedItem();
+                break;
+            case 16:
+                genre = genreBox.getSelectedItem();
+                break;
+            case 17:
+                genre = genreBox.getSelectedItem();
+                break;
+            case 18:
+                genre = genreBox.getSelectedItem();
+                break;
+            case 19:
+                genre = genreBox.getSelectedItem();
+                break;
+            case 20:
+                genre = genreBox.getSelectedItem();
+                break;
+            case 21:
+                genre = genreBox.getSelectedItem();
+                break;
+            case 22:
+                genre = genreBox.getSelectedItem();
+                break;
+            case 23:
+                genre = genreBox.getSelectedItem();
+                break;
+            case 24:
+                genre = genreBox.getSelectedItem();
+                break;
+            case 25:
+                genre = genreBox.getSelectedItem();
+                break;
+            case 26:
+                genre = genreBox.getSelectedItem();
+                break;
+            case 27:
+                genre = genreBox.getSelectedItem();
+                break;
+            case 28:
+                genre = genreBox.getSelectedItem();
+                break;
+            case 29:
+                genre = genreBox.getSelectedItem();
+                break;
+            default:
+                genre = "";
+                break;
         }
-        
-        else if(outRadioButton.isSelected()){
-            state = "OUT";
-            viewRecords(state);
-            
-        }
+      
+        if (genre.equals("")) {
 
-        else{
-            System.out.println("Error");
+            JOptionPane.showMessageDialog(null, "Please Fill out all the needed areas.");
+
+        } else {
+            viewRecords(genre);
         }
-        
     }//GEN-LAST:event_submitButtonActionPerformed
 
+    private void genreBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_genreBoxActionPerformed
+
+    }//GEN-LAST:event_genreBoxActionPerformed
+
     private void doubleClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_doubleClick
+        
                
         int rowTable = displayTable.getSelectedRow();
 
@@ -261,17 +333,15 @@ public class viewStatePanel_1 extends javax.swing.JPanel {
 
         }
 
+        
     }//GEN-LAST:event_doubleClick
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JTable displayTable;
-    private javax.swing.JRadioButton inRadioButton;
+    private javax.swing.JComboBox<String> genreBox;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JRadioButton outRadioButton;
     private javax.swing.JButton submitButton;
     // End of variables declaration//GEN-END:variables
 }

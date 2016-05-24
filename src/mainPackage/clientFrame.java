@@ -177,7 +177,7 @@ public class clientFrame extends javax.swing.JFrame {
         clientPanel.removeAll();
         clientPanel.setVisible(false);
         clientPanel.setLayout(new BorderLayout());
-        clientPanel.add(new viewAuthorPanel_1(), BorderLayout.CENTER);
+        clientPanel.add(new searchByAuthorPanel(), BorderLayout.CENTER);
         clientPanel.repaint();
         clientPanel.setVisible(true);
 
@@ -199,7 +199,7 @@ public class clientFrame extends javax.swing.JFrame {
         clientPanel.removeAll();
         clientPanel.setVisible(false);
         clientPanel.setLayout(new BorderLayout());
-        clientPanel.add(new viewGenrePanel_1(), BorderLayout.CENTER);
+        clientPanel.add(new searchByGenrePanel(), BorderLayout.CENTER);
         clientPanel.repaint();
         clientPanel.setVisible(true);
 
@@ -222,7 +222,7 @@ public class clientFrame extends javax.swing.JFrame {
         clientPanel.removeAll();
         clientPanel.setVisible(false);
         clientPanel.setLayout(new BorderLayout());
-        clientPanel.add(new viewStatePanel_1(), BorderLayout.CENTER);
+        clientPanel.add(new searchByStatusPanel(), BorderLayout.CENTER);
         clientPanel.repaint();
         clientPanel.setVisible(true);
 

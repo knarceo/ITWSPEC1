@@ -21,41 +21,41 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Windows8.1
  */
-public class searchByIdPanel extends javax.swing.JPanel {
+public class searchByStatusPanel extends javax.swing.JPanel {
 
     private static final String DATABSE_URL = "jdbc:derby://localhost:1527/libraryDb";
     private static final String username = "oracle";
     private static final String password = "pass";
-    private final String GET_RECORDS = "SELECT * FROM TBLBOOKS WHERE ID = ?";
+    private final String GET_RECORDS = "SELECT * FROM TBLBOOKS WHERE STATE = ?";
 
     private Connection connection;
     private PreparedStatement statement;
     private ResultSet resultset;
     private ResultSetMetaData rsMetadata;
 
-    public searchByIdPanel() {
+    public searchByStatusPanel() {
         initComponents();
         try {
             connection = DriverManager.getConnection(DATABSE_URL, username, password);
         } catch (SQLException ex) {
-            Logger.getLogger(searchByIdPanel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(searchByStatusPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public int checkRecords(int id) {
+    public int checkRecords(String genre) {
 
         int count = 0;
 
         try {
             statement = connection.prepareStatement(GET_RECORDS);
-            statement.setInt(1, id);
+            statement.setString(1, genre);
             resultset = statement.executeQuery();
 
             while (resultset.next()) {
                 count = count + 1;
             }
 
-            if (count == 1) {
+            if (count >= 1) {
 
                 return count;
             }
@@ -68,17 +68,18 @@ public class searchByIdPanel extends javax.swing.JPanel {
 
     }
 
-    public void viewRecords(int id) {
+    public void viewRecords(String genre) {
         try {
 
-            if (checkRecords(id) == 1) {
+            if (checkRecords(genre) >= 1) {
 
                 statement = connection.prepareStatement(GET_RECORDS);
-                statement.setInt(1, id);
+                statement.setString(1, genre);
                 resultset = statement.executeQuery();
                 rsMetadata = resultset.getMetaData();
 
-                DefaultTableModel dtmPrefix = new DefaultTableModel() {
+                DefaultTableModel dtmPrefix = new DefaultTableModel(){
+                    
                     @Override
                     public boolean isCellEditable(int row, int column) {
                         return false;
@@ -97,15 +98,13 @@ public class searchByIdPanel extends javax.swing.JPanel {
                         resultset.getString(2),
                         resultset.getString(3),
                         resultset.getString(4),
-                        resultset.getString(5),});
+                        resultset.getString(5)
+                    });
                     displayTable.setModel(dtmPrefix);
                 }
-                idField.setText("");
+
             } else {
-
-                JOptionPane.showMessageDialog(null, "Book ID not Found!");
-                idField.setText("");
-
+                JOptionPane.showMessageDialog(null, "There are no Books at this State!");
             }
         } catch (SQLException ex) {
             Logger.getLogger(displayPanel.class.getName()).log(Level.SEVERE, null, ex);
@@ -121,14 +120,16 @@ public class searchByIdPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
-        idField = new javax.swing.JTextField();
         submitButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         displayTable = new javax.swing.JTable();
+        outRadioButton = new javax.swing.JRadioButton();
+        inRadioButton = new javax.swing.JRadioButton();
 
         jLabel1.setFont(new java.awt.Font("Arial Narrow", 1, 24)); // NOI18N
-        jLabel1.setText("Search by ID");
+        jLabel1.setText("Search by Status");
 
         submitButton.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         submitButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/view.png"))); // NOI18N
@@ -140,6 +141,13 @@ public class searchByIdPanel extends javax.swing.JPanel {
 
         displayTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
                 {null, null, null, null},
                 {null, null, null, null},
                 {null, null, null, null},
@@ -156,6 +164,14 @@ public class searchByIdPanel extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(displayTable);
 
+        buttonGroup1.add(outRadioButton);
+        outRadioButton.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        outRadioButton.setText("OUT");
+
+        buttonGroup1.add(inRadioButton);
+        inRadioButton.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        inRadioButton.setText("IN");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -163,13 +179,16 @@ public class searchByIdPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 688, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 692, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(idField)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(submitButton))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(inRadioButton)
+                                .addGap(18, 18, 18)
+                                .addComponent(outRadioButton)
+                                .addGap(18, 18, 18)
+                                .addComponent(submitButton))
+                            .addComponent(jLabel1))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -177,30 +196,42 @@ public class searchByIdPanel extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(submitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(idField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(outRadioButton)
+                    .addComponent(inRadioButton)
+                    .addComponent(submitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 372, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 383, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
 
-        try {
-            String id = idField.getText();
-            int id1 = Integer.parseInt(id);
-            viewRecords(id1);
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Please Input a Proper ID Number.");
+        String state;
+
+        if (inRadioButton.isSelected()) {
+            state = "IN";
+            viewRecords(state);
+
         }
+        
+        else if(outRadioButton.isSelected()){
+            state = "OUT";
+            viewRecords(state);
+            
+        }
+
+        else{
+            System.out.println("Error");
+        }
+        
     }//GEN-LAST:event_submitButtonActionPerformed
 
     private void doubleClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_doubleClick
-            
+               
         int rowTable = displayTable.getSelectedRow();
 
         Object id = displayTable.getValueAt(rowTable, 0);
@@ -222,15 +253,16 @@ public class searchByIdPanel extends javax.swing.JPanel {
 
         }
 
-        
     }//GEN-LAST:event_doubleClick
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JTable displayTable;
-    private javax.swing.JTextField idField;
+    private javax.swing.JRadioButton inRadioButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JRadioButton outRadioButton;
     private javax.swing.JButton submitButton;
     // End of variables declaration//GEN-END:variables
 }
