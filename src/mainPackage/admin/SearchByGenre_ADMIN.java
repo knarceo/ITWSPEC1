@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mainPackage;
+package mainPackage.admin;
 
 import mainPackage.admin.SearchBookByID_ADMIN;
 import mainPackage.admin.AddBookPanel_ADMIN;
@@ -20,12 +20,13 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import mainPackage.displayPanel;
 
 /**
  *
  * @author Windows8.1
  */
-public class viewGenrePanel extends javax.swing.JPanel {
+public class SearchByGenre_ADMIN extends javax.swing.JPanel {
 
     private static final String DATABSE_URL = "jdbc:derby://localhost:1527/libraryDb";
     private static final String username = "oracle";
@@ -59,12 +60,12 @@ public class viewGenrePanel extends javax.swing.JPanel {
     private ResultSet resultset;
     private ResultSetMetaData rsMetadata;
 
-    public viewGenrePanel() {
+    public SearchByGenre_ADMIN() {
         initComponents();
         try {
             connection = DriverManager.getConnection(DATABSE_URL, username, password);
         } catch (SQLException ex) {
-            Logger.getLogger(viewGenrePanel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SearchByGenre_ADMIN.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -184,7 +185,7 @@ public class viewGenrePanel extends javax.swing.JPanel {
                     displayTable.setModel(dtmPrefix);
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "Book Genre is not available of the moment!");
+                JOptionPane.showMessageDialog(null, "No books found under this genre", "", JOptionPane.ERROR_MESSAGE);
             }
         } catch (SQLException ex) {
             Logger.getLogger(displayPanel.class.getName()).log(Level.SEVERE, null, ex);
@@ -291,22 +292,16 @@ public class viewGenrePanel extends javax.swing.JPanel {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         submitButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         displayTable = new javax.swing.JTable();
-        inButton = new javax.swing.JButton();
-        borrowButton = new javax.swing.JButton();
         genreBox = new javax.swing.JComboBox<>();
 
-        jLabel1.setFont(new java.awt.Font("Georgia", 0, 24)); // NOI18N
-        jLabel1.setText("Search a Book");
-
-        jLabel2.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
-        jLabel2.setText("Genre:");
+        jLabel1.setFont(new java.awt.Font("Arial Narrow", 1, 24)); // NOI18N
+        jLabel1.setText("Administrator : Search by Genre");
 
         submitButton.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        submitButton.setText("Submit");
+        submitButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/assets/viewAll.png"))); // NOI18N
         submitButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 submitButtonActionPerformed(evt);
@@ -331,22 +326,6 @@ public class viewGenrePanel extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(displayTable);
 
-        inButton.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        inButton.setText("IN");
-        inButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                inButtonActionPerformed(evt);
-            }
-        });
-
-        borrowButton.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        borrowButton.setText("OUT");
-        borrowButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                borrowButtonActionPerformed(evt);
-            }
-        });
-
         genreBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Adventure", "Romance", "Fantasy", "Science fiction", "Satire", "Mystery", "Horror", "Self help", "Health", "Guide", "Travel", "Children's", "Religion & Spirituality", "Science", "History", "Math", "Anthology", "Poetry", "Encyclopedias", "Dictionaries", "Comics", "Art", "Cookbooks", "Diaries", "Journals", "Prayer books", "Series", "Trilogy", "Biographies", "Autobiographies" }));
         genreBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -359,42 +338,35 @@ public class viewGenrePanel extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(genreBox, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(submitButton))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(inButton, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(borrowButton))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 636, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(41, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel1))
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(genreBox, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(submitButton)))
+                        .addGap(0, 387, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(44, 44, 44)
+                .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(16, 16, 16)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(genreBox, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(submitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(borrowButton)
-                    .addComponent(inButton))
-                .addGap(177, 177, 177))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -402,179 +374,13 @@ public class viewGenrePanel extends javax.swing.JPanel {
 
         Object genre = "";
 
-        switch (genreBox.getSelectedIndex()) {
-
-            case 0:
-                genre = genreBox.getSelectedItem();
-                System.out.println(genre);
-                break;
-            case 1:
-                genre = genreBox.getSelectedItem();
-                break;
-            case 2:
-                genre = genreBox.getSelectedItem();
-                break;
-            case 3:
-                genre = genreBox.getSelectedItem();
-                break;
-            case 4:
-                genre = genreBox.getSelectedItem();
-                break;
-            case 5:
-                genre = genreBox.getSelectedItem();
-                break;
-            case 6:
-                genre = genreBox.getSelectedItem();
-                break;
-            case 7:
-                genre = genreBox.getSelectedItem();
-                break;
-            case 8:
-                genre = genreBox.getSelectedItem();
-                break;
-            case 9:
-                genre = genreBox.getSelectedItem();
-                break;
-            case 10:
-                genre = genreBox.getSelectedItem();
-                break;
-            case 11:
-                genre = genreBox.getSelectedItem();
-                break;
-            case 12:
-                genre = genreBox.getSelectedItem();
-                break;
-            case 13:
-                genre = genreBox.getSelectedItem();
-                break;
-            case 14:
-                genre = genreBox.getSelectedItem();
-                break;
-            case 15:
-                genre = genreBox.getSelectedItem();
-                break;
-            case 16:
-                genre = genreBox.getSelectedItem();
-                break;
-            case 17:
-                genre = genreBox.getSelectedItem();
-                break;
-            case 18:
-                genre = genreBox.getSelectedItem();
-                break;
-            case 19:
-                genre = genreBox.getSelectedItem();
-                break;
-            case 20:
-                genre = genreBox.getSelectedItem();
-                break;
-            case 21:
-                genre = genreBox.getSelectedItem();
-                break;
-            case 22:
-                genre = genreBox.getSelectedItem();
-                break;
-            case 23:
-                genre = genreBox.getSelectedItem();
-                break;
-            case 24:
-                genre = genreBox.getSelectedItem();
-                break;
-            case 25:
-                genre = genreBox.getSelectedItem();
-                break;
-            case 26:
-                genre = genreBox.getSelectedItem();
-                break;
-            case 27:
-                genre = genreBox.getSelectedItem();
-                break;
-            case 28:
-                genre = genreBox.getSelectedItem();
-                break;
-            case 29:
-                genre = genreBox.getSelectedItem();
-                break;
-            default:
-                genre = "";
-                break;
-        }
-
+        genre = genreBox.getSelectedItem();
         if (genre.equals("")) {
-
-            JOptionPane.showMessageDialog(null, "Please Fill out all the needed areas.");
-
+            JOptionPane.showMessageDialog(null, "Please pick a genre from the list provided.", "", JOptionPane.ERROR_MESSAGE);
         } else {
             viewRecords(genre);
         }
     }//GEN-LAST:event_submitButtonActionPerformed
-
-    private void inButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inButtonActionPerformed
-
-        try {
-            int row = displayTable.getSelectedRow();
-            Object id = displayTable.getValueAt(row, 0);
-
-            Object sNumber = displayTable.getValueAt(row, 5);
-            UPDATE_ACCOUNTS_IN(sNumber);
-
-            displayTable.setValueAt("IN", row, 4);
-
-            displayTable.setValueAt("", row, 5);
-
-            displayTable.setValueAt("", row, 6);
-
-            UPDATE_TBLBOOKS_IN(id);
-            UPDATE_BORROW(id);
-
-        } catch (ArrayIndexOutOfBoundsException e) {
-            JOptionPane.showMessageDialog(null, "Input an ID first.");
-        }
-    }//GEN-LAST:event_inButtonActionPerformed
-
-    private void borrowButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_borrowButtonActionPerformed
-
-        int row = displayTable.getSelectedRow();
-
-        Object state = displayTable.getValueAt(row, 4);
-
-        if (state.equals("OUT")) {
-
-            JOptionPane.showMessageDialog(null, "The Book is still out!");
-        } else {
-
-            String sNumber = JOptionPane.showInputDialog("Enter Student Number");
-
-            if (checkAccounts(sNumber) == 1) {
-
-                if (checkBorrowed(sNumber) == 0) {
-
-                    try {
-
-                        displayTable.setValueAt("OUT", row, 4);
-
-                        displayTable.setValueAt(sNumber, row, 5);
-
-                        displayTable.setValueAt(sqldate, row, 6);
-
-                        Object id = displayTable.getValueAt(row, 0);
-
-                        UPDATE_TBLBOOKS_OUT(id, sNumber);
-                        INSERT_TO_BORROW(sNumber, id);
-                        UPDATE_ACCOUNTS_OUT(id, sNumber);
-
-                    } catch (ArrayIndexOutOfBoundsException e) {
-                        JOptionPane.showMessageDialog(null, "Input an ID first.");
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(null, "Student Number has already Borrowed a Book!");
-                }
-
-            } else {
-                JOptionPane.showMessageDialog(null, "Student Number is not Registered");
-            }
-        }
-    }//GEN-LAST:event_borrowButtonActionPerformed
 
     private void genreBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_genreBoxActionPerformed
 
@@ -611,12 +417,9 @@ public class viewGenrePanel extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton borrowButton;
     private javax.swing.JTable displayTable;
     private javax.swing.JComboBox<String> genreBox;
-    private javax.swing.JButton inButton;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton submitButton;
     // End of variables declaration//GEN-END:variables
