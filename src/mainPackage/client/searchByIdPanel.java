@@ -1,6 +1,9 @@
 package mainPackage.client;
 
 import java.awt.BorderLayout;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -31,6 +34,8 @@ public class searchByIdPanel extends javax.swing.JPanel {
     private PreparedStatement statement;
     private ResultSet resultset;
     private ResultSetMetaData rsMetadata;
+    static ObjectOutputStream output;
+    static ObjectInputStream input;
 
     public searchByIdPanel() {
         initComponents();
@@ -206,16 +211,17 @@ public class searchByIdPanel extends javax.swing.JPanel {
         searchStateBtn = new javax.swing.JButton();
         outRadioButton = new javax.swing.JRadioButton();
         inRadioButton = new javax.swing.JRadioButton();
+        borrowBtn = new javax.swing.JButton();
 
         displayTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5"
             }
         ));
         displayTable.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -228,7 +234,7 @@ public class searchByIdPanel extends javax.swing.JPanel {
         jLabel1.setFont(new java.awt.Font("Arial Narrow", 1, 24)); // NOI18N
         jLabel1.setText("Search a Book");
 
-        columnBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Search By ID", "Search By Author", "Search By Title", "Search By Genre", "Search By Status" }));
+        columnBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "View All Books", "Search By ID", "Search By Author", "Search By Title", "Search By Genre", "Search By Status" }));
         columnBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 columnBoxActionPerformed(evt);
@@ -270,6 +276,14 @@ public class searchByIdPanel extends javax.swing.JPanel {
             }
         });
 
+        borrowBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/assets/editicon.png"))); // NOI18N
+        borrowBtn.setText("Request to Borrow");
+        borrowBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                borrowBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -296,6 +310,10 @@ public class searchByIdPanel extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1)
                         .addContainerGap())))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(borrowBtn)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -304,21 +322,18 @@ public class searchByIdPanel extends javax.swing.JPanel {
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(searchByIdField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(outRadioButton)
-                                    .addComponent(inRadioButton)))
-                            .addComponent(columnBox, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(submitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 378, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(searchStateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(outRadioButton)
+                        .addComponent(inRadioButton))
+                    .addComponent(searchByIdField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(columnBox, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(submitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(searchStateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(borrowBtn)
+                .addContainerGap(173, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -357,6 +372,9 @@ public class searchByIdPanel extends javax.swing.JPanel {
             ClientFrame.clientPanel.add(new searchByStatusPanel(), BorderLayout.CENTER);
             ClientFrame.clientPanel.repaint();
             ClientFrame.clientPanel.setVisible(true);
+        }
+        else if(columnBox.getSelectedItem().toString().equals("View All Books")){
+            viewAllRecords();
         }
         else{
             searchByIdField.setVisible(true);
@@ -424,8 +442,22 @@ public class searchByIdPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_inRadioButtonActionPerformed
 
+    private void borrowBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_borrowBtnActionPerformed
+        int row = displayTable.getSelectedRow();
+        Object state = displayTable.getValueAt(row, 4);
+
+        if (state.equals("OUT")) {
+            JOptionPane.showMessageDialog(null, "The Book is still out!");
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Request has been sent to the Book Admin!");
+            sendData("=============================\nA user has requested this book."+state.toString()+"\n=============================");
+        }
+    }//GEN-LAST:event_borrowBtnActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton borrowBtn;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> columnBox;
     private javax.swing.JTable displayTable;
@@ -467,11 +499,23 @@ public class searchByIdPanel extends javax.swing.JPanel {
                     resultset.getString(3),
                     resultset.getString(4),
                     resultset.getString(5),});
-                displayTable.setModel(dtmPrefix);
+                    displayTable.setModel(dtmPrefix);
             }
             searchByIdField.setText("");         
         } catch (SQLException ex) {
             Logger.getLogger(ViewAllBooksPanel_ADMIN.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    private void sendData(String message) {
+        try {
+            output.writeObject("CLIENT : \n" + message);
+            output.flush(); // flush data to output
+            //displayMessage("\nCLIENT>>> " + message);
+
+        } catch (IOException ioException) {
+            System.out.println("Error writing object");
+        }
+
     }
 }

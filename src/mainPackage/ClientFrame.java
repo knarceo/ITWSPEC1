@@ -6,6 +6,11 @@
 package mainPackage;
 
 import java.awt.BorderLayout;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.InetAddress;
+import java.net.Socket;
 import javax.swing.JOptionPane;
 import mainPackage.client.searchByIdPanel;
 
@@ -15,6 +20,10 @@ import mainPackage.client.searchByIdPanel;
  */
 public class ClientFrame extends javax.swing.JFrame {
     
+    //Client-Server Variables
+    static Socket client;
+    static ObjectOutputStream output;
+    static ObjectInputStream input;
     public ClientFrame() {
         initComponents();
         clientPanel.removeAll();
@@ -54,11 +63,12 @@ public class ClientFrame extends javax.swing.JFrame {
         );
         clientPanelLayout.setVerticalGroup(
             clientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 426, Short.MAX_VALUE)
+            .addGap(0, 420, Short.MAX_VALUE)
         );
 
         logOutBtn.setBackground(new java.awt.Color(255, 51, 51));
         logOutBtn.setFont(new java.awt.Font("Arial Narrow", 1, 18)); // NOI18N
+        logOutBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/assets/exit.jpg"))); // NOI18N
         logOutBtn.setText("Log Out");
         logOutBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -93,8 +103,9 @@ public class ClientFrame extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(logOutBtn)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(clientPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -178,9 +189,34 @@ public class ClientFrame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+                if(args.length == 0){
+                    try {
+                        client = new Socket(InetAddress.getByName("127.0.0.1"), 12345);
+                    } catch (IOException ex) { }
+                }else{
+                    try {
+                        client = new Socket(InetAddress.getByName(args[0]), 12345);
+                    } catch (IOException ex) { }
+                }
+                
+                try {
+                    getStreams(); // get the input and output streams
+                } catch (IOException ex) {
+                    //Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 new ClientFrame().setVisible(true);
             }
         });
+    }
+    
+    static void getStreams() throws IOException {
+        // set up output stream for objects
+        output = new ObjectOutputStream(client.getOutputStream());
+        output.flush(); // flush output buffer to send header information
+
+        // set up input stream for objects
+        input = new ObjectInputStream(client.getInputStream());
+        //displayMessage("\nGot I/O streams\n");
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

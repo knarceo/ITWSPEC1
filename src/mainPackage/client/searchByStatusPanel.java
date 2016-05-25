@@ -128,11 +128,12 @@ public class searchByStatusPanel extends javax.swing.JPanel {
         buttonGroup1 = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
         submitButton = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        displayTable = new javax.swing.JTable();
         outRadioButton = new javax.swing.JRadioButton();
         inRadioButton = new javax.swing.JRadioButton();
         columnBox = new javax.swing.JComboBox<String>();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        displayTable = new javax.swing.JTable();
+        borrowBtn = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Arial Narrow", 1, 24)); // NOI18N
         jLabel1.setText("Search by Status");
@@ -144,31 +145,6 @@ public class searchByStatusPanel extends javax.swing.JPanel {
                 submitButtonActionPerformed(evt);
             }
         });
-
-        displayTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        displayTable.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                doubleClick(evt);
-            }
-        });
-        jScrollPane1.setViewportView(displayTable);
 
         buttonGroup1.add(outRadioButton);
         outRadioButton.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -183,10 +159,36 @@ public class searchByStatusPanel extends javax.swing.JPanel {
             }
         });
 
-        columnBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Search By ID", "Search By Author", "Search By Title", "Search By Genre", "Search By Status" }));
+        columnBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "View All Books", "Search By ID", "Search By Author", "Search By Title", "Search By Genre", "Search By Status" }));
         columnBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 columnBoxActionPerformed(evt);
+            }
+        });
+
+        displayTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5"
+            }
+        ));
+        displayTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                displayTabledoubleClick(evt);
+            }
+        });
+        jScrollPane1.setViewportView(displayTable);
+
+        borrowBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/assets/editicon.png"))); // NOI18N
+        borrowBtn.setText("Request to Borrow");
+        borrowBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                borrowBtnActionPerformed(evt);
             }
         });
 
@@ -209,11 +211,15 @@ public class searchByStatusPanel extends javax.swing.JPanel {
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 692, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel1)
-                                .addGap(0, 532, Short.MAX_VALUE)))
+                                .addGap(0, 532, Short.MAX_VALUE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING))
                         .addContainerGap())))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(borrowBtn)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -227,9 +233,11 @@ public class searchByStatusPanel extends javax.swing.JPanel {
                         .addComponent(outRadioButton)
                         .addComponent(inRadioButton)
                         .addComponent(submitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 378, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(borrowBtn)
+                .addGap(173, 173, 173))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -255,31 +263,6 @@ public class searchByStatusPanel extends javax.swing.JPanel {
         
     }//GEN-LAST:event_submitButtonActionPerformed
 
-    private void doubleClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_doubleClick
-               
-        int rowTable = displayTable.getSelectedRow();
-
-        Object id = displayTable.getValueAt(rowTable, 0);
-        Object title = displayTable.getValueAt(rowTable, 1);
-        Object author = displayTable.getValueAt(rowTable, 2);
-        Object genre = displayTable.getValueAt(rowTable, 3);
-        Object status = displayTable.getValueAt(rowTable, 4);
-        
-        if (evt.getClickCount() == 2) {
-            JTable target = (JTable) evt.getSource();
-            int row = target.getSelectedRow();
-
-            JOptionPane.showMessageDialog(null, "ID: " + id + "\n"
-                    + "Title: " + title + "\n"
-                    + "Author: " + author + "\n"
-                    + "Genre: " + genre + "\n"
-                    + "Status: " + status + "\n"
-            );
-
-        }
-
-    }//GEN-LAST:event_doubleClick
-
     private void inRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inRadioButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_inRadioButtonActionPerformed
@@ -287,17 +270,15 @@ public class searchByStatusPanel extends javax.swing.JPanel {
     private void columnBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_columnBoxActionPerformed
         // TODO add your handling code here:
         if(columnBox.getSelectedItem().toString().equals("Search By Status")){
-            //                searchByIdField.setVisible(false);
-            //                submitButton.setVisible(false);
-            //                inRadioButton.setVisible(true);
-            //                outRadioButton.setVisible(true);
-            //                searchStateBtn.setVisible(true);
             ClientFrame.clientPanel.removeAll();
             ClientFrame.clientPanel.setVisible(false);
             ClientFrame.clientPanel.setLayout(new BorderLayout());
             ClientFrame.clientPanel.add(new searchByStatusPanel(), BorderLayout.CENTER);
             ClientFrame.clientPanel.repaint();
             ClientFrame.clientPanel.setVisible(true);
+        }
+        else if(columnBox.getSelectedItem().toString().equals("View All Books")){
+            viewAllRecords();
         }
         else{
             ClientFrame.clientPanel.removeAll();
@@ -309,8 +290,43 @@ public class searchByStatusPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_columnBoxActionPerformed
 
+    private void displayTabledoubleClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_displayTabledoubleClick
+
+        int rowTable = displayTable.getSelectedRow();
+
+        Object id = displayTable.getValueAt(rowTable, 0);
+        Object title = displayTable.getValueAt(rowTable, 1);
+        Object author = displayTable.getValueAt(rowTable, 2);
+        Object genre = displayTable.getValueAt(rowTable, 3);
+        Object status = displayTable.getValueAt(rowTable, 4);
+
+        if (evt.getClickCount() == 2) {
+            JTable target = (JTable) evt.getSource();
+            int row = target.getSelectedRow();
+
+            JOptionPane.showMessageDialog(null, "ID: " + id + "\n"
+                + "Title: " + title + "\n"
+                + "Author: " + author + "\n"
+                + "Genre: " + genre + "\n"
+                + "Status: " + status + "\n"
+            );
+
+        }
+
+    }//GEN-LAST:event_displayTabledoubleClick
+
+    private void borrowBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_borrowBtnActionPerformed
+        int row = displayTable.getSelectedRow();
+        Object state = displayTable.getValueAt(row, 4);
+
+        if (state.equals("OUT")) {
+            JOptionPane.showMessageDialog(null, "The Book is still out!");
+        }
+    }//GEN-LAST:event_borrowBtnActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton borrowBtn;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> columnBox;
     private javax.swing.JTable displayTable;

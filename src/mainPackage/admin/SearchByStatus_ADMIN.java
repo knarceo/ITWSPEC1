@@ -5,6 +5,7 @@
  */
 package mainPackage.admin;
 
+import java.awt.BorderLayout;
 import mainPackage.admin.SearchBookByID_ADMIN;
 import mainPackage.admin.AddBookPanel_ADMIN;
 import java.sql.Connection;
@@ -20,6 +21,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import mainPackage.AdminFrame;
 
 /**
  *
@@ -31,28 +33,7 @@ public class SearchByStatus_ADMIN extends javax.swing.JPanel {
     private static final String username = "oracle";
     private static final String password = "pass";
 
-    Calendar currenttime = Calendar.getInstance();
-
-    Date sqldate = new Date((currenttime.getTime()).getTime());
-
     private final String GET_RECORDS = "SELECT * FROM TBLBOOKS WHERE STATE = ?";
-
-    private final String CHECK_BORROWED = "SELECT STUDENT_NUMBER = ? FROM ACCOUNTS WHERE BOOK_ID != 0";
-
-    //Student Number Checker
-    private final String GET_SNUMBER = "SELECT * FROM ACCOUNTS WHERE STUDENT_NUMBER = ?";
-
-    //Commands for table books 
-    private final String UPDATE_TBLBOOKS_OUT = "UPDATE TBLBOOKS SET DATE_BORROWED = ?, STATE = 'OUT', STUDENT_NUMBER = ? WHERE ID = ?"; // STUDENT NUMBER KUNG SINO HUMIRAM YUNG NASA JOPTIONPANE
-    private final String UPDATE_TBLBOOKS_IN = "UPDATE TBLBOOKS SET DATE_BORROWED = NULL, STATE = 'IN', STUDENT_NUMBER = NULL  WHERE ID = ?"; //ID NA NASA TABLE
-
-    //Commands for table BORROW
-    private final String INSERT_TO_BORROW = "INSERT INTO BORROW VALUES(?,?,?,null)"; // Book has been borrowed
-    private final String UPDATE_BORROW = "UPDATE BORROW SET DATE_RETURNED = ? WHERE BOOK_ID = ?"; // STUDENT NUMBER NA NASA TABLE
-
-    //Commands for accounts
-    private final String UPDATE_ACCOUNTS_OUT = "UPDATE ACCOUNTS SET DATE_BORROWED = ?, BOOK_ID = ? WHERE STUDENT_NUMBER = ?"; // Book ID kung ano yung nasa table na book id YUNG STUDENT NUMBER NAMAN KUNG SINO YUNG HUMIRAM YUNG NASA JOPTIONPANE
-    private final String UPDATE_ACCOUNTS_IN = "UPDATE ACCOUNTS SET DATE_BORROWED = NULL, BOOK_ID = 0 WHERE STUDENT_NUMBER = ?"; // STUDENT NUMBER NA NASA TABLE
 
     private Connection connection;
     private PreparedStatement statement;
@@ -66,40 +47,52 @@ public class SearchByStatus_ADMIN extends javax.swing.JPanel {
         } catch (SQLException ex) {
             Logger.getLogger(SearchByStatus_ADMIN.class.getName()).log(Level.SEVERE, null, ex);
         }
+        viewAllRecords();
     }
-
-    public int checkBorrowed(String sNumber) {
-
-        int count = 0;
-
+    
+    private void viewAllRecords() {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         try {
-            statement = connection.prepareStatement(CHECK_BORROWED);
-            statement.setString(1, sNumber);
+
+            String searchQuery = "SELECT * FROM TBLBOOKS";
+            statement = connection.prepareStatement(searchQuery);
             resultset = statement.executeQuery();
+            rsMetadata = resultset.getMetaData();
+            
+            DefaultTableModel dtmPrefix = new DefaultTableModel() {
+                    @Override
+                    public boolean isCellEditable(int row, int column) {
+                        return false;
+                    }
+                };
+            dtmPrefix.addColumn("ID");
+            dtmPrefix.addColumn("TITLE");
+            dtmPrefix.addColumn("AUTHOR");
+            dtmPrefix.addColumn("GENRE");
+            dtmPrefix.addColumn("STATUS");
 
             while (resultset.next()) {
-                count = count + 1;
-            }
 
-            if (count == 1) {
-                return count;
+                dtmPrefix.addRow(new Object[]{
+                    resultset.getInt(1),
+                    resultset.getString(2),
+                    resultset.getString(3),
+                    resultset.getString(4),
+                    resultset.getString(5),});
+                displayTable.setModel(dtmPrefix);
             }
-
         } catch (SQLException ex) {
-            Logger.getLogger(SearchBookByID_ADMIN.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ViewAllBooksPanel_ADMIN.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        return count = 0;
-
     }
-
-    public int checktblBooks(String genre) {
+    
+    public int checkRecords(String state) {
 
         int count = 0;
 
         try {
             statement = connection.prepareStatement(GET_RECORDS);
-            statement.setString(1, genre);
+            statement.setString(1, state);
             resultset = statement.executeQuery();
 
             while (resultset.next()) {
@@ -119,44 +112,18 @@ public class SearchByStatus_ADMIN extends javax.swing.JPanel {
 
     }
 
-    public int checkAccounts(String sNumber) {
-
-        int count = 0;
-
-        try {
-            statement = connection.prepareStatement(GET_SNUMBER);
-            statement.setString(1, sNumber);
-            resultset = statement.executeQuery();
-
-            while (resultset.next()) {
-                count = count + 1;
-            }
-
-            if (count >= 1) {
-
-                return count;
-            }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(AddBookPanel_ADMIN.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        return count = 0;
-
-    }
-
-    public void viewRecords(String genre) {
+    public void viewRecords(String state) {
         try {
 
-            if (checktblBooks(genre) >= 1) {
+            if (checkRecords(state) >= 1) {
 
                 statement = connection.prepareStatement(GET_RECORDS);
-                statement.setString(1, genre);
+                statement.setString(1, state);
                 resultset = statement.executeQuery();
                 rsMetadata = resultset.getMetaData();
 
-                DefaultTableModel dtmPrefix = new DefaultTableModel() {
-
+                DefaultTableModel dtmPrefix = new DefaultTableModel(){
+                    
                     @Override
                     public boolean isCellEditable(int row, int column) {
                         return false;
@@ -166,9 +133,7 @@ public class SearchByStatus_ADMIN extends javax.swing.JPanel {
                 dtmPrefix.addColumn("TITLE");
                 dtmPrefix.addColumn("AUTHOR");
                 dtmPrefix.addColumn("GENRE");
-                dtmPrefix.addColumn("STATE");
-                dtmPrefix.addColumn("STUDENT NUMBER");
-                dtmPrefix.addColumn("DATE BORROWED");
+                dtmPrefix.addColumn("STATUS");
 
                 while (resultset.next()) {
 
@@ -177,108 +142,16 @@ public class SearchByStatus_ADMIN extends javax.swing.JPanel {
                         resultset.getString(2),
                         resultset.getString(3),
                         resultset.getString(4),
-                        resultset.getString(5),
-                        resultset.getString(6),
-                        resultset.getString(7)
+                        resultset.getString(5)
                     });
                     displayTable.setModel(dtmPrefix);
                 }
 
             } else {
-                JOptionPane.showMessageDialog(null, "There are no Books at this State!");
+                JOptionPane.showMessageDialog(null, "There are no books in this status", "", JOptionPane.ERROR_MESSAGE);
             }
         } catch (SQLException ex) {
             Logger.getLogger(ViewAllBooksPanel_ADMIN.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void UPDATE_TBLBOOKS_OUT(Object id, String sNumber) { // Student Number at ID
-
-        try {
-            statement = connection.prepareStatement(UPDATE_TBLBOOKS_OUT);
-            statement.setObject(1, sqldate);
-            statement.setObject(2, sNumber);
-            statement.setObject(3, id);
-            statement.executeUpdate();
-
-        } catch (SQLException ex) {
-            Logger.getLogger(SearchBookByID_ADMIN.class
-                    .getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }
-
-    public void INSERT_TO_BORROW(String sNumber, Object book_id) { // Student Number at ID
-
-        try {
-            statement = connection.prepareStatement(INSERT_TO_BORROW);
-            statement.setObject(1, sNumber);
-            statement.setObject(2, book_id);
-            statement.setObject(3, sqldate);
-            statement.executeUpdate();
-
-        } catch (SQLException ex) {
-            Logger.getLogger(SearchBookByID_ADMIN.class
-                    .getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }
-
-    public void UPDATE_ACCOUNTS_OUT(Object id, String sNumber) { // Student Number at ID
-
-        try {
-            statement = connection.prepareStatement(UPDATE_ACCOUNTS_OUT);
-            statement.setObject(3, sNumber);
-            statement.setObject(2, id);
-            statement.setObject(1, sqldate);
-            statement.executeUpdate();
-
-        } catch (SQLException ex) {
-            Logger.getLogger(SearchBookByID_ADMIN.class
-                    .getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }
-
-    public void UPDATE_TBLBOOKS_IN(Object id) {
-
-        try {
-            statement = connection.prepareStatement(UPDATE_TBLBOOKS_IN);
-            statement.setObject(1, id);
-            statement.executeUpdate();
-
-        } catch (SQLException ex) {
-            Logger.getLogger(SearchBookByID_ADMIN.class
-                    .getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }
-
-    public void UPDATE_BORROW(Object book_id) {
-
-        try {
-            statement = connection.prepareStatement(UPDATE_BORROW);
-            statement.setObject(2, book_id);
-            statement.setObject(1, sqldate);
-            statement.executeUpdate();
-
-        } catch (SQLException ex) {
-            Logger.getLogger(SearchBookByID_ADMIN.class
-                    .getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }
-
-    public void UPDATE_ACCOUNTS_IN(Object sNumber) {
-
-        try {
-            statement = connection.prepareStatement(UPDATE_ACCOUNTS_IN);
-            statement.setObject(1, sNumber);
-            statement.executeUpdate();
-
-        } catch (SQLException ex) {
-            Logger.getLogger(SearchBookByID_ADMIN.class
-                    .getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -294,54 +167,69 @@ public class SearchByStatus_ADMIN extends javax.swing.JPanel {
         buttonGroup1 = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
         submitButton = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        displayTable = new javax.swing.JTable();
         outRadioButton = new javax.swing.JRadioButton();
         inRadioButton = new javax.swing.JRadioButton();
+        columnBox = new javax.swing.JComboBox<String>();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        displayTable = new javax.swing.JTable();
+        lendBtn = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Arial Narrow", 1, 24)); // NOI18N
-        jLabel1.setText("Administrator : Search by Status");
+        jLabel1.setText("Search by Status");
 
         submitButton.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        submitButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/assets/viewAll.png"))); // NOI18N
+        submitButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/assets/view.png"))); // NOI18N
         submitButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 submitButtonActionPerformed(evt);
             }
         });
 
+        buttonGroup1.add(outRadioButton);
+        outRadioButton.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        outRadioButton.setText("OUT");
+
+        buttonGroup1.add(inRadioButton);
+        inRadioButton.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        inRadioButton.setText("IN");
+        inRadioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                inRadioButtonActionPerformed(evt);
+            }
+        });
+
+        columnBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Search By ID", "Search By Author", "Search By Title", "Search By Genre", "Search By Status" }));
+        columnBox.setSelectedItem("Search By Status");
+        columnBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                columnBoxActionPerformed(evt);
+            }
+        });
+
         displayTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5"
             }
         ));
         displayTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                doubleClick(evt);
+                displayTabledoubleClick(evt);
             }
         });
         jScrollPane1.setViewportView(displayTable);
 
-        buttonGroup1.add(outRadioButton);
-        outRadioButton.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        outRadioButton.setText("OUT");
-
-        buttonGroup1.add(inRadioButton);
-        inRadioButton.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        inRadioButton.setText("IN");
+        lendBtn.setText("Lend Book Selected");
+        lendBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                lendBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -351,16 +239,24 @@ public class SearchByStatus_ADMIN extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(inRadioButton)
-                                .addGap(18, 18, 18)
-                                .addComponent(outRadioButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(submitButton))
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 692, Short.MAX_VALUE))
+                        .addGap(6, 6, 6)
+                        .addComponent(columnBox, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(inRadioButton)
+                        .addGap(18, 18, 18)
+                        .addComponent(outRadioButton)
+                        .addGap(18, 18, 18)
+                        .addComponent(submitButton)
+                        .addGap(333, 333, 333))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jScrollPane1)
+                        .addContainerGap())))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lendBtn)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -368,13 +264,17 @@ public class SearchByStatus_ADMIN extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(columnBox, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(outRadioButton)
+                        .addComponent(inRadioButton)
+                        .addComponent(submitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 334, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(outRadioButton)
-                    .addComponent(inRadioButton)
-                    .addComponent(submitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 383, Short.MAX_VALUE)
+                .addComponent(lendBtn)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -387,19 +287,48 @@ public class SearchByStatus_ADMIN extends javax.swing.JPanel {
             state = "IN";
             viewRecords(state);
 
-        } else if (outRadioButton.isSelected()) {
+        }
+
+        else if(outRadioButton.isSelected()){
             state = "OUT";
             viewRecords(state);
 
-        } else {
+        }
 
-            JOptionPane.showMessageDialog(null, "Please Choose a Button.");
-
+        else{
+            System.out.println("Error");
         }
 
     }//GEN-LAST:event_submitButtonActionPerformed
 
-    private void doubleClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_doubleClick
+    private void inRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inRadioButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_inRadioButtonActionPerformed
+
+    private void columnBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_columnBoxActionPerformed
+        // TODO add your handling code here:
+        if(columnBox.getSelectedItem().toString().equals("Search By Status")){
+            AdminFrame.serverPanel.removeAll();
+            AdminFrame.serverPanel.setVisible(false);
+            AdminFrame.serverPanel.setLayout(new BorderLayout());
+            AdminFrame.serverPanel.add(new SearchByStatus_ADMIN(), BorderLayout.CENTER);
+            AdminFrame.serverPanel.repaint();
+            AdminFrame.serverPanel.setVisible(true);
+        }
+        else if(columnBox.getSelectedItem().toString().equals("View All Books")){
+            viewAllRecords();
+        }
+        else{
+            AdminFrame.serverPanel.removeAll();
+            AdminFrame.serverPanel.setVisible(false);
+            AdminFrame.serverPanel.setLayout(new BorderLayout());
+            AdminFrame.serverPanel.add(new ViewAllBooksPanel_ADMIN(), BorderLayout.CENTER);
+            AdminFrame.serverPanel.repaint();
+            AdminFrame.serverPanel.setVisible(true);
+        }
+    }//GEN-LAST:event_columnBoxActionPerformed
+
+    private void displayTabledoubleClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_displayTabledoubleClick
 
         int rowTable = displayTable.getSelectedRow();
 
@@ -407,34 +336,35 @@ public class SearchByStatus_ADMIN extends javax.swing.JPanel {
         Object title = displayTable.getValueAt(rowTable, 1);
         Object author = displayTable.getValueAt(rowTable, 2);
         Object genre = displayTable.getValueAt(rowTable, 3);
-        Object state = displayTable.getValueAt(rowTable, 4);
-        Object sNumber = displayTable.getValueAt(rowTable, 5);
-        Object date_borrowed = displayTable.getValueAt(rowTable, 6);
+        Object status = displayTable.getValueAt(rowTable, 4);
 
         if (evt.getClickCount() == 2) {
             JTable target = (JTable) evt.getSource();
             int row = target.getSelectedRow();
 
             JOptionPane.showMessageDialog(null, "ID: " + id + "\n"
-                    + "Title: " + title + "\n"
-                    + "Author: " + author + "\n"
-                    + "Genre: " + genre + "\n"
-                    + "State: " + state + "\n"
-                    + "Student Number: " + sNumber + "\n"
-                    + "Date Borrowed: " + date_borrowed + "\n"
+                + "Title: " + title + "\n"
+                + "Author: " + author + "\n"
+                + "Genre: " + genre + "\n"
+                + "Status: " + status + "\n"
             );
 
         }
+    }//GEN-LAST:event_displayTabledoubleClick
 
-    }//GEN-LAST:event_doubleClick
+    private void lendBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lendBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lendBtnActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JComboBox<String> columnBox;
     private javax.swing.JTable displayTable;
     private javax.swing.JRadioButton inRadioButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton lendBtn;
     private javax.swing.JRadioButton outRadioButton;
     private javax.swing.JButton submitButton;
     // End of variables declaration//GEN-END:variables

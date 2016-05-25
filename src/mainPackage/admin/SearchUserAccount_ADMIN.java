@@ -29,7 +29,7 @@ public class SearchUserAccount_ADMIN extends javax.swing.JPanel {
     private static final String username = "oracle";
     private static final String password = "pass";
     private final String GET_RECORDS = "SELECT * FROM ACCOUNTS WHERE STUDENT_NUMBER = ?";
-
+    private final String GET_STUDREC = "SELECT * FROM ACCOUNTS";
     private Connection connection;
     private PreparedStatement statement;
     private ResultSet resultset;
@@ -41,6 +41,48 @@ public class SearchUserAccount_ADMIN extends javax.swing.JPanel {
             connection = DriverManager.getConnection(DATABSE_URL, username, password);
         } catch (SQLException ex) {
             Logger.getLogger(SearchUserAccount_ADMIN.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        viewStudRecords();
+    }
+    
+    public void viewStudRecords() {
+        try {
+
+            statement = connection.prepareStatement(GET_STUDREC);
+            resultset = statement.executeQuery();
+            rsMetadata = resultset.getMetaData();
+
+            DefaultTableModel dtmPrefix = new DefaultTableModel() {
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }
+            };
+            dtmPrefix.addColumn("STUDENT ID");
+            dtmPrefix.addColumn("FIRST NAME");
+            dtmPrefix.addColumn("LAST NAME");
+            dtmPrefix.addColumn("MIDDLE NAME");
+            dtmPrefix.addColumn("USERNAME");
+            dtmPrefix.addColumn("PASSWORD");
+            dtmPrefix.addColumn("BOOK ID");
+            dtmPrefix.addColumn("BORROWED");
+
+            while (resultset.next()) {
+
+                dtmPrefix.addRow(new Object[]{
+                    resultset.getString(1),
+                    resultset.getString(2),
+                    resultset.getString(3),
+                    resultset.getString(4),
+                    resultset.getString(5),
+                    resultset.getString(6),
+                    resultset.getString(7),
+                    resultset.getString(8)
+                });
+                displayTable.setModel(dtmPrefix);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ViewAllBooksPanel_ADMIN.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -97,7 +139,7 @@ public class SearchUserAccount_ADMIN extends javax.swing.JPanel {
                 dtmPrefix.addColumn("USERNAME");
                 dtmPrefix.addColumn("PASSWORD");
                 dtmPrefix.addColumn("BOOK ID");
-                dtmPrefix.addColumn("DATE BORROWED");
+                dtmPrefix.addColumn("BORROWED");
 
                 while (resultset.next()) {
 

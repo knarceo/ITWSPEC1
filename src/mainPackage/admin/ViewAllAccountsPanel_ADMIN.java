@@ -62,7 +62,7 @@ public class ViewAllAccountsPanel_ADMIN extends javax.swing.JPanel {
             dtmPrefix.addColumn("USERNAME");
             dtmPrefix.addColumn("PASSWORD");
             dtmPrefix.addColumn("BOOK ID");
-            dtmPrefix.addColumn("DATE BORROWED");
+            dtmPrefix.addColumn("BORROWED");
 
             while (resultset.next()) {
 
@@ -144,8 +144,8 @@ public class ViewAllAccountsPanel_ADMIN extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 447, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(53, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 

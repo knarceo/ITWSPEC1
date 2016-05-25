@@ -20,6 +20,12 @@ import mainPackage.admin.DeleteBookPanel_ADMIN;
 import mainPackage.admin.UpdateBookPanel_ADMIN;
 import mainPackage.admin.AddBookPanel_ADMIN;
 import java.awt.BorderLayout;
+import java.io.EOFException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -30,6 +36,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -37,9 +44,11 @@ import javax.swing.JOptionPane;
  */
 public class AdminFrame extends javax.swing.JFrame {
 
-    /**
-     * Creates new form serverFrame
-     */
+    private ObjectOutputStream output; // output stream to client
+    private ObjectInputStream input; // input stream from client
+    private ServerSocket server; // server socket
+    private Socket socketConnection; // connection to client
+    private int counter = 1; // counter of number of connections
     
     public static String EDIT_ID;
     public static String DELETE_ID;
@@ -54,6 +63,17 @@ public class AdminFrame extends javax.swing.JFrame {
     private final String username = "oracle";
     private final String password = "pass";
     
+//    public class AdminThread implements Runnable{
+//        public AdminThread(){
+//        }
+//        @Override
+//        public void run() {
+////            while(true){                
+//                runServer();
+////            }
+//        }
+//    }
+    
     public AdminFrame() {
         initComponents();
         serverPanel.removeAll();
@@ -62,13 +82,13 @@ public class AdminFrame extends javax.swing.JFrame {
         serverPanel.add(new ViewAllBooksPanel_ADMIN(), BorderLayout.CENTER);
         serverPanel.repaint();
         serverPanel.setVisible(true);
-        
-        
+             
         try {
             connection = DriverManager.getConnection(DATABSE_URL, username, password);
         } catch (SQLException ex) {
             Logger.getLogger(AdminFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
+//        runServer();
     }
 
     public int checkRecord(String sNumber, String column, String dbase) {
@@ -103,31 +123,46 @@ public class AdminFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jPanel1 = new javax.swing.JPanel();
+        delUserBtn = new javax.swing.JButton();
+        viewAllUserBtn = new javax.swing.JButton();
         serverPanel = new javax.swing.JPanel();
-        jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        addBook = new javax.swing.JMenuItem();
-        editBook = new javax.swing.JMenuItem();
-        deleteBook = new javax.swing.JMenuItem();
-        searchBook = new javax.swing.JMenu();
-        byIdMenuItem = new javax.swing.JMenuItem();
-        byTitleMenuItem = new javax.swing.JMenuItem();
-        byAuthorMenuItem = new javax.swing.JMenuItem();
-        byGenreMenuItem = new javax.swing.JMenuItem();
-        byStatusItem = new javax.swing.JMenuItem();
-        viewAllBooks = new javax.swing.JMenuItem();
-        jSeparator1 = new javax.swing.JPopupMenu.Separator();
-        exitMenuItem = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
-        addAccountItem = new javax.swing.JMenuItem();
-        updateAccountItem = new javax.swing.JMenuItem();
-        deleteAccountItem = new javax.swing.JMenuItem();
-        viewAccountItem = new javax.swing.JMenuItem();
-        displayAccountItem = new javax.swing.JMenuItem();
+        viewAllBtn = new javax.swing.JButton();
+        addBookBtn = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        addUserBtn = new javax.swing.JButton();
+        editBookBtn = new javax.swing.JButton();
+        delBookBtn = new javax.swing.JButton();
+        editUserBtn = new javax.swing.JButton();
+        searchUserBtn = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        enterField = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        displayArea = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Admin");
-        setResizable(false);
+        setTitle("Server");
+        setPreferredSize(new java.awt.Dimension(725, 770));
+
+        delUserBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/assets/deleteicon.png"))); // NOI18N
+        delUserBtn.setText("Delete User");
+        delUserBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                delUserBtnActionPerformed(evt);
+            }
+        });
+
+        viewAllUserBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/assets/viewAll.png"))); // NOI18N
+        viewAllUserBtn.setText("View All User Accounts");
+        viewAllUserBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewAllUserBtnActionPerformed(evt);
+            }
+        });
 
         serverPanel.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -135,210 +170,234 @@ public class AdminFrame extends javax.swing.JFrame {
         serverPanel.setLayout(serverPanelLayout);
         serverPanelLayout.setHorizontalGroup(
             serverPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 710, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         serverPanelLayout.setVerticalGroup(
             serverPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 469, Short.MAX_VALUE)
+            .addGap(0, 503, Short.MAX_VALUE)
         );
 
-        jMenuBar1.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
-
-        jMenu1.setText("Books");
-
-        addBook.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.ALT_MASK));
-        addBook.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/assets/add-icon.png"))); // NOI18N
-        addBook.setText("Add Book");
-        addBook.addActionListener(new java.awt.event.ActionListener() {
+        viewAllBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/assets/viewAll.png"))); // NOI18N
+        viewAllBtn.setText("View All Books");
+        viewAllBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addBookActionPerformed(evt);
+                viewAllBtnActionPerformed(evt);
             }
         });
-        jMenu1.add(addBook);
 
-        editBook.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.ALT_MASK));
-        editBook.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/assets/editicon.png"))); // NOI18N
-        editBook.setText("Edit Book");
-        editBook.addActionListener(new java.awt.event.ActionListener() {
+        addBookBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/assets/add-icon.png"))); // NOI18N
+        addBookBtn.setText("Add Book");
+        addBookBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                editBookActionPerformed(evt);
+                addBookBtnActionPerformed(evt);
             }
         });
-        jMenu1.add(editBook);
 
-        deleteBook.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.ALT_MASK));
-        deleteBook.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/assets/deleteicon.png"))); // NOI18N
-        deleteBook.setText("Delete Book");
-        deleteBook.addActionListener(new java.awt.event.ActionListener() {
+        jLabel7.setFont(new java.awt.Font("Arial Narrow", 1, 18)); // NOI18N
+        jLabel7.setText("Account Management");
+
+        jLabel1.setFont(new java.awt.Font("Arial Narrow", 1, 36)); // NOI18N
+        jLabel1.setText("Book Rental System : Admin");
+
+        jLabel10.setFont(new java.awt.Font("Arial Narrow", 1, 18)); // NOI18N
+        jLabel10.setText("Book Management");
+
+        addUserBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/assets/add-icon.png"))); // NOI18N
+        addUserBtn.setText("Add User");
+        addUserBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                deleteBookActionPerformed(evt);
+                addUserBtnActionPerformed(evt);
             }
         });
-        jMenu1.add(deleteBook);
 
-        searchBook.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/assets/viewAll.png"))); // NOI18N
-        searchBook.setText("Search");
-
-        byIdMenuItem.setText("By ID");
-        byIdMenuItem.addActionListener(new java.awt.event.ActionListener() {
+        editBookBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/assets/editicon.png"))); // NOI18N
+        editBookBtn.setText("Edit Book");
+        editBookBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                byIdMenuItemActionPerformed(evt);
+                editBookBtnActionPerformed(evt);
             }
         });
-        searchBook.add(byIdMenuItem);
 
-        byTitleMenuItem.setText("By Title");
-        byTitleMenuItem.addActionListener(new java.awt.event.ActionListener() {
+        delBookBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/assets/deleteicon.png"))); // NOI18N
+        delBookBtn.setText("Delete Book");
+        delBookBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                byTitleMenuItemActionPerformed(evt);
+                delBookBtnActionPerformed(evt);
             }
         });
-        searchBook.add(byTitleMenuItem);
 
-        byAuthorMenuItem.setText("By Author");
-        byAuthorMenuItem.addActionListener(new java.awt.event.ActionListener() {
+        editUserBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/assets/editicon.png"))); // NOI18N
+        editUserBtn.setText("Edit User");
+        editUserBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                byAuthorMenuItemActionPerformed(evt);
+                editUserBtnActionPerformed(evt);
             }
         });
-        searchBook.add(byAuthorMenuItem);
 
-        byGenreMenuItem.setText("By Genre");
-        byGenreMenuItem.addActionListener(new java.awt.event.ActionListener() {
+        searchUserBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/assets/view.png"))); // NOI18N
+        searchUserBtn.setText("Search User");
+        searchUserBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                byGenreMenuItemActionPerformed(evt);
+                searchUserBtnActionPerformed(evt);
             }
         });
-        searchBook.add(byGenreMenuItem);
 
-        byStatusItem.setText("By Status");
-        byStatusItem.addActionListener(new java.awt.event.ActionListener() {
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(serverPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(147, 147, 147)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(60, 60, 60)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel10)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel7)
+                                .addGap(117, 117, 117))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(viewAllBtn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(delBookBtn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(editBookBtn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(addBookBtn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                        .addComponent(viewAllUserBtn)
+                                        .addGap(106, 106, 106))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                            .addComponent(searchUserBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(addUserBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(51, 51, 51)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(delUserBtn)
+                                            .addComponent(editUserBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(58, 58, 58)))))))
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(jLabel7))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(addBookBtn)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(editBookBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(delBookBtn)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(viewAllBtn))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(viewAllUserBtn)
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(1, 1, 1)
+                                .addComponent(editUserBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(delUserBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(addUserBtn)
+                                .addGap(14, 14, 14)
+                                .addComponent(searchUserBtn)))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(serverPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jTabbedPane1.addTab("Manage Books", jPanel1);
+
+        enterField.setEditable(false);
+        enterField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                byStatusItemActionPerformed(evt);
+                enterFieldActionPerformed(evt);
             }
         });
-        searchBook.add(byStatusItem);
 
-        jMenu1.add(searchBook);
+        jLabel2.setText("Enter a message:");
 
-        viewAllBooks.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.ALT_MASK));
-        viewAllBooks.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/assets/view.png"))); // NOI18N
-        viewAllBooks.setText("View All Books");
-        viewAllBooks.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                viewAllBooksActionPerformed(evt);
-            }
-        });
-        jMenu1.add(viewAllBooks);
-        jMenu1.add(jSeparator1);
+        displayArea.setEditable(false);
+        displayArea.setColumns(20);
+        displayArea.setRows(5);
+        jScrollPane1.setViewportView(displayArea);
 
-        exitMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X, java.awt.event.InputEvent.CTRL_MASK));
-        exitMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/assets/system-delete-alt.png"))); // NOI18N
-        exitMenuItem.setText("Exit");
-        exitMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                exitMenuItemActionPerformed(evt);
-            }
-        });
-        jMenu1.add(exitMenuItem);
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 711, Short.MAX_VALUE)
+                    .addComponent(enterField)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2)
+                .addGap(11, 11, 11)
+                .addComponent(enterField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 675, Short.MAX_VALUE)
+                .addContainerGap())
+        );
 
-        jMenuBar1.add(jMenu1);
-
-        jMenu2.setText("User Accounts");
-
-        addAccountItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
-        addAccountItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/assets/add-icon.png"))); // NOI18N
-        addAccountItem.setText("Add User");
-        addAccountItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addAccountItemActionPerformed(evt);
-            }
-        });
-        jMenu2.add(addAccountItem);
-
-        updateAccountItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.CTRL_MASK));
-        updateAccountItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/assets/editicon.png"))); // NOI18N
-        updateAccountItem.setText("Edit User");
-        updateAccountItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                updateAccountItemActionPerformed(evt);
-            }
-        });
-        jMenu2.add(updateAccountItem);
-
-        deleteAccountItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.CTRL_MASK));
-        deleteAccountItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/assets/deleteicon.png"))); // NOI18N
-        deleteAccountItem.setText("Delete User");
-        deleteAccountItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                deleteAccountItemActionPerformed(evt);
-            }
-        });
-        jMenu2.add(deleteAccountItem);
-
-        viewAccountItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, java.awt.event.InputEvent.CTRL_MASK));
-        viewAccountItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/assets/viewAll.png"))); // NOI18N
-        viewAccountItem.setText("Search User");
-        viewAccountItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                viewAccountItemActionPerformed(evt);
-            }
-        });
-        jMenu2.add(viewAccountItem);
-
-        displayAccountItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.CTRL_MASK));
-        displayAccountItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/assets/view.png"))); // NOI18N
-        displayAccountItem.setText("View All User Accounts");
-        displayAccountItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                displayAccountItemActionPerformed(evt);
-            }
-        });
-        jMenu2.add(displayAccountItem);
-
-        jMenuBar1.add(jMenu2);
-
-        setJMenuBar(jMenuBar1);
+        jTabbedPane1.addTab("Book Transaction Logs", jPanel2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(serverPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jTabbedPane1)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(serverPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jTabbedPane1)
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void addBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBookActionPerformed
-
+    private void addBookBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBookBtnActionPerformed
         serverPanel.removeAll();
         serverPanel.setVisible(false);
         serverPanel.setLayout(new BorderLayout());
         serverPanel.add(new AddBookPanel_ADMIN(), BorderLayout.CENTER);
         serverPanel.repaint();
         serverPanel.setVisible(true);
+    }//GEN-LAST:event_addBookBtnActionPerformed
 
-    }//GEN-LAST:event_addBookActionPerformed
-
-    private void viewAllBooksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewAllBooksActionPerformed
-
+    private void viewAllBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewAllBtnActionPerformed
         serverPanel.removeAll();
         serverPanel.setVisible(false);
         serverPanel.setLayout(new BorderLayout());
         serverPanel.add(new ViewAllBooksPanel_ADMIN(), BorderLayout.CENTER);
         serverPanel.repaint();
         serverPanel.setVisible(true);
+    }//GEN-LAST:event_viewAllBtnActionPerformed
 
-    }//GEN-LAST:event_viewAllBooksActionPerformed
-
-    private void editBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBookActionPerformed
-        // TODO add your handling code here:
+    private void editBookBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBookBtnActionPerformed
         EDIT_ID = JOptionPane.showInputDialog("Enter Book ID");
         if(checkRecord(EDIT_ID, "ID", "TBLBOOKS") != 0){
             serverPanel.removeAll();
@@ -350,10 +409,9 @@ public class AdminFrame extends javax.swing.JFrame {
         }else{
             JOptionPane.showMessageDialog(new JFrame(), "Please input a valid Book ID", "", JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_editBookActionPerformed
+    }//GEN-LAST:event_editBookBtnActionPerformed
 
-    private void deleteBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBookActionPerformed
-        
+    private void delBookBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delBookBtnActionPerformed
         DELETE_ID = JOptionPane.showInputDialog("Enter Book ID");
         if(checkRecord(DELETE_ID, "ID", "TBLBOOKS") > 0){
             serverPanel.removeAll();
@@ -365,58 +423,27 @@ public class AdminFrame extends javax.swing.JFrame {
         }else{
             JOptionPane.showMessageDialog(new JFrame(), "Please input a valid Book ID", "", JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_deleteBookActionPerformed
+    }//GEN-LAST:event_delBookBtnActionPerformed
 
-    private void deleteAccountItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteAccountItemActionPerformed
-
-        USER_DELETE_ID = JOptionPane.showInputDialog("Input Student Number");
-        if(checkRecord(USER_DELETE_ID, "STUDENT_NUMBER", "ACCOUNTS") > 0){
-            serverPanel.removeAll();
-            serverPanel.setVisible(false);
-            serverPanel.setLayout(new BorderLayout());
-            serverPanel.add(new DeleteAccountPanel_ADMIN(), BorderLayout.CENTER);
-            serverPanel.repaint();
-            serverPanel.setVisible(true);   
-        }else{   
-            JOptionPane.showMessageDialog(new JFrame(), "Please input valid Student Number", "", JOptionPane.ERROR_MESSAGE);
-        }
-    }//GEN-LAST:event_deleteAccountItemActionPerformed
-
-    private void viewAccountItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewAccountItemActionPerformed
-
-        serverPanel.removeAll();
-        serverPanel.setVisible(false);
-        serverPanel.setLayout(new BorderLayout());
-        serverPanel.add(new SearchUserAccount_ADMIN(), BorderLayout.CENTER);
-        serverPanel.repaint();
-        serverPanel.setVisible(true);
-
-    }//GEN-LAST:event_viewAccountItemActionPerformed
-
-    private void addAccountItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addAccountItemActionPerformed
-
-        serverPanel.removeAll();
-        serverPanel.setVisible(false);
-        serverPanel.setLayout(new BorderLayout());
-        serverPanel.add(new AddUserPanel_ADMIN(), BorderLayout.CENTER);
-        serverPanel.repaint();
-        serverPanel.setVisible(true);
-
-    }//GEN-LAST:event_addAccountItemActionPerformed
-
-    private void displayAccountItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_displayAccountItemActionPerformed
-
+    private void viewAllUserBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewAllUserBtnActionPerformed
         serverPanel.removeAll();
         serverPanel.setVisible(false);
         serverPanel.setLayout(new BorderLayout());
         serverPanel.add(new ViewAllAccountsPanel_ADMIN(), BorderLayout.CENTER);
         serverPanel.repaint();
         serverPanel.setVisible(true);
+    }//GEN-LAST:event_viewAllUserBtnActionPerformed
 
-    }//GEN-LAST:event_displayAccountItemActionPerformed
+    private void addUserBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addUserBtnActionPerformed
+        serverPanel.removeAll();
+        serverPanel.setVisible(false);
+        serverPanel.setLayout(new BorderLayout());
+        serverPanel.add(new AddUserPanel_ADMIN(), BorderLayout.CENTER);
+        serverPanel.repaint();
+        serverPanel.setVisible(true);
+    }//GEN-LAST:event_addUserBtnActionPerformed
 
-    private void updateAccountItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateAccountItemActionPerformed
-        
+    private void editUserBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editUserBtnActionPerformed
         USER_EDIT_ID = JOptionPane.showInputDialog("Input Student Number");
         if(checkRecord(USER_EDIT_ID, "STUDENT_NUMBER", "ACCOUNTS") > 0){
             serverPanel.removeAll();
@@ -428,70 +455,138 @@ public class AdminFrame extends javax.swing.JFrame {
         }else{
             JOptionPane.showMessageDialog(new JFrame(), "Student Number does not exist", "", JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_updateAccountItemActionPerformed
+    }//GEN-LAST:event_editUserBtnActionPerformed
 
-    private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuItemActionPerformed
-
-        System.exit(0);
-
-    }//GEN-LAST:event_exitMenuItemActionPerformed
-
-    private void byIdMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_byIdMenuItemActionPerformed
-
+    private void searchUserBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchUserBtnActionPerformed
         serverPanel.removeAll();
         serverPanel.setVisible(false);
         serverPanel.setLayout(new BorderLayout());
-        serverPanel.add(new SearchBookByID_ADMIN(), BorderLayout.CENTER);
+        serverPanel.add(new SearchUserAccount_ADMIN(), BorderLayout.CENTER);
         serverPanel.repaint();
         serverPanel.setVisible(true);
+    }//GEN-LAST:event_searchUserBtnActionPerformed
 
-    }//GEN-LAST:event_byIdMenuItemActionPerformed
+    private void delUserBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delUserBtnActionPerformed
+        USER_DELETE_ID = JOptionPane.showInputDialog("Input Student Number");
+        if(checkRecord(USER_DELETE_ID, "STUDENT_NUMBER", "ACCOUNTS") > 0){
+            serverPanel.removeAll();
+            serverPanel.setVisible(false);
+            serverPanel.setLayout(new BorderLayout());
+            serverPanel.add(new DeleteAccountPanel_ADMIN(), BorderLayout.CENTER);
+            serverPanel.repaint();
+            serverPanel.setVisible(true);   
+        }else{   
+            JOptionPane.showMessageDialog(new JFrame(), "Please input valid Student Number", "", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_delUserBtnActionPerformed
 
-    private void byTitleMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_byTitleMenuItemActionPerformed
+    private void enterFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enterFieldActionPerformed
+        sendData(evt.getActionCommand());
+        enterField.setText("");
+    }//GEN-LAST:event_enterFieldActionPerformed
 
-        serverPanel.removeAll();
-        serverPanel.setVisible(false);
-        serverPanel.setLayout(new BorderLayout());
-        serverPanel.add(new SearchByTitle_ADMIN(), BorderLayout.CENTER);
-        serverPanel.repaint();
-        serverPanel.setVisible(true);
+    // set up and run server
+    public void runServer() {
+        try // set up server to receive connections; process connections
+        {
+            server = new ServerSocket(12345, 100); // create ServerSocket
+            while (true) {
+                try {
+                    waitForConnection(); // wait for a connection
+                    getStreams(); // get input & output streams
+                    processConnection(); // process connection
 
-    }//GEN-LAST:event_byTitleMenuItemActionPerformed
+                } catch (EOFException eofException) {
+                    displayMessage("\nServer terminated connection");
+                } finally {
+                    closeConnection(); // close connection
+                    ++counter;
+                }
+            }
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
+    }
 
-    private void byAuthorMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_byAuthorMenuItemActionPerformed
+    // wait for connection to arrive, then display connection info
+    private void waitForConnection() throws IOException {
+        displayMessage("Waiting for connection\n");
+        socketConnection = server.accept(); // allow server to accept connection
+        displayMessage("Connection " + counter + " received from: "
+                + socketConnection.getInetAddress().getHostName());
+    }
 
-        serverPanel.removeAll();
-        serverPanel.setVisible(false);
-        serverPanel.setLayout(new BorderLayout());
-        serverPanel.add(new SearchByAuthor_ADMIN(), BorderLayout.CENTER);
-        serverPanel.repaint();
-        serverPanel.setVisible(true);
+    // get streams to send and receive data
+    private void getStreams() throws IOException {
+        // set up output stream for objects
+        output = new ObjectOutputStream(socketConnection.getOutputStream());
+        output.flush(); // flush output buffer to send header information
+        // set up input stream for objects
+        input = new ObjectInputStream(socketConnection.getInputStream());
+        displayMessage("\nGot I/O streams\n");
+    }
 
-    }//GEN-LAST:event_byAuthorMenuItemActionPerformed
+    // process connection with client
+    private void processConnection() throws IOException {
+        String message = "Connection successful";
+        sendData(message); // send connection successful message
+        // enable enterField so server user can send messages
+        setTextFieldEditable(true);
+        do // process messages sent from client
+        {
+            try // read message and display it
+            {
+                message = (String) input.readObject(); // read new message
+                displayMessage("\n" + message); // display message
+            } catch (ClassNotFoundException classNotFoundException) {
+                displayMessage("\nUnknown object type received");
+            }
+        } while (!message.equals("CLIENT>>> TERMINATE"));
+    }
 
-    private void byGenreMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_byGenreMenuItemActionPerformed
+    private void closeConnection() {
+        displayMessage("\nTerminating connection\n");
+        setTextFieldEditable(false); // disable enterField
+        try {
+            output.close(); // close output stream
+            input.close(); // close input stream
+            socketConnection.close(); // close socket
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
+    }
 
-        serverPanel.removeAll();
-        serverPanel.setVisible(false);
-        serverPanel.setLayout(new BorderLayout());
-        serverPanel.add(new SearchByGenre_ADMIN(), BorderLayout.CENTER);
-        serverPanel.repaint();
-        serverPanel.setVisible(true);
+    private void sendData(String message) {
+        try {
+            output.writeObject("SERVER>>> " + message);
+            output.flush(); // flush output to client
+            displayMessage("\nSERVER>>> " + message);
+        } catch (IOException ioException) {
+            displayArea.append("\nError writing object");
+        }
+    }
 
-    }//GEN-LAST:event_byGenreMenuItemActionPerformed
+    private void displayMessage(final String messageToDisplay) {
+        SwingUtilities.invokeLater(
+                new Runnable() {
+            public void run() // updates displayArea
+            {
+                displayArea.append(messageToDisplay); // append message
+            }
+        });
+    }
 
-    private void byStatusItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_byStatusItemActionPerformed
-
-        serverPanel.removeAll();
-        serverPanel.setVisible(false);
-        serverPanel.setLayout(new BorderLayout());
-        serverPanel.add(new SearchByStatus_ADMIN(), BorderLayout.CENTER);
-        serverPanel.repaint();
-        serverPanel.setVisible(true);
-
-
-    }//GEN-LAST:event_byStatusItemActionPerformed
-
+    // manipulates enterField in the event-dispatch thread
+    private void setTextFieldEditable(final boolean editable) {
+        SwingUtilities.invokeLater(
+                new Runnable() {
+            public void run() // sets enterField's editability
+            {
+                enterField.setEditable(editable);
+            }
+        });
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -523,32 +618,31 @@ public class AdminFrame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AdminFrame().setVisible(true);
+                new AdminFrame().setVisible(true); 
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem addAccountItem;
-    private javax.swing.JMenuItem addBook;
-    private javax.swing.JMenuItem byAuthorMenuItem;
-    private javax.swing.JMenuItem byGenreMenuItem;
-    private javax.swing.JMenuItem byIdMenuItem;
-    private javax.swing.JMenuItem byStatusItem;
-    private javax.swing.JMenuItem byTitleMenuItem;
-    private javax.swing.JMenuItem deleteAccountItem;
-    private javax.swing.JMenuItem deleteBook;
-    private javax.swing.JMenuItem displayAccountItem;
-    private javax.swing.JMenuItem editBook;
-    private javax.swing.JMenuItem exitMenuItem;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JPopupMenu.Separator jSeparator1;
-    private javax.swing.JMenu searchBook;
-    private javax.swing.JPanel serverPanel;
-    private javax.swing.JMenuItem updateAccountItem;
-    private javax.swing.JMenuItem viewAccountItem;
-    private javax.swing.JMenuItem viewAllBooks;
+    private javax.swing.JButton addBookBtn;
+    private javax.swing.JButton addUserBtn;
+    private javax.swing.JButton delBookBtn;
+    private javax.swing.JButton delUserBtn;
+    private javax.swing.JTextArea displayArea;
+    private javax.swing.JButton editBookBtn;
+    private javax.swing.JButton editUserBtn;
+    private javax.swing.JTextField enterField;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JButton searchUserBtn;
+    public static javax.swing.JPanel serverPanel;
+    private javax.swing.JButton viewAllBtn;
+    private javax.swing.JButton viewAllUserBtn;
     // End of variables declaration//GEN-END:variables
 }

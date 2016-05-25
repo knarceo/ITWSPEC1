@@ -5,6 +5,7 @@
  */
 package mainPackage.admin;
 
+import java.awt.BorderLayout;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -14,6 +15,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import mainPackage.AdminFrame;
 
 /**
  *
@@ -202,7 +204,7 @@ public class AddBookPanel_ADMIN extends javax.swing.JPanel {
                     .addComponent(genreBox, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(addButton)
-                .addContainerGap(185, Short.MAX_VALUE))
+                .addContainerGap(180, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
