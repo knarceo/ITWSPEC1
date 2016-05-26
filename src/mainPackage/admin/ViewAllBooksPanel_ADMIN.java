@@ -672,56 +672,63 @@ public class ViewAllBooksPanel_ADMIN extends javax.swing.JPanel {
 
     private void lendBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lendBtnActionPerformed
         int row = displayTable.getSelectedRow();
-        Object state = displayTable.getValueAt(row, 4);
-        Object result = displayTable.getValueAt(row, 1);
-        if (state.equals("OUT")) {
-            JOptionPane.showMessageDialog(null, "The Book is still out!");
-        } else {
-            String sNumber = JOptionPane.showInputDialog("Enter Student Number");
-            if (checkAccounts(sNumber) == 1) {
-                if (checkBorrowed(sNumber) == 0) {
-                    try {
-                        displayTable.setValueAt("OUT", row, 4);
-                        displayTable.setValueAt(sNumber, row, 5);
-                        displayTable.setValueAt(sqldate, row, 6);
-                        Object id = displayTable.getValueAt(row, 0);
-                        UPDATE_TBLBOOKS_OUT(id, sNumber);
-                        INSERT_TO_BORROW(sNumber, id);
-                        UPDATE_ACCOUNTS_OUT(id, sNumber);
-
-                        AdminFrame.displayArea.append("\n=============================\nA book named "+result+" has been lent to the client with a student number of: "+sNumber+".\n=============================");
-                    } catch (ArrayIndexOutOfBoundsException e) {
-                        JOptionPane.showMessageDialog(null, "Input an ID first.");
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(null, "Student Number has already a Borrowed Book!");
-                }
-
+        if(row == -1){
+            JOptionPane.showMessageDialog(null, "Please select a book from the table first", "", JOptionPane.ERROR_MESSAGE);
+        }else{
+            Object state = displayTable.getValueAt(row, 4);
+            Object result = displayTable.getValueAt(row, 1);
+            if (state.equals("OUT")) {
+                JOptionPane.showMessageDialog(null, "The Book is still out!");
             } else {
-                JOptionPane.showMessageDialog(null, "Student Number is not registered.");
-            }
+                String sNumber = JOptionPane.showInputDialog("Enter Student Number");
+                if (checkAccounts(sNumber) == 1) {
+                    if (checkBorrowed(sNumber) == 0) {
+                        try {
+                            displayTable.setValueAt("OUT", row, 4);
+                            displayTable.setValueAt(sNumber, row, 5);
+                            displayTable.setValueAt(sqldate, row, 6);
+                            Object id = displayTable.getValueAt(row, 0);
+                            UPDATE_TBLBOOKS_OUT(id, sNumber);
+                            INSERT_TO_BORROW(sNumber, id);
+                            UPDATE_ACCOUNTS_OUT(id, sNumber);
 
+                            AdminFrame.displayArea.append("\n=============================\nA book named "+result+" has been lent to the client with a student number of: "+sNumber+".\n=============================");
+                        } catch (ArrayIndexOutOfBoundsException e) {
+                            JOptionPane.showMessageDialog(null, "Input an ID first.");
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Student Number has already a Borrowed Book!");
+                    }
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "Please input a valid Student Number", "", JOptionPane.ERROR_MESSAGE);
+                }
+            }   
         }
     }//GEN-LAST:event_lendBtnActionPerformed
 
     private void returnBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnBtnActionPerformed
         try {
             int row = displayTable.getSelectedRow();
-            Object id = displayTable.getValueAt(row, 0);
-            Object result = displayTable.getValueAt(row, 1);
-            Object sNumber = displayTable.getValueAt(row, 5);
-            UPDATE_ACCOUNTS_IN(sNumber);
+            if(row == -1){
+                JOptionPane.showMessageDialog(null, "Please select a book from the table first", "", JOptionPane.ERROR_MESSAGE);
+            }else{
+                Object id = displayTable.getValueAt(row, 0);
+                Object result = displayTable.getValueAt(row, 1);
+                Object sNumber = displayTable.getValueAt(row, 5);
+                UPDATE_ACCOUNTS_IN(sNumber);
 
-            displayTable.setValueAt("IN", row, 4);
+                displayTable.setValueAt("IN", row, 4);
 
-            displayTable.setValueAt("", row, 5);
+                displayTable.setValueAt("", row, 5);
 
-            displayTable.setValueAt("", row, 6);
+                displayTable.setValueAt("", row, 6);
 
-            UPDATE_TBLBOOKS_IN(id);
-            UPDATE_BORROW(id);
-            JOptionPane.showMessageDialog(null, "This book has been returned by the client.");
-            AdminFrame.displayArea.append("\n=============================\nA book named "+result+" has been returned by the client.\n=============================");
+                UPDATE_TBLBOOKS_IN(id);
+                UPDATE_BORROW(id);
+                JOptionPane.showMessageDialog(null, "This book has been returned by the client.");
+                AdminFrame.displayArea.append("\n=============================\nA book named "+result+" has been returned by the client.\n=============================");   
+            }
         } catch (ArrayIndexOutOfBoundsException e) {
             JOptionPane.showMessageDialog(null, "Input an ID first.");
         }

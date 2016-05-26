@@ -6,6 +6,7 @@
 package mainPackage;
 
 import java.awt.BorderLayout;
+import java.awt.Window;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -177,6 +178,7 @@ public class LoginPanel extends javax.swing.JPanel {
             this.remove(this);
             AdminFrame serverFrame = new AdminFrame();
             serverFrame.setVisible(true);
+            ((Window) getRootPane().getParent()).dispose();
         } else if (username.equals("") && password.equals("")) {
             JOptionPane.showMessageDialog(null, "Please Fill out the needed areas.", "", JOptionPane.ERROR_MESSAGE);
         } else if (checkRecords(username, password) == 1) {
@@ -184,6 +186,7 @@ public class LoginPanel extends javax.swing.JPanel {
             this.remove(this);
             ClientFrame clientFrame = new ClientFrame();
             clientFrame.setVisible(true);
+            ((Window) getRootPane().getParent()).dispose();
         }else if(checkRecords(username, password) == -1){
             JOptionPane.showMessageDialog(null, "This account has been deactivated.\nPlease contact the administrator for further instructions", "", JOptionPane.ERROR_MESSAGE);
         }else if (checkRecords(username, password) == 0) {
