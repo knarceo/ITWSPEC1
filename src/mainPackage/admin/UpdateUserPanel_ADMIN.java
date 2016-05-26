@@ -71,13 +71,15 @@ public class UpdateUserPanel_ADMIN extends javax.swing.JPanel {
 
         try {
             String QUERY1;
-            if(sNumber.equals(AdminFrame.USER_EDIT_ID)){
-                QUERY1 = "SELECT * FROM ACCOUNTS WHERE USERNAME = '"+checkUser+"'";
+            System.out.println(sNumber+" "+AdminFrame.USER_EDIT_ID);
+            System.out.println(sNumber.equals(String.valueOf(AdminFrame.USER_EDIT_ID)));
+            if(sNumber.equals(String.valueOf(AdminFrame.USER_EDIT_ID))){
+                QUERY1 = "SELECT * FROM ACCOUNTS WHERE STUDENT_NUMBER = "+sNumber;
             }else{
                 QUERY1 = "SELECT * FROM ACCOUNTS WHERE STUDENT_NUMBER = "+sNumber+" OR USERNAME = '"+checkUser+"'";
             }
             
-            System.out.println(AdminFrame.USER_EDIT_ID+" "+checkUser);
+            System.out.println(QUERY1);
             
             statement = connection.prepareStatement(QUERY1);
 //            statement.setString(1, sNumber);
@@ -85,7 +87,7 @@ public class UpdateUserPanel_ADMIN extends javax.swing.JPanel {
             resultset = statement.executeQuery();
 
             if(resultset.next()){
-                return "NOT CLEAR";
+                return "CLEAR";
             }
 //            while (resultset.next()) {
 //                count = count + 1;
@@ -100,7 +102,7 @@ public class UpdateUserPanel_ADMIN extends javax.swing.JPanel {
             Logger.getLogger(AddBookPanel_ADMIN.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        return "CLEAR";
+        return "NOT_CLEAR";
 
     }
 
@@ -305,7 +307,7 @@ public class UpdateUserPanel_ADMIN extends javax.swing.JPanel {
         }
 
         else{
-        updateRecord(studId, fName, lName, mName, username, password);
+            updateRecord(studId, fName, lName, mName, username, password);
         }
     }//GEN-LAST:event_submitButtonActionPerformed
 

@@ -50,10 +50,15 @@ public class LoginPanel extends javax.swing.JPanel {
             resultset = statement.executeQuery();
 
             while (resultset.next()) {
-                count = count + 1;
+                if(resultset.getString("ACCT_STATUS").equals("DEACTIVATED")){
+                    return -1;
+//                    JOptionPane.showMessageDialog(null, "Account has been deactivated.\nPlease contact administrator for further details", "", JOptionPane.ERROR_MESSAGE);
+//                    break;
+                }else{
+                    count = count++;
+                }
             }
             if (count == 1) {
-
                 return count;
             }
 
@@ -175,7 +180,9 @@ public class LoginPanel extends javax.swing.JPanel {
             this.remove(this);
             ClientFrame clientFrame = new ClientFrame();
             clientFrame.setVisible(true);
-        } else if (checkRecords(username, password) == 0) {
+        }else if(checkRecords(username, password) == -1){
+            JOptionPane.showMessageDialog(null, "This account has been deactivated.\nPlease contact the administrator for further instructions", "", JOptionPane.ERROR_MESSAGE);
+        }else if (checkRecords(username, password) == 0) {
             JOptionPane.showMessageDialog(null, "Account not Found!", "", JOptionPane.ERROR_MESSAGE);
             usernameField.setText("");
             passwordField.setText("");
