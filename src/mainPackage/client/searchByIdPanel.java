@@ -463,17 +463,16 @@ public class searchByIdPanel extends javax.swing.JPanel {
         }
         else{
             String stud = JOptionPane.showInputDialog("Enter Student Number");
-            JOptionPane.showMessageDialog(null, "Request has been sent to the Book Admin!");
-            sendData("=============================\nA user has requested this book named "+result.toString()+" with a student number of "+stud+".\n=============================");
+//            JOptionPane.showMessageDialog(null, "Request has been sent to the Book Admin!");
             if(row == -1){
                 JOptionPane.showMessageDialog(null, "Please select a book from the table", "", JOptionPane.ERROR_MESSAGE);
-            }
-            else{
+            }else{
                 if (state.equals("OUT")) {
                     JOptionPane.showMessageDialog(null, "The Book is still out!");
                 }else{
                     JOptionPane.showMessageDialog(null, "Request has been sent to the Book Admin!");
-                    sendData("=============================\nA user has requested this book."+state.toString()+"\n=============================");
+                    sendData("=============================\nA user has requested this book named "+result.toString()+" with a student number of "+stud+".\n=============================");
+//                    sendData("=============================\nA user has requested this book."+state.toString()+"\n=============================");
                 }
             }
         }
