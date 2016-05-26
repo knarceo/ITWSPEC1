@@ -1,2 +1,2 @@
-# ITWSPEC1
-Book Rental System Project
+# BOOKSYS
+Book Rental System ITWSPEC Project
