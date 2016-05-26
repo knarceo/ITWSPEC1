@@ -153,6 +153,9 @@
     <Component class="javax.swing.JTextField" name="userNameField">
     </Component>
     <Component class="javax.swing.JTextField" name="studIdField">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel9">
       <Properties>

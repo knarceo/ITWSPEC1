@@ -77,22 +77,23 @@ public class AddUserPanel_ADMIN extends javax.swing.JPanel {
             if (checkRecords(sNumber, username) >= 1) {
 
                 JOptionPane.showMessageDialog(null, "Student Number OR Username already Exists!");
-                studIdField.setText("");
-                fNameField.setText("");
-                lNameField.setText("");
-                mNameField.setText("");
-                userNameField.setText("");
-                passwordField.setText("");
+//                studIdField.setText("");
+//                fNameField.setText("");
+//                lNameField.setText("");
+//                mNameField.setText("");
+//                userNameField.setText("");
+//                passwordField.setText("");
 
             } else {
-
-                statement = connection.prepareStatement(ADD_REC);
-                statement.setString(1, sNumber);
-                statement.setString(2, fName);
-                statement.setString(3, lName);
-                statement.setString(4, mName);
-                statement.setString(5, username);
-                statement.setString(6, password);
+                String ADDQUERY = "INSERT INTO ACCOUNTS (STUDENT_NUMBER, FIRST_NAME, LAST_NAME, MIDDLE_NAME, USERNAME, PASSWORD) "
+                        + "VALUES ("+sNumber+", '"+fName+"', '"+lName+"', '"+mName+"', '"+username+"', '"+password+"')";
+                statement = connection.prepareStatement(ADDQUERY);
+//                statement.setString(1, sNumber);
+//                statement.setString(2, fName);
+//                statement.setString(3, lName);
+//                statement.setString(4, mName);
+//                statement.setString(5, username);
+//                statement.setString(6, password);
                 statement.executeUpdate();
                 JOptionPane.showMessageDialog(null, "Account Created!");
 

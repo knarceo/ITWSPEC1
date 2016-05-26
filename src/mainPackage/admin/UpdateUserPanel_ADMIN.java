@@ -71,8 +71,6 @@ public class UpdateUserPanel_ADMIN extends javax.swing.JPanel {
 
         try {
             String QUERY1;
-            System.out.println(sNumber+" "+AdminFrame.USER_EDIT_ID);
-            System.out.println(sNumber.equals(String.valueOf(AdminFrame.USER_EDIT_ID)));
             if(sNumber.equals(String.valueOf(AdminFrame.USER_EDIT_ID))){
                 QUERY1 = "SELECT * FROM ACCOUNTS WHERE STUDENT_NUMBER = "+sNumber;
             }else{
@@ -176,6 +174,8 @@ public class UpdateUserPanel_ADMIN extends javax.swing.JPanel {
 
         jLabel2.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
         jLabel2.setText("Student ID:");
+
+        studIdField.setEditable(false);
 
         jLabel9.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
         jLabel9.setText("Password:");
@@ -301,12 +301,8 @@ public class UpdateUserPanel_ADMIN extends javax.swing.JPanel {
         String password = new String(passwordField.getPassword());
 
         if (studId.equals("") || fName.equals("") || lName.equals("") || mName.equals("") || username.equals("") || password.equals("")) {
-
             JOptionPane.showMessageDialog(null, "Please Fill out all the needed areas.");
-
-        }
-
-        else{
+        }else{
             updateRecord(studId, fName, lName, mName, username, password);
         }
     }//GEN-LAST:event_submitButtonActionPerformed
