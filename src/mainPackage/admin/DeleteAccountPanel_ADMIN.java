@@ -27,7 +27,7 @@ public class DeleteAccountPanel_ADMIN extends javax.swing.JPanel {
     private final String DATABSE_URL = "jdbc:derby://localhost:1527/libraryDb";
     private final String username = "oracle";
     private final String password = "pass";
-    private final String DEL_REC = "DELETE FROM ACCOUNTS WHERE Student_Number = ?";
+//    private final String DEL_REC = "DELETE FROM ACCOUNTS WHERE Student_Number = ?";
     private final String CHECK_REC = "SELECT * FROM ACCOUNTS WHERE STUDENT_NUMBER = ?";
 
     private Connection connection;
@@ -45,6 +45,18 @@ public class DeleteAccountPanel_ADMIN extends javax.swing.JPanel {
         
         
         getAccountRecord();
+        checkStatusToggleButtons();
+    }
+    
+    public void checkStatusToggleButtons(){
+        getAccountRecord();
+        if(statusField.getText().equals("ACTIVATED")){
+            deacBtn.setEnabled(true);
+            activateBtn.setEnabled(false);
+        }else{
+            deacBtn.setEnabled(false);
+            activateBtn.setEnabled(true);   
+        }
     }
     
     public void getAccountRecord(){
@@ -55,13 +67,13 @@ public class DeleteAccountPanel_ADMIN extends javax.swing.JPanel {
             resultset = statement.executeQuery();
             rsMetadata = resultset.getMetaData();
             
-            System.out.println(QUERY);
             while(resultset.next()){
                 midField.setText(resultset.getString("MIDDLE_NAME"));
                 fnameField.setText(resultset.getString("FIRST_NAME"));
                 lastField.setText(resultset.getString("LAST_NAME"));
                 idField.setText(String.valueOf(resultset.getInt("STUDENT_NUMBER")));
                 usernameField.setText(resultset.getString("USERNAME"));
+                statusField.setText(resultset.getString("ACCT_STATUS"));
             }
             
         } catch (SQLException ex) {
@@ -95,19 +107,20 @@ public class DeleteAccountPanel_ADMIN extends javax.swing.JPanel {
 
     }
 
-    public void deleteRecord(int id) {
+    public void deleteRecord(int id, String status) {
         try {
             if (checkRecords(id) == 1) {
-                statement = connection.prepareStatement(DEL_REC);
-                statement.setInt(1, id);
+                String DEL_QUERY = "UPDATE ACCOUNTS SET ACCT_STATUS = '"+status+"' WHERE STUDENT_NUMBER = "+id;
+                statement = connection.prepareStatement(DEL_QUERY);
+//                statement.setInt(1, id);
                 statement.executeUpdate();
-                JOptionPane.showMessageDialog(null, "Account Disabled!");
+                JOptionPane.showMessageDialog(null, "Account has been "+status);
 //                idField.setText("");
             } else {
                 JOptionPane.showMessageDialog(null, "Student Number Not Found!");
 //                idField.setText("");
             }
-            setVisible(false);
+//            setVisible(false);
         } catch (SQLException ex) {
             System.out.println(ex);
         }
@@ -123,7 +136,7 @@ public class DeleteAccountPanel_ADMIN extends javax.swing.JPanel {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        deleteButton = new javax.swing.JButton();
+        deacBtn = new javax.swing.JButton();
         idField = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -137,16 +150,20 @@ public class DeleteAccountPanel_ADMIN extends javax.swing.JPanel {
         fnameField = new javax.swing.JTextField();
         midField = new javax.swing.JTextField();
         lastField = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        statusField = new javax.swing.JTextField();
+        activateBtn = new javax.swing.JButton();
 
         jPanel1.setPreferredSize(new java.awt.Dimension(710, 469));
 
-        deleteButton.setBackground(new java.awt.Color(255, 51, 51));
-        deleteButton.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        deleteButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/assets/deleteicon.png"))); // NOI18N
-        deleteButton.setText("DISABLE");
-        deleteButton.addActionListener(new java.awt.event.ActionListener() {
+        deacBtn.setBackground(new java.awt.Color(255, 51, 51));
+        deacBtn.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        deacBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/assets/deleteicon.png"))); // NOI18N
+        deacBtn.setText("DEACTIVATE");
+        deacBtn.setEnabled(false);
+        deacBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                deleteButtonActionPerformed(evt);
+                deacBtnActionPerformed(evt);
             }
         });
 
@@ -194,6 +211,25 @@ public class DeleteAccountPanel_ADMIN extends javax.swing.JPanel {
 
         lastField.setEditable(false);
 
+        jLabel9.setText("Account Status");
+
+        statusField.setEditable(false);
+        statusField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                statusFieldActionPerformed(evt);
+            }
+        });
+
+        activateBtn.setBackground(new java.awt.Color(102, 255, 102));
+        activateBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/assets/add-icon.png"))); // NOI18N
+        activateBtn.setText("ACTIVATE");
+        activateBtn.setEnabled(false);
+        activateBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                activateBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -202,42 +238,48 @@ public class DeleteAccountPanel_ADMIN extends javax.swing.JPanel {
                 .addGap(33, 33, 33)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel8)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addGap(186, 186, 186)
-                                .addComponent(jLabel1)))
+                        .addComponent(jLabel3)
+                        .addGap(186, 186, 186)
+                        .addComponent(jLabel1)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addGap(31, 31, 31)
-                                .addComponent(fnameField, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel7)
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lastField)
-                                    .addComponent(midField))))
-                        .addGap(45, 45, 45)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel4))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel5)
+                                        .addGap(31, 31, 31)
+                                        .addComponent(fnameField, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel7)
+                                        .addGap(18, 18, 18)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(lastField)
+                                            .addComponent(midField))))
+                                .addGap(45, 45, 45)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel6)
+                                    .addComponent(jLabel4)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addGap(307, 307, 307)
+                                .addComponent(jLabel9)))
                         .addGap(17, 17, 17)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(usernameField)
-                            .addComponent(idField))
-                        .addContainerGap())))
+                            .addComponent(idField)
+                            .addComponent(statusField))))
+                .addContainerGap())
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(136, 136, 136)
                 .addComponent(jLabel2)
                 .addContainerGap(145, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(225, 225, 225))
+                .addComponent(deacBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(activateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(187, 187, 187))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -263,10 +305,14 @@ public class DeleteAccountPanel_ADMIN extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
-                    .addComponent(lastField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lastField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9)
+                    .addComponent(statusField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 108, Short.MAX_VALUE)
-                .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(89, 89, 89))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(deacBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(activateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(116, 116, 116))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -295,20 +341,42 @@ public class DeleteAccountPanel_ADMIN extends javax.swing.JPanel {
 
     }//GEN-LAST:event_idFieldActionPerformed
 
-    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
+    private void deacBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deacBtnActionPerformed
 
-        if(JOptionPane.showConfirmDialog(new JFrame(), "Are you sure you want to disable this account?") == 0){
-            deleteRecord(Integer.valueOf(AdminFrame.USER_DELETE_ID));
+        if(JOptionPane.showConfirmDialog(new JFrame(), "Are you sure you want to deactivate this account?") == 0){
+            if(statusField.getText().equals("ACTIVATED")){
+                deleteRecord(Integer.valueOf(AdminFrame.USER_DELETE_ID), "DEACTIVATED");
+            }else{
+                deleteRecord(Integer.valueOf(AdminFrame.USER_DELETE_ID), "ACTIVATED");
+            }
         }
-    }//GEN-LAST:event_deleteButtonActionPerformed
+        checkStatusToggleButtons();
+    }//GEN-LAST:event_deacBtnActionPerformed
 
     private void fnameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fnameFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_fnameFieldActionPerformed
 
+    private void statusFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_statusFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_statusFieldActionPerformed
+
+    private void activateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_activateBtnActionPerformed
+        // TODO add your handling code here:
+        if(JOptionPane.showConfirmDialog(new JFrame(), "Are you sure you want to activate this account?") == 0){
+            if(statusField.getText().equals("ACTIVATED")){
+                deleteRecord(Integer.valueOf(AdminFrame.USER_DELETE_ID), "DEACTIVATED");
+            }else{
+                deleteRecord(Integer.valueOf(AdminFrame.USER_DELETE_ID), "ACTIVATED");
+            }
+        }
+        checkStatusToggleButtons();
+    }//GEN-LAST:event_activateBtnActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton deleteButton;
+    private javax.swing.JButton activateBtn;
+    private javax.swing.JButton deacBtn;
     private javax.swing.JTextField fnameField;
     private javax.swing.JTextField idField;
     private javax.swing.JLabel jLabel1;
@@ -319,9 +387,11 @@ public class DeleteAccountPanel_ADMIN extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField lastField;
     private javax.swing.JTextField midField;
+    private javax.swing.JTextField statusField;
     private javax.swing.JTextField usernameField;
     // End of variables declaration//GEN-END:variables
 }

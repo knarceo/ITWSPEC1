@@ -25,7 +25,6 @@ public class LoginPanel extends javax.swing.JPanel {
     private static final String DATABSE_URL = "jdbc:derby://localhost:1527/libraryDb";
     private static final String username = "oracle";
     private static final String password = "pass";
-    private final String CHECK_RECORDS = "SELECT * FROM ACCOUNTS WHERE USERNAME = ? AND PASSWORD = ?";
 
     private Connection connection;
     private PreparedStatement statement;
@@ -44,18 +43,28 @@ public class LoginPanel extends javax.swing.JPanel {
     public int checkRecords(String username, String password) {
         int count = 0;
         try {
+            String CHECK_RECORDS = "SELECT * FROM ACCOUNTS WHERE USERNAME = '"+username+"' AND PASSWORD = '"+password+"'";
             statement = connection.prepareStatement(CHECK_RECORDS);
-            statement.setString(1, username);
-            statement.setString(2, password);
+//            statement.setString(1, username);
+//            statement.setString(2, password);
             resultset = statement.executeQuery();
-
             while (resultset.next()) {
-                count = count + 1;
+                if(resultset.getString("ACCT_STATUS").equals("DEACTIVATED")){
+                    return -1;
+                }else{
+                    return 1;
+                }
             }
-            if (count == 1) {
-
-                return count;
-            }
+            return 0;
+//            while (resultset.next()) {
+//                if(resultset.getString("ACCT_STATUS").equals("DEACTIVATED")){
+//                    return -1;
+//                    JOptionPane.showMessageDialog(null, "Account has been deactivated.\nPlease contact administrator for further details", "", JOptionPane.ERROR_MESSAGE);
+//                    break;
+//                }
+//                
+//                count = count++;
+//            }
 
         } catch (SQLException ex) {
             Logger.getLogger(LoginPanel.class.getName()).log(Level.SEVERE, null, ex);
@@ -175,12 +184,14 @@ public class LoginPanel extends javax.swing.JPanel {
             this.remove(this);
             ClientFrame clientFrame = new ClientFrame();
             clientFrame.setVisible(true);
-        } else if (checkRecords(username, password) == 0) {
+        }else if(checkRecords(username, password) == -1){
+            JOptionPane.showMessageDialog(null, "This account has been deactivated.\nPlease contact the administrator for further instructions", "", JOptionPane.ERROR_MESSAGE);
+        }else if (checkRecords(username, password) == 0) {
             JOptionPane.showMessageDialog(null, "Account not Found!", "", JOptionPane.ERROR_MESSAGE);
             usernameField.setText("");
             passwordField.setText("");
         } else {
-            JOptionPane.showMessageDialog(null, "Account not Found!", "", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Account not Found!!", "", JOptionPane.ERROR_MESSAGE);
             usernameField.setText("");
             passwordField.setText("");
         }

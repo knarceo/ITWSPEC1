@@ -66,18 +66,20 @@ public class SearchUserAccount_ADMIN extends javax.swing.JPanel {
             dtmPrefix.addColumn("PASSWORD");
             dtmPrefix.addColumn("BOOK ID");
             dtmPrefix.addColumn("BORROWED");
+            dtmPrefix.addColumn("STATUS");
 
             while (resultset.next()) {
 
                 dtmPrefix.addRow(new Object[]{
-                    resultset.getString(1),
-                    resultset.getString(2),
-                    resultset.getString(3),
-                    resultset.getString(4),
-                    resultset.getString(5),
-                    resultset.getString(6),
-                    resultset.getString(7),
-                    resultset.getString(8)
+                    resultset.getString("STUDENT_NUMBER"),
+                    resultset.getString("FIRST_NAME"),
+                    resultset.getString("LAST_NAME"),
+                    resultset.getString("MIDDLE_NAME"),
+                    resultset.getString("USERNAME"),
+                    resultset.getString("PASSWORD"),
+                    resultset.getString("BOOK_ID"),
+                    resultset.getString("DATE_BORROWED"),
+                    resultset.getString("ACCT_STATUS")
                 });
                 displayTable.setModel(dtmPrefix);
             }
@@ -140,18 +142,21 @@ public class SearchUserAccount_ADMIN extends javax.swing.JPanel {
                 dtmPrefix.addColumn("PASSWORD");
                 dtmPrefix.addColumn("BOOK ID");
                 dtmPrefix.addColumn("BORROWED");
+                dtmPrefix.addColumn("STATUS");
 
                 while (resultset.next()) {
 
                     dtmPrefix.addRow(new Object[]{
-                        resultset.getString(1),
-                        resultset.getString(2),
-                        resultset.getString(3),
-                        resultset.getString(4),
-                        resultset.getString(5),
-                        resultset.getString(6),
-                        resultset.getString(7),
-                        resultset.getString(8)
+                        
+                        resultset.getString("STUDENT_NUMBER"),
+                        resultset.getString("FIRST_NAME"),
+                        resultset.getString("LAST_NAME"),
+                        resultset.getString("MIDDLE_NAME"),
+                        resultset.getString("USERNAME"),
+                        resultset.getString("PASSWORD"),
+                        resultset.getString("BOOK_ID"),
+                        resultset.getString("DATE_BORROWED"),
+                        resultset.getString("ACCT_STATUS")
                     });
                     displayTable.setModel(dtmPrefix);
                 }

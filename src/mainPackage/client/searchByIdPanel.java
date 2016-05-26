@@ -104,7 +104,7 @@ public class searchByIdPanel extends javax.swing.JPanel {
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(AddBookPanel_ADMIN.class.getName()).log(Level.SEVERE, null, ex);
+//            Logger.getLogger(AddBookPanel_ADMIN.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return 0;
@@ -382,8 +382,7 @@ public class searchByIdPanel extends javax.swing.JPanel {
             ClientFrame.clientPanel.add(new searchByStatusPanel(), BorderLayout.CENTER);
             ClientFrame.clientPanel.repaint();
             ClientFrame.clientPanel.setVisible(true);
-        }
-        else if(columnBox.getSelectedItem().toString().equals("View All Books")){
+        }else if(columnBox.getSelectedItem().toString().equals("View All Books")){
             viewAllRecords();
         }
         else{
@@ -418,8 +417,9 @@ public class searchByIdPanel extends javax.swing.JPanel {
                 }
 
             viewRecords(tblColumn, searchByIdField.getText());
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Please Input a Proper ID Number.");
+        } catch (Exception e) {
+            System.out.println(e);
+//            JOptionPane.showMessageDialog(null, "Please Input a Proper ID Number.");
         }
                 
     }//GEN-LAST:event_submitButtonActionPerformed
@@ -465,6 +465,17 @@ public class searchByIdPanel extends javax.swing.JPanel {
             String stud = JOptionPane.showInputDialog("Enter Student Number");
             JOptionPane.showMessageDialog(null, "Request has been sent to the Book Admin!");
             sendData("=============================\nA user has requested this book named "+result.toString()+" with a student number of "+stud+".\n=============================");
+            if(row == -1){
+                JOptionPane.showMessageDialog(null, "Please select a book from the table", "", JOptionPane.ERROR_MESSAGE);
+            }
+            else{
+                if (state.equals("OUT")) {
+                    JOptionPane.showMessageDialog(null, "The Book is still out!");
+                }else{
+                    JOptionPane.showMessageDialog(null, "Request has been sent to the Book Admin!");
+                    sendData("=============================\nA user has requested this book."+state.toString()+"\n=============================");
+                }
+            }
         }
     }//GEN-LAST:event_borrowBtnActionPerformed
 
