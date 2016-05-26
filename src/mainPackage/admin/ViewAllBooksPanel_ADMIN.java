@@ -64,7 +64,7 @@ public class ViewAllBooksPanel_ADMIN extends javax.swing.JPanel {
     
     static ObjectOutputStream output;
     static ObjectInputStream input;
-
+    
     public ViewAllBooksPanel_ADMIN() {
         initComponents();
         inRadioButton.setVisible(false);
@@ -78,44 +78,6 @@ public class ViewAllBooksPanel_ADMIN extends javax.swing.JPanel {
         viewAllRecords();
     }
 
-//    public void viewRecords() {
-//        try {
-//
-//            statement = connection.prepareStatement(GET_RECORDS);
-//            resultset = statement.executeQuery();
-//            rsMetadata = resultset.getMetaData();
-//
-//            DefaultTableModel dtmPrefix = new DefaultTableModel() {
-//                @Override
-//                public boolean isCellEditable(int row, int column) {
-//                    return false;
-//                }
-//            };
-//            dtmPrefix.addColumn("ID");
-//            dtmPrefix.addColumn("TITLE");
-//            dtmPrefix.addColumn("AUTHOR");
-//            dtmPrefix.addColumn("GENRE");
-//            dtmPrefix.addColumn("STATE");
-//            dtmPrefix.addColumn("STUDENT NUMBER");
-//            dtmPrefix.addColumn("DATE BORROWED");
-//
-//            while (resultset.next()) {
-//
-//                dtmPrefix.addRow(new Object[]{
-//                    resultset.getInt(1),
-//                    resultset.getString(2),
-//                    resultset.getString(3),
-//                    resultset.getString(4),
-//                    resultset.getString(5),
-//                    resultset.getString(6),
-//                    resultset.getString(7)
-//                });
-//                displayTable.setModel(dtmPrefix);
-//            }
-//        } catch (SQLException ex) {
-//            Logger.getLogger(ViewAllBooksPanel_ADMIN.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//    }
     public int checkRecords(String column, String tblValue) {
         
         String QUERY = "";
@@ -278,6 +240,8 @@ public class ViewAllBooksPanel_ADMIN extends javax.swing.JPanel {
             dtmPrefix.addColumn("AUTHOR");
             dtmPrefix.addColumn("GENRE");
             dtmPrefix.addColumn("STATUS");
+            dtmPrefix.addColumn("STUDENT NUMBER");
+            dtmPrefix.addColumn("DATE BORROWED");
 
             while (resultset.next()) {
 
@@ -286,7 +250,9 @@ public class ViewAllBooksPanel_ADMIN extends javax.swing.JPanel {
                     resultset.getString(2),
                     resultset.getString(3),
                     resultset.getString(4),
-                    resultset.getString(5),});
+                    resultset.getString(5),
+                    resultset.getString(6),
+                    resultset.getString(7),});
                     displayTable.setModel(dtmPrefix);
             }
             searchByIdField.setText("");         
@@ -684,6 +650,8 @@ public class ViewAllBooksPanel_ADMIN extends javax.swing.JPanel {
         Object author = displayTable.getValueAt(rowTable, 2);
         Object genre = displayTable.getValueAt(rowTable, 3);
         Object status = displayTable.getValueAt(rowTable, 4);
+        Object student_num = displayTable.getValueAt(rowTable, 5);
+        Object date_borrowed = displayTable.getValueAt(rowTable, 6);
 
         if (evt.getClickCount() == 2) {
             JTable target = (JTable) evt.getSource();
@@ -694,6 +662,8 @@ public class ViewAllBooksPanel_ADMIN extends javax.swing.JPanel {
                 + "Author: " + author + "\n"
                 + "Genre: " + genre + "\n"
                 + "Status: " + status + "\n"
+                + "Student Number: " + student_num + "\n"
+                + "Date Borrowed: " + date_borrowed + "\n"
             );
 
         }
@@ -704,7 +674,7 @@ public class ViewAllBooksPanel_ADMIN extends javax.swing.JPanel {
         int row = displayTable.getSelectedRow();
 
         Object state = displayTable.getValueAt(row, 4);
-
+        Object result = displayTable.getValueAt(row, 1);
         if (state.equals("OUT")) {
 
             JOptionPane.showMessageDialog(null, "The Book is still out!");
@@ -729,8 +699,8 @@ public class ViewAllBooksPanel_ADMIN extends javax.swing.JPanel {
                         UPDATE_TBLBOOKS_OUT(id, sNumber);
                         INSERT_TO_BORROW(sNumber, id);
                         UPDATE_ACCOUNTS_OUT(id, sNumber);
-                        sendData("=============================\nRequest for borrowing of this book has been approved."+state.toString()+"\n=============================");
-
+                        AdminFrame.displayArea.append("\n=============================\nA book named "+result+" has been lent to the client with a student number of: "+sNumber+".\n=============================");
+                        
                     } catch (ArrayIndexOutOfBoundsException e) {
                         JOptionPane.showMessageDialog(null, "Input an ID first.");
                     }
@@ -749,8 +719,8 @@ public class ViewAllBooksPanel_ADMIN extends javax.swing.JPanel {
         try {
             int row = displayTable.getSelectedRow();
             Object id = displayTable.getValueAt(row, 0);
-
-            Object sNumber = displayTable.getValueAt(row, 4);
+            Object result = displayTable.getValueAt(row, 1);
+            Object sNumber = displayTable.getValueAt(row, 5);
             UPDATE_ACCOUNTS_IN(sNumber);
 
             displayTable.setValueAt("IN", row, 4);
@@ -761,9 +731,8 @@ public class ViewAllBooksPanel_ADMIN extends javax.swing.JPanel {
 
             UPDATE_TBLBOOKS_IN(id);
             UPDATE_BORROW(id);
-            
-            sendData("=============================\nA book has been returned by the client."+id.toString()+"\n=============================");
-
+            JOptionPane.showMessageDialog(null, "This book has been returned by the client.");
+            AdminFrame.displayArea.append("\n=============================\nA book named "+result+" has been returned by the client.\n=============================");
         } catch (ArrayIndexOutOfBoundsException e) {
             JOptionPane.showMessageDialog(null, "Input an ID first.");
         }

@@ -11,11 +11,6 @@ import mainPackage.admin.DeleteAccountPanel_ADMIN;
 import mainPackage.admin.SearchUserAccount_ADMIN;
 import mainPackage.admin.UpdateUserPanel_ADMIN;
 import mainPackage.admin.AddUserPanel_ADMIN;
-import mainPackage.admin.SearchByStatus_ADMIN;
-import mainPackage.admin.SearchByGenre_ADMIN;
-import mainPackage.admin.SearchByAuthor_ADMIN;
-import mainPackage.admin.SearchByTitle_ADMIN;
-import mainPackage.admin.SearchBookByID_ADMIN;
 import mainPackage.admin.DeleteBookPanel_ADMIN;
 import mainPackage.admin.UpdateBookPanel_ADMIN;
 import mainPackage.admin.AddBookPanel_ADMIN;
@@ -32,17 +27,21 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 
 /**
  *
  * @author Windows8.1
  */
-public class AdminFrame extends javax.swing.JFrame {
+public final class AdminFrame extends javax.swing.JFrame {
 
     private ObjectOutputStream output; // output stream to client
     private ObjectInputStream input; // input stream from client
@@ -63,16 +62,15 @@ public class AdminFrame extends javax.swing.JFrame {
     private final String username = "oracle";
     private final String password = "pass";
     
-//    public class AdminThread implements Runnable{
-//        public AdminThread(){
-//        }
-//        @Override
-//        public void run() {
-////            while(true){                
-//                runServer();
-////            }
-//        }
-//    }
+    public void process() {
+        new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                 runServer();
+            }
+        }).start();
+    }
     
     public AdminFrame() {
         initComponents();
@@ -88,6 +86,7 @@ public class AdminFrame extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(AdminFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
+        process();
 //        runServer();
     }
 
@@ -146,7 +145,6 @@ public class AdminFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Server");
-        setPreferredSize(new java.awt.Dimension(725, 770));
 
         delUserBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/assets/deleteicon.png"))); // NOI18N
         delUserBtn.setText("Delete User");
@@ -252,8 +250,7 @@ public class AdminFrame extends javax.swing.JFrame {
                     .addComponent(serverPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(147, 147, 147)
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jLabel1))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(60, 60, 60)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -268,12 +265,9 @@ public class AdminFrame extends javax.swing.JFrame {
                                     .addComponent(delBookBtn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(editBookBtn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(addBookBtn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                        .addComponent(viewAllUserBtn)
-                                        .addGap(106, 106, 106))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                             .addComponent(searchUserBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                             .addComponent(addUserBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -281,7 +275,11 @@ public class AdminFrame extends javax.swing.JFrame {
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                             .addComponent(delUserBtn)
                                             .addComponent(editUserBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(58, 58, 58)))))))
+                                        .addGap(58, 58, 58))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(viewAllUserBtn)
+                                        .addGap(106, 106, 106)))))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -618,7 +616,7 @@ public class AdminFrame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AdminFrame().setVisible(true); 
+                new AdminFrame().setVisible(true);
             }
         });
     }
@@ -628,7 +626,7 @@ public class AdminFrame extends javax.swing.JFrame {
     private javax.swing.JButton addUserBtn;
     private javax.swing.JButton delBookBtn;
     private javax.swing.JButton delUserBtn;
-    private javax.swing.JTextArea displayArea;
+    public static javax.swing.JTextArea displayArea;
     private javax.swing.JButton editBookBtn;
     private javax.swing.JButton editUserBtn;
     private javax.swing.JTextField enterField;

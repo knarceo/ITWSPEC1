@@ -6,6 +6,11 @@
 package mainPackage.client;
 
 import java.awt.BorderLayout;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.InetAddress;
+import java.net.Socket;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -36,8 +41,13 @@ public class searchByStatusPanel extends javax.swing.JPanel {
     private PreparedStatement statement;
     private ResultSet resultset;
     private ResultSetMetaData rsMetadata;
+    
+    static Socket client;
+    static ObjectOutputStream output;
+    static ObjectInputStream input;
 
     public searchByStatusPanel() {
+       
         initComponents();
         try {
             connection = DriverManager.getConnection(DATABSE_URL, username, password);
@@ -160,6 +170,7 @@ public class searchByStatusPanel extends javax.swing.JPanel {
         });
 
         columnBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "View All Books", "Search By ID", "Search By Author", "Search By Title", "Search By Genre", "Search By Status" }));
+        columnBox.setSelectedItem("Search By Status");
         columnBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 columnBoxActionPerformed(evt);
@@ -318,12 +329,29 @@ public class searchByStatusPanel extends javax.swing.JPanel {
     private void borrowBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_borrowBtnActionPerformed
         int row = displayTable.getSelectedRow();
         Object state = displayTable.getValueAt(row, 4);
-
+        Object result = displayTable.getValueAt(row, 1);
+        
         if (state.equals("OUT")) {
             JOptionPane.showMessageDialog(null, "The Book is still out!");
         }
+        else{
+            String stud = JOptionPane.showInputDialog("Enter Student Number");
+            JOptionPane.showMessageDialog(null, "Request has been sent to the Book Admin!");
+            sendData("=============================\nA user has requested this book named "+result.toString()+" with a student number of "+stud+".\n=============================");
+        }
     }//GEN-LAST:event_borrowBtnActionPerformed
+    
+    private void sendData(String message) {
+        try {
+            output.writeObject("CLIENT : \n" + message);
+            output.flush(); // flush data to output
+            //displayMessage("\nCLIENT>>> " + message);
 
+        } catch (IOException ioException) {
+            System.out.println("Error writing object");
+        }
+
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton borrowBtn;

@@ -26,7 +26,7 @@ public class AddUserPanel_ADMIN extends javax.swing.JPanel {
     private final String DATABSE_URL = "jdbc:derby://localhost:1527/libraryDb";
     private final String username = "oracle";
     private final String password = "pass";
-    private final String ADD_REC = "INSERT INTO ACCOUNTS VALUES(?, ?, ?, ?, ?, ?,0,NULL)";//Student Number,First Name,Last Name,Middle Name,Username,Password,Book id
+    private final String ADD_REC = "INSERT INTO ACCOUNTS VALUES(?, ?, ?, ?, ?, ?,0,NULL,?)";//Student Number,First Name,Last Name,Middle Name,Username,Password,Book id
     private final String CHECK_RECORDS = "SELECT * FROM ACCOUNTS WHERE STUDENT_NUMBER = ? OR USERNAME = ?";
 
     private Connection connection;
@@ -70,7 +70,7 @@ public class AddUserPanel_ADMIN extends javax.swing.JPanel {
 
     }
 
-    public void addRecord(String sNumber, String fName, String lName, String mName, String username, String password) {
+    public void addRecord(String sNumber, String fName, String lName, String mName, String username, String password, String acct_status) {
 
         try {
 
@@ -93,6 +93,7 @@ public class AddUserPanel_ADMIN extends javax.swing.JPanel {
                 statement.setString(4, mName);
                 statement.setString(5, username);
                 statement.setString(6, password);
+                statement.setString(7, acct_status);
                 statement.executeUpdate();
                 JOptionPane.showMessageDialog(null, "Account Created!");
 
@@ -268,7 +269,7 @@ public class AddUserPanel_ADMIN extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(null, "Please Fill out all the needed areas.");
 
             } else {
-                addRecord(studId, fName, lName, mName, username, password);
+                addRecord(studId, fName, lName, mName, username, password, "ACTIVATED");
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Please Fill up all the needed Areas.");

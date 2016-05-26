@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.InetAddress;
+import java.net.Socket;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -34,6 +36,7 @@ public class searchByIdPanel extends javax.swing.JPanel {
     private PreparedStatement statement;
     private ResultSet resultset;
     private ResultSetMetaData rsMetadata;
+    static Socket client;
     static ObjectOutputStream output;
     static ObjectInputStream input;
 
@@ -48,8 +51,15 @@ public class searchByIdPanel extends javax.swing.JPanel {
             Logger.getLogger(searchByIdPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
         viewAllRecords();
+                
+        try {
+            client = new Socket(InetAddress.getByName("127.0.0.1"), 12345);
+            getStreams();
+        } catch (IOException ex) {
+            Logger.getLogger(searchByIdPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
-
+    
     public int checkRecordsByState(String state) {
 
         int count = 0;
@@ -445,13 +455,16 @@ public class searchByIdPanel extends javax.swing.JPanel {
     private void borrowBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_borrowBtnActionPerformed
         int row = displayTable.getSelectedRow();
         Object state = displayTable.getValueAt(row, 4);
+        Object result = displayTable.getValueAt(row, 1);
+        
 
         if (state.equals("OUT")) {
             JOptionPane.showMessageDialog(null, "The Book is still out!");
         }
         else{
+            String stud = JOptionPane.showInputDialog("Enter Student Number");
             JOptionPane.showMessageDialog(null, "Request has been sent to the Book Admin!");
-            sendData("=============================\nA user has requested this book."+state.toString()+"\n=============================");
+            sendData("=============================\nA user has requested this book named "+result.toString()+" with a student number of "+stud+".\n=============================");
         }
     }//GEN-LAST:event_borrowBtnActionPerformed
 
@@ -505,6 +518,16 @@ public class searchByIdPanel extends javax.swing.JPanel {
         } catch (SQLException ex) {
             Logger.getLogger(ViewAllBooksPanel_ADMIN.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    static void getStreams() throws IOException {
+        // set up output stream for objects
+        output = new ObjectOutputStream(client.getOutputStream());
+        output.flush(); // flush output buffer to send header information
+
+        // set up input stream for objects
+        input = new ObjectInputStream(client.getInputStream());
+        //displayMessage("\nGot I/O streams\n");
     }
     
     private void sendData(String message) {

@@ -27,7 +27,7 @@ public class UpdateUserPanel_ADMIN extends javax.swing.JPanel {
     private final String DATABSE_URL = "jdbc:derby://localhost:1527/libraryDb";
     private final String username = "oracle";
     private final String password = "pass";
-    private final String UPDATE_REC = "UPDATE ACCOUNTS SET First_Name = ?,Last_Name = ?, Middle_Name = ?,Username = ?, Password = ? WHERE Student_Number = ?";
+    private final String UPDATE_REC = "UPDATE ACCOUNTS SET FIRST_NAME = ?,LAST_NAME = ?, MIDDLE_NAME = ?,USERNAME = ?, PASSWORD = ? WHERE STUDENT_NUMBER = ?";
 
     private Connection connection;
     private PreparedStatement statement;
@@ -110,12 +110,12 @@ public class UpdateUserPanel_ADMIN extends javax.swing.JPanel {
             if (checkRecords(sNumber, username).equals("CLEAR")) {
 
                 statement = connection.prepareStatement(UPDATE_REC);
-                statement.setString(6, sNumber);
-                statement.setString(1, fName);
-                statement.setString(2, lName);
-                statement.setString(3, mName);
-                statement.setString(4, username);
-                statement.setString(5, password);
+                statement.setString(1, sNumber);
+                statement.setString(2, fName);
+                statement.setString(3, lName);
+                statement.setString(4, mName);
+                statement.setString(5, username);
+                statement.setString(6, password);
                 statement.executeUpdate();
 
                 JOptionPane.showMessageDialog(null, "Your Account has been Updated!");

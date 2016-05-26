@@ -26,7 +26,7 @@ public class RegistrationPanel extends javax.swing.JPanel {
     private final String DATABSE_URL = "jdbc:derby://localhost:1527/libraryDb";
     private final String username = "oracle";
     private final String password = "pass";
-    private final String ADD_REC = "INSERT INTO ACCOUNTS VALUES(?, ?, ?, ?, ?, ?,0,NULL)";//Student Number,First Name,Last Name,Middle Name,Username,Password,book id
+    private final String ADD_REC = "INSERT INTO ACCOUNTS VALUES(?, ?, ?, ?, ?, ?,0,NULL, ?)";//Student Number,First Name,Last Name,Middle Name,Username,Password,book id
     private final String CHECK_RECORDS = "SELECT * FROM ACCOUNTS WHERE STUDENT_NUMBER = ? OR USERNAME = ?";
 
     private Connection connection;
@@ -43,7 +43,7 @@ public class RegistrationPanel extends javax.swing.JPanel {
         }
     }
 
-    public void addRecord(String sNumber, String fName, String lName, String mName, String username, String password) {
+    public void addRecord(String sNumber, String fName, String lName, String mName, String username, String password, String acct_status) {
 
         try {
 
@@ -66,6 +66,7 @@ public class RegistrationPanel extends javax.swing.JPanel {
                 statement.setString(4, mName);
                 statement.setString(5, username);
                 statement.setString(6, password);
+                statement.setString(7, acct_status);
                 statement.executeUpdate();
 
                 JOptionPane.showMessageDialog(null, "Your Account has been created. You may now login.", "", JOptionPane.INFORMATION_MESSAGE);
@@ -285,7 +286,7 @@ public class RegistrationPanel extends javax.swing.JPanel {
         if (studId.equals("") || fName.equals("") || lName.equals("") || mName.equals("") || username.equals("") || password.equals("")) {
             JOptionPane.showMessageDialog(null, "Please Fill out all the needed areas.", "", JOptionPane.ERROR_MESSAGE);
         } else {
-            addRecord(studId, fName, lName, mName, username, password);
+            addRecord(studId, fName, lName, mName, username, password, "ACTIVATED");
         }
     }//GEN-LAST:event_submitButtonActionPerformed
 

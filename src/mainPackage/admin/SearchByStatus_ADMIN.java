@@ -6,6 +6,9 @@
 package mainPackage.admin;
 
 import java.awt.BorderLayout;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import mainPackage.admin.SearchBookByID_ADMIN;
 import mainPackage.admin.AddBookPanel_ADMIN;
 import java.sql.Connection;
@@ -32,13 +35,38 @@ public class SearchByStatus_ADMIN extends javax.swing.JPanel {
     private static final String DATABSE_URL = "jdbc:derby://localhost:1527/libraryDb";
     private static final String username = "oracle";
     private static final String password = "pass";
-
     private final String GET_RECORDS = "SELECT * FROM TBLBOOKS WHERE STATE = ?";
+    
+    private final String GET_STATE = "SELECT * FROM TBLBOOKS WHERE STATE = ?";
+    
+     //Commands for table books 
+    private final String UPDATE_TBLBOOKS_OUT = "UPDATE TBLBOOKS SET DATE_BORROWED = ?, STATE = 'OUT', STUDENT_NUMBER = ? WHERE ID = ?"; // STUDENT NUMBER KUNG SINO HUMIRAM YUNG NASA JOPTIONPANE
+    private final String UPDATE_TBLBOOKS_IN = "UPDATE TBLBOOKS SET DATE_BORROWED = NULL, STATE = 'IN', STUDENT_NUMBER = NULL  WHERE ID = ?"; //ID NA NASA TABLE
+
+    //Commands for table BORROW
+    private final String INSERT_TO_BORROW = "INSERT INTO BORROW VALUES(?,?,?,null)"; // Book has been borrowed
+    private final String UPDATE_BORROW = "UPDATE BORROW SET DATE_RETURNED = ? WHERE BOOK_ID = ?"; // STUDENT NUMBER NA NASA TABLE
+
+    //Commands for accounts
+    private final String UPDATE_ACCOUNTS_OUT = "UPDATE ACCOUNTS SET DATE_BORROWED = ?, BOOK_ID = ? WHERE STUDENT_NUMBER = ?"; // Book ID kung ano yung nasa table na book id YUNG STUDENT NUMBER NAMAN KUNG SINO YUNG HUMIRAM YUNG NASA JOPTIONPANE
+    private final String UPDATE_ACCOUNTS_IN = "UPDATE ACCOUNTS SET DATE_BORROWED = NULL, BOOK_ID = 0 WHERE STUDENT_NUMBER = ?"; // STUDENT NUMBER NA NASA TABLE
+    
+    private final String CHECK_BORROWED = "SELECT STUDENT_NUMBER = ? FROM ACCOUNTS WHERE BOOK_ID != 0";
+    
+    
+    //Student Number Checker
+    private final String GET_SNUMBER = "SELECT * FROM ACCOUNTS WHERE STUDENT_NUMBER = ?";
 
     private Connection connection;
     private PreparedStatement statement;
     private ResultSet resultset;
     private ResultSetMetaData rsMetadata;
+    
+    Calendar currenttime = Calendar.getInstance();
+    Date sqldate = new Date((currenttime.getTime()).getTime());
+    
+    static ObjectOutputStream output;
+    static ObjectInputStream input;
 
     public SearchByStatus_ADMIN() {
         initComponents();
@@ -154,6 +182,138 @@ public class SearchByStatus_ADMIN extends javax.swing.JPanel {
             Logger.getLogger(ViewAllBooksPanel_ADMIN.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    public int checkAccounts(String sNumber) {
+
+        int count = 0;
+
+        try {
+            statement = connection.prepareStatement(GET_SNUMBER);
+            statement.setString(1, sNumber);
+            resultset = statement.executeQuery();
+
+            while (resultset.next()) {
+                count = count + 1;
+            }
+
+            if (count == 1) {
+
+                return count;
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ViewAllBooksPanel_ADMIN.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return count = 0;
+
+    }
+
+    public int checkBorrowed(String sNumber) {
+
+        int count = 0;
+
+        try {
+            statement = connection.prepareStatement(CHECK_BORROWED);
+            statement.setString(1, sNumber);
+            resultset = statement.executeQuery();
+
+            while (resultset.next()) {
+                count = count + 1;
+            }
+
+            if (count == 1) {
+                return count;
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ViewAllBooksPanel_ADMIN.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return count = 0;
+
+    }
+    
+    public void UPDATE_TBLBOOKS_OUT(Object id, String sNumber) { // Student Number at ID
+
+        try {
+            statement = connection.prepareStatement(UPDATE_TBLBOOKS_OUT);
+            statement.setObject(1, sqldate);
+            statement.setObject(2, sNumber);
+            statement.setObject(3, id);
+            statement.executeUpdate();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ViewAllBooksPanel_ADMIN.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public void INSERT_TO_BORROW(String sNumber, Object book_id) { // Student Number at ID
+
+        try {
+            statement = connection.prepareStatement(INSERT_TO_BORROW);
+            statement.setObject(1, sNumber);
+            statement.setObject(2, book_id);
+            statement.setObject(3, sqldate);
+            statement.executeUpdate();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ViewAllBooksPanel_ADMIN.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public void UPDATE_ACCOUNTS_OUT(Object id, String sNumber) { // Student Number at ID
+
+        try {
+            statement = connection.prepareStatement(UPDATE_ACCOUNTS_OUT);
+            statement.setObject(3, sNumber);
+            statement.setObject(2, id);
+            statement.setObject(1, sqldate);
+            statement.executeUpdate();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ViewAllBooksPanel_ADMIN.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+    
+    public void UPDATE_TBLBOOKS_IN(Object id) {
+
+        try {
+            statement = connection.prepareStatement(UPDATE_TBLBOOKS_IN);
+            statement.setObject(1, id);
+            statement.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ViewAllBooksPanel_ADMIN.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public void UPDATE_BORROW(Object book_id) {
+
+        try {
+            statement = connection.prepareStatement(UPDATE_BORROW);
+            statement.setObject(2, book_id);
+            statement.setObject(1, sqldate);
+            statement.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ViewAllBooksPanel_ADMIN.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public void UPDATE_ACCOUNTS_IN(Object sNumber) {
+
+        try {
+            statement = connection.prepareStatement(UPDATE_ACCOUNTS_IN);
+            statement.setObject(1, sNumber);
+            statement.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ViewAllBooksPanel_ADMIN.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -173,6 +333,7 @@ public class SearchByStatus_ADMIN extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         displayTable = new javax.swing.JTable();
         lendBtn = new javax.swing.JButton();
+        returnBtn = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Arial Narrow", 1, 24)); // NOI18N
         jLabel1.setText("Search by Status");
@@ -231,6 +392,13 @@ public class SearchByStatus_ADMIN extends javax.swing.JPanel {
             }
         });
 
+        returnBtn.setText("Return");
+        returnBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                returnBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -249,13 +417,16 @@ public class SearchByStatus_ADMIN extends javax.swing.JPanel {
                         .addComponent(submitButton)
                         .addGap(333, 333, 333))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jScrollPane1)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING))
                         .addContainerGap())))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(returnBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lendBtn)
                 .addContainerGap())
         );
@@ -274,7 +445,9 @@ public class SearchByStatus_ADMIN extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 334, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lendBtn)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lendBtn)
+                    .addComponent(returnBtn))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -337,6 +510,8 @@ public class SearchByStatus_ADMIN extends javax.swing.JPanel {
         Object author = displayTable.getValueAt(rowTable, 2);
         Object genre = displayTable.getValueAt(rowTable, 3);
         Object status = displayTable.getValueAt(rowTable, 4);
+        Object student_num = displayTable.getValueAt(rowTable, 5);
+        Object date_borrowed = displayTable.getValueAt(rowTable, 6);
 
         if (evt.getClickCount() == 2) {
             JTable target = (JTable) evt.getSource();
@@ -347,15 +522,92 @@ public class SearchByStatus_ADMIN extends javax.swing.JPanel {
                 + "Author: " + author + "\n"
                 + "Genre: " + genre + "\n"
                 + "Status: " + status + "\n"
+                + "Student Number: " + student_num + "\n"
+                + "Date Borrowed: " + date_borrowed + "\n"
             );
 
         }
     }//GEN-LAST:event_displayTabledoubleClick
 
     private void lendBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lendBtnActionPerformed
-        // TODO add your handling code here:
+        int row = displayTable.getSelectedRow();
+
+        Object state = displayTable.getValueAt(row, 4);
+        Object result = displayTable.getValueAt(row, 1);
+        if (state.equals("OUT")) {
+
+            JOptionPane.showMessageDialog(null, "The Book is still out!");
+        } else {
+
+            String sNumber = JOptionPane.showInputDialog("Enter Student Number");
+
+            if (checkAccounts(sNumber) == 1) {
+
+                if (checkBorrowed(sNumber) == 0) {
+
+                    try {
+
+                        displayTable.setValueAt("OUT", row, 4);
+
+                        displayTable.setValueAt(sNumber, row, 5);
+
+                        displayTable.setValueAt(sqldate, row, 6);
+
+                        Object id = displayTable.getValueAt(row, 0);
+
+                        UPDATE_TBLBOOKS_OUT(id, sNumber);
+                        INSERT_TO_BORROW(sNumber, id);
+                        UPDATE_ACCOUNTS_OUT(id, sNumber);
+                        AdminFrame.displayArea.append("\n=============================\nA book named "+result+" has been lent to the client with a student number of: "+sNumber+".\n=============================");
+
+                    } catch (ArrayIndexOutOfBoundsException e) {
+                        JOptionPane.showMessageDialog(null, "Input an ID first.");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Student Number has already a Borrowed Book!");
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Student Number is not registered.");
+            }
+
+        }
     }//GEN-LAST:event_lendBtnActionPerformed
 
+    private void returnBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnBtnActionPerformed
+        try {
+            int row = displayTable.getSelectedRow();
+            Object id = displayTable.getValueAt(row, 0);
+            Object result = displayTable.getValueAt(row, 1);
+            Object sNumber = displayTable.getValueAt(row, 5);
+            UPDATE_ACCOUNTS_IN(sNumber);
+
+            displayTable.setValueAt("IN", row, 4);
+
+            displayTable.setValueAt("", row, 5);
+
+            displayTable.setValueAt("", row, 6);
+
+            UPDATE_TBLBOOKS_IN(id);
+            UPDATE_BORROW(id);
+            JOptionPane.showMessageDialog(null, "This book has been returned by the client.");
+            AdminFrame.displayArea.append("\n=============================\nA book named "+result+" has been returned by the client.\n=============================");
+        } catch (ArrayIndexOutOfBoundsException e) {
+            JOptionPane.showMessageDialog(null, "Input an ID first.");
+        }
+    }//GEN-LAST:event_returnBtnActionPerformed
+
+    private void sendData(String message) {
+        try {
+            output.writeObject("CLIENT : \n" + message);
+            output.flush(); // flush data to output
+            //displayMessage("\nCLIENT>>> " + message);
+
+        } catch (IOException ioException) {
+            System.out.println("Error writing object");
+        }
+
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
@@ -366,6 +618,7 @@ public class SearchByStatus_ADMIN extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton lendBtn;
     private javax.swing.JRadioButton outRadioButton;
+    private javax.swing.JButton returnBtn;
     private javax.swing.JButton submitButton;
     // End of variables declaration//GEN-END:variables
 }
