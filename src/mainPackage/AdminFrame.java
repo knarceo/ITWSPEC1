@@ -146,7 +146,6 @@ public class AdminFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Server");
-        setPreferredSize(new java.awt.Dimension(725, 770));
 
         delUserBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/mainPackage/assets/deleteicon.png"))); // NOI18N
         delUserBtn.setText("Disable User");
